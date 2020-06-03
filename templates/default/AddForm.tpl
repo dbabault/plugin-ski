@@ -174,8 +174,18 @@
 										{$aid=$form_rents[$fid][$id_adh][$category_id]}
 											{foreach from=$aid item=b key=c}
 												{if $c == 'object_id'}
-												{$rentobj=$objects[$b]['name1']}
-												{$serial=$objects[$b]['serial_number']}
+													{$serial=$objects[$b]['serial_number']}
+													{if $objects[$b]['state'] == 'used'}
+														{$rentobj=$objects[$b]['name1']}
+													{elseif $objects[$b]['state'] == 'during'}
+														{assign var=rentobj value=$objects[$b]['name']}
+														{assign var=rentobj value=$rentobj|cat:"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loué sur fiche "}
+														{assign var=rentobj value=$rentobj|cat:$objects[$b]['used']}
+													{else}
+														{$rentobj=$objects[$b]['name']}
+														{assign var=rentobj value=$rentobj|cat:"\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loué sur fiche "}
+														{assign var=rentobj value=$rentobj|cat:$objects[$b]['used']}
+													{/if}
 												{/if}
 											{/foreach}
 										{if $fid == $form_id}{break}{/if}
@@ -207,6 +217,9 @@
 													{assign var=mbr1 value=$mbr1|cat:":date_end="|cat:$date_end}
 													{assign var=mbr1 value=$mbr1|cat:":period="|cat:$period}
 													{assign var=mbr1 value=$mbr1|cat:":duration="|cat:$duration}
+													{assign var=mbr1 value=$mbr1|cat:":before="|cat:$before}
+													{assign var=mbr1 value=$mbr1|cat:":after="|cat:$after}
+													{assign var=mbr1 value=$mbr1|cat:":during="|cat:$during}
 													<option value="{$mbr1}">
 														{$obj['name']}
 													</option>
@@ -285,7 +298,7 @@
 		//var res = this.value.split(":");
     var res1= this.value;
     if (this.name === "object") {
-			window.confirm("{_T string="Do you want to lent "}" + $obj + "?" );
+			//window.confirm("{_T string="Do you want to lent "}" + $obj + "?" );
       $.ajax({
         url: '{path_for name="ski_do_add_object" domain="ski"}',
         type: "post",

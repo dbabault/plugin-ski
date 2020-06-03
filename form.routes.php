@@ -206,6 +206,9 @@ $this->get(
             $form_rents[] = "";
             foreach ($list_object as $object) {
                 $val1 = '';
+                $before=0;
+                $after=0;
+                $used='';
                 //
                 // https://www.w3schools.com/charsets/ref_emoji.asp
                 //
@@ -241,15 +244,19 @@ $this->get(
                         if ($rdb == $db and $rdf == $df) {
                             if ($rent->form_id != $form_id) {
                                 $val1 = 'during';
+                                $used=$rent->form_id;
                             } else {
                                 $val1 = 'used';
                             }
                         } elseif ($rdb < $df and $rdf > $db) {
                             $val1 = 'before';
+                            $used=$rent->form_id;
                         } elseif ($rdb < $db and $rdf == $db) {
                             $val1 = 'before';
+                            $used=$rent->form_id;
                         } elseif ($rdb == $df and $rdf > $df) {
                             $val1 = 'after';
+                            $used=$rent->form_id;
                         } else {
                             $val1 = 'libre';
                         } // fin calcul val1
@@ -296,6 +303,8 @@ $this->get(
                 } else {
                     $objects_list[$object->object_id]['name'] = $b . $object->dimension . $a;
                 }
+
+                $objects_list[$object->object_id]['used'] = $used;
 
                 $objects_list[$object->object_id]['object_id'] = $object->object_id;
                 $objects_list[$object->object_id]['serial_number'] = $object->serial_number;
@@ -449,15 +458,15 @@ $this->post(
         $formrent = new FormRent($this->zdb, $this->plugins, $olendsprefs);
         if (GALETTE_MODE == 'DEV') {
             $file1="/home/galette/galette/data/logs/route-do-add-object.txt";
-            $output = print_r($pst, true);
-            file_put_contents($file1, "\npst : " . $output);
+            $output = print_r($_POST . $output);
+                file_put_contents($file1, "\nargs : " . $output);
         }
 
         foreach ($pst as $val) {
             $a = explode("=", $val)[0];
             $b = explode("=", $val)[1];
             if (GALETTE_MODE == 'DEV') {
-                file_put_contents($file1, "\npst : " . $a . "=" . $b);
+                file_put_contents($file1, "\npst1 : " . $a . "=" . $b);
             }
             $formrent->$a = "$b";
             $$a = "$b";
