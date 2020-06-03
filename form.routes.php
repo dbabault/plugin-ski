@@ -314,6 +314,11 @@ $this->get(
                     $objects_list[$object->object_id]['name'] = "";
                     $objects_list[$object->object_id]['name1'] = "";
                 }
+                if ($object->name == "baton") {
+                    $objects_list[$object->object_id]['name'] = $object->dimension ;
+                    $objects_list[$object->object_id]['name1'] = $object->dimension ;
+                        $objects_list[$object->object_id]['state'] = 'used';
+                }
             } //foreach ($list_object as $object)
         } // if ($form_status == "Create")
 
