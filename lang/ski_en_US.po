@@ -1,0 +1,527 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: galette 0.9.3\n"
+"PO-Revision-Date: 2019-12-11 11:38+0100\n"
+"Last-Translator: root <daniel@babault.net>\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../templates/default/ski_preferences.tpl:89
+msgid "View price sum:"
+msgstr ""
+
+#: ../_routes.php:787
+msgid "Familymanagement"
+msgstr ""
+
+#: ../templates/default/ski_members.tpl:26 ../templates/default/ListForm.tpl:22
+msgid "Clear filter"
+msgstr ""
+
+#: ../lib/GaletteSki/Filters/FormFilter.php:286
+#: ../lib/GaletteSki/IO/PdfForm.php:190 ../lib/GaletteSki/IO/PdfForm.php:311
+#: ../templates/default/ski_family.tpl:46 ../templates/default/ListForm.tpl:111
+msgid "Status"
+msgstr ""
+
+#: ../lib/GaletteSki/Filters/FormFilter.php:282
+#: ../templates/default/ListForm.tpl:59
+msgid "Begin Date"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:89
+#: ../templates/default/ski_preferences.tpl:90
+msgid "View the objects buy price sum on the list under the category"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:184
+msgid "Description"
+msgstr ""
+
+#: ../_routes.php:785
+msgid "Membersmanagement"
+msgstr ""
+
+#: ../templates/default/ListForm.tpl:85
+msgid "End Date"
+msgstr ""
+
+#: ../templates/default/ListForm.tpl:121
+msgid "Comment"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:189
+msgid "Weight"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:64
+msgid "View category:"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:79
+msgid "View dimensions:"
+msgstr ""
+
+#: ../lib/GaletteSki/Filters/FormFilter.php:284
+msgid "End  Date"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:74
+msgid "View description"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:95
+msgid "View buy price:"
+msgstr ""
+
+#: ../templates/default/menu.tpl:7
+msgid "Ski dashboard"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:33
+msgid ""
+"Comment text to add on generated contribution. Automatically replaced values "
+"(put into curly brackets): <br/>- NAME: Name<br/>- DESCRIPTION: "
+"Description<br/>- SERIAL_NUMBER: Serial number<br/>- PRICE: Price<br/>- "
+"RENT_PRICE: Borrow price<br/>- WEIGHT: Weight<br/>- DIMENSION: Dimensions"
+msgstr ""
+
+#: ../templates/default/ski_family.tpl:42
+msgid "Birth date"
+msgstr ""
+
+#: ../templates/default/Form.tpl:68 ../templates/default/Form.tpl:78
+msgid "Adherents"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:192 ../lib/GaletteSki/IO/PdfForm.php:313
+#: ../templates/default/AddForm.tpl:126 ../templates/default/ski_family.tpl:36
+msgid "Member"
+msgstr ""
+
+#: ../templates/default/ListForm.tpl:123
+msgid "Actions"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:271
+msgid "Available"
+msgstr ""
+
+#: ../templates/default/Form.tpl:72
+msgid "--- Select a Member ---"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:183 ../templates/default/AddForm.tpl:141
+#: ../templates/default/Form.tpl:87
+msgid "Name"
+msgstr ""
+
+#: ../templates/default/ski_family.tpl:44
+msgid "Licence"
+msgstr ""
+
+#: ../_routes.php:134
+msgid "Lend Rental Form"
+msgstr ""
+
+#: ../lib/GaletteSki/Filters/FormFilter.php:283
+#: ../templates/default/ListForm.tpl:72
+msgid "Forecast Date"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:137
+msgid "Printed on %date"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:269
+msgid "Borrowed"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:84
+msgid "View borrow price:"
+msgstr ""
+
+#: ../templates/default/Form.tpl:14
+msgid "Form"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:41
+msgid "Max thumb height (in px)"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:22
+msgid "Contribution type:"
+msgstr ""
+
+#: ../templates/default/ski_family.tpl:25
+msgid "Parent"
+msgstr ""
+
+#: ../templates/default/ski_family.tpl:29
+msgid "Email"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:39
+msgid "Images related"
+msgstr ""
+
+#: ../templates/default/menu.tpl:23 ../templates/default/menu.tpl:24
+msgid "List Members"
+msgstr ""
+
+#: ../templates/default/menu.tpl:8
+msgid "Dashboard"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:8
+msgid "Members can borrow:"
+msgstr ""
+
+#: ../templates/default/ListForm.tpl:227
+msgid "Pages:"
+msgstr ""
+
+#: ../templates/default/AddForm.tpl:49 ../templates/default/AddForm.tpl:89
+msgid "Status:"
+msgstr ""
+
+#: ../lib/GaletteSki/Filters/FormFilter.php:281
+#: ../templates/default/AddForm.tpl:45 ../templates/default/AddForm.tpl:88
+#: ../templates/default/ListForm.tpl:46
+msgid "Id"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:310
+msgid "End"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:191
+msgid "Since"
+msgstr ""
+
+#: ../templates/default/ListForm.tpl:191 ../templates/default/ListForm.tpl:194
+msgid "form card in PDF"
+msgstr ""
+
+#: ../templates/default/ski_members.tpl:25 ../templates/default/ListForm.tpl:21
+msgid "Filter"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:312
+msgid "On site"
+msgstr ""
+
+#: ../templates/default/Form.tpl:56
+msgid "Expected return"
+msgstr ""
+
+#: ../templates/default/menu.tpl:13 ../templates/default/menu.tpl:14
+msgid "List Forms"
+msgstr ""
+
+#: ../templates/default/ListForm.tpl:33
+msgid "Change"
+msgstr ""
+
+#: ../lib/GaletteSki/Filters/FormFilter.php:288
+#: ../templates/default/AddForm.tpl:62 ../templates/default/AddForm.tpl:91
+msgid "Duration"
+msgstr ""
+
+#: ../templates/default/ListForm.tpl:26
+msgid "Records per page:"
+msgstr ""
+
+#: ../templates/default/Form.tpl:196
+msgid "Cancel"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:105
+msgid "View weight"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:24
+msgid "Choose a contribution type"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:111 ../lib/GaletteSki/IO/PdfForm.php:113
+#: ../lib/GaletteSki/IO/PdfForm.php:128
+msgid "Form list"
+msgstr ""
+
+#: ../templates/default/ListForm.tpl:214
+msgid "No form has been found"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:45
+msgid "Max thumb width (in px)"
+msgstr ""
+
+#: ../templates/default/ski_family.tpl:45
+msgid "Card Nbr"
+msgstr ""
+
+#: ../templates/default/Form.tpl:51
+msgid "Expected return:"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:55
+msgid "Show fullsize image or just thumbs"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:100
+msgid "View serial number:"
+msgstr ""
+
+#: ../templates/default/ListForm.tpl:201 ../templates/default/ListForm.tpl:204
+msgid "Remove %form from database"
+msgstr ""
+
+#: ../lib/GaletteSki/Filters/FormFilter.php:287
+#: ../templates/default/AddForm.tpl:53 ../templates/default/AddForm.tpl:90
+msgid "Period"
+msgstr ""
+
+#: ../lib/GaletteSki/Repository/FormRent.php:263
+msgid "FormRent has not been added"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:6
+msgid "Plugin preferences"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:50
+msgid "Display images in objects and categories lists"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:219
+msgid "Category: %category"
+msgstr ""
+
+#: ../templates/default/ski_family.tpl:30
+msgid "Phone"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:69
+msgid "View forecast return date:"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:15
+#: ../templates/default/ski_preferences.tpl:16
+msgid ""
+"Automatically generate a contribution for the member of the amount of the "
+"rental price of the object"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:307
+msgid "History of Form loans"
+msgstr ""
+
+#: ../templates/default/Form.tpl:189
+msgid "I have read and I agree with terms and conditions"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:55
+msgid "Enable fullsize:"
+msgstr ""
+
+#: ../templates/default/Form.tpl:62
+msgid "Comments:"
+msgstr ""
+
+#: ../templates/default/AddForm.tpl:130
+msgid "--- Select a Family ---"
+msgstr ""
+
+#: ../templates/default/menu.tpl:2
+msgid "Ski"
+msgstr ""
+
+#: ../templates/default/AddForm.tpl:75 ../templates/default/AddForm.tpl:94
+msgid "End date"
+msgstr ""
+
+#: ../templates/default/AddForm.tpl:93
+msgid "Forecast date"
+msgstr ""
+
+#: ../templates/default/ski_family.tpl:28
+msgid "City"
+msgstr ""
+
+#: ../templates/default/Form.tpl:28
+msgid "--- Select a Form ---"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:32
+msgid "Contribution text:"
+msgstr ""
+
+#: ../templates/default/AddForm.tpl:64
+msgid "--- Select a duration ---"
+msgstr ""
+
+#: ../templates/default/Form.tpl:195
+msgid "Take away"
+msgstr ""
+
+#: ../templates/default/AddForm.tpl:55
+msgid "--- Select a period ---"
+msgstr ""
+
+#: ../templates/default/Form.tpl:191
+msgid ""
+"The items offered for rent are in good condition and verification rental "
+"contradictory to their status is at the time of withdrawal. No claims will "
+"be accepted after the release of the object. Writing by the store a list of "
+"reservation does not exempt the customer checking his retrait. The payment "
+"of rent entitles the purchaser to make normal use of the loaned object. If "
+"the object is rendered in a degraded state, the seller reserves the right to "
+"collect all or part of the security deposit. In case of deterioration of the "
+"rented beyond the standard object, a financial contribution will be required "
+"for additional cleaning caused. In case of damage, loss or theft of the "
+"rented property, the deposit will not be refunded automatically to 'the "
+"company as damages pursuant to Article 1152 of the Civil Code and without "
+"that it need for any other judicial or extra-judicial formality. In some "
+"other cases not listed above and at the discretion of the seller, the "
+"deposit check may also be collected in whole or party."
+msgstr ""
+
+#: ../templates/default/Form.tpl:190
+msgid "Show terms and conditions"
+msgstr ""
+
+#: ../templates/default/ListForm.tpl:98
+msgid "Parent_id"
+msgstr ""
+
+#: ../templates/default/AddForm.tpl:71 ../templates/default/AddForm.tpl:92
+#: ../templates/default/Form.tpl:40 ../templates/default/Form.tpl:45
+msgid "Begin date"
+msgstr ""
+
+#: ../templates/default/ski_family.tpl:27
+msgid "Zip - Town"
+msgstr ""
+
+#: ../templates/default/ski_members.tpl:13 ../templates/default/ListForm.tpl:15
+msgid "Enter a value"
+msgstr ""
+
+#: ../templates/default/Form.tpl:17
+msgid "Form number:"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:314 ../templates/default/AddForm.tpl:79
+#: ../templates/default/AddForm.tpl:113
+msgid "Comments"
+msgstr ""
+
+#: ../lib/GaletteSki/Repository/Form.php:491
+msgid "Form has not been added"
+msgstr ""
+
+#: ../templates/default/ski_family.tpl:26
+msgid "Address"
+msgstr ""
+
+#: ../lib/GaletteSki/Filters/FormFilter.php:285
+msgid "Parent Id"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:62
+msgid "Display preferences"
+msgstr ""
+
+#: ../templates/default/AddForm.tpl:40 ../templates/default/ski_family.tpl:23
+msgid "General informations"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:8
+#: ../templates/default/ski_preferences.tpl:9
+msgid ""
+"Allow a member (not staff neither admin) to borrow an object. If set to "
+"'No', only admin and staff members can access the 'Take object' page"
+msgstr ""
+
+#: ../lib/GaletteSki/Entity/SkiPreferences.php:291
+msgid "Unable to store preferences :("
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:262
+msgid "Sum:"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:187
+msgid "Borrow price"
+msgstr ""
+
+#: ../templates/default/ski_family.tpl:31
+msgid "GSM"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:49
+msgid "Images in lists:"
+msgstr ""
+
+#: ../templates/default/ski_members.tpl:14 ../templates/default/ListForm.tpl:16
+msgid "in:"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:309
+msgid "Begin"
+msgstr ""
+
+#: ../templates/default/ski_members.tpl:10 ../templates/default/ListForm.tpl:12
+msgid "Search:"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:188
+msgid "Dimensions"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:15
+msgid "Generate contribution:"
+msgstr ""
+
+#: ../templates/default/menu.tpl:18 ../templates/default/menu.tpl:19
+msgid "New Form"
+msgstr ""
+
+#: ../templates/default/ListForm.tpl:186
+msgid "Edit the form"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:185
+msgid "Serial"
+msgstr ""
+
+#: ../_routes.php:623
+msgid "Ski Form List"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:32
+msgid "Comment text to add on generated contribution"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:186
+msgid "Price"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:56
+msgid ""
+"Will permit to see fullsize image clicking on thumbnails.<br/>If disabled, "
+"only thumbnails will be displayed, but full images are still kept."
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:193
+msgid "Return"
+msgstr ""
+
+#: ../templates/default/ListForm.tpl:135 ../templates/default/ListForm.tpl:183
+msgid "Open the form"
+msgstr ""
