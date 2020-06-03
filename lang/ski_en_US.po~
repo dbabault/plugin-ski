@@ -14,8 +14,8 @@ msgstr ""
 msgid "View price sum:"
 msgstr ""
 
-#: ../templates/default/ski_preferences.tpl:74
-msgid "View description"
+#: ../_routes.php:787
+msgid "Familymanagement"
 msgstr ""
 
 #: ../templates/default/ski_members.tpl:26 ../templates/default/ListForm.tpl:22
@@ -68,6 +68,10 @@ msgstr ""
 
 #: ../lib/GaletteSki/Filters/FormFilter.php:284
 msgid "End  Date"
+msgstr ""
+
+#: ../templates/default/ski_preferences.tpl:74
+msgid "View description"
 msgstr ""
 
 #: ../templates/default/ski_preferences.tpl:95

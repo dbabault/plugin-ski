@@ -34,9 +34,10 @@
  * @link      http://galette.tuxfamily.org
  * @since     Available since 0.9.3
  *
- *$file = fopen("/home/daniel/fichier.txt", "a");
- *fwrite($file,"\n filter_str2 :   " . $filters->filter_str );
- *fwrite($file, "\n---------------\n");
+ *$file1="/home/daniel/fichier1-do_add_form.txt";
+ *file_put_contents($file1, "\n 1 Form.php newForm",FILE_APPEND);
+ *$output = print_r($f, true);
+ *file_put_contents($file1, "\n 3 Form.php newForm",FILE_APPEND);
  *
  */
 
@@ -94,6 +95,7 @@ class Form
     const ORDERBY_DURATION=7;
 
 
+
     private $fields = array(
         'form_id' => 'integer',
         'date_begin' => 'datetime',
@@ -101,6 +103,7 @@ class Form
         'date_end' => 'datetime',
         'comment' => 'varchar(200)',
         'parent_id' => 'integer',
+        'parent_sname' => 'varchar(50)',
         'form_status' => 'enum',
         'period' => 'varchar(20)',
         'duration' => 'varchar(20)'
@@ -127,12 +130,6 @@ class Form
         $this->zdb = $zdb;
         $this->plugins = $plugins;
         $this->prefs = $lprefs;
-
-/*$file = fopen("/home/daniel/fichier.txt", "a");*/
-/*fwrite($file, "\n 1---------------lib/Repository/Form.php\n");*/
-
-/*fwrite($file, "\n 2---------------lib/Repository/Form.php\n");*/
-
         $now = date('Y-m-d');
         $this->_date_begin = $now;
         $this->_date_forecast = $now;
@@ -163,10 +160,6 @@ class Form
         $limit = true
     ) {
         try {
-/*$file = fopen("/home/daniel/fichier.txt", "a");*/
-/*fwrite($file, "\n 1---------------lib/Repository/Form.php getFormList \n");*/
-
-/*fwrite($file, "\n 2---------------lib/Repository/Form.php getFormList \n");*/
             $select = $this->buildSelect($fields, $count);
             //add limits to retrieve only relevant rows
             if ($limit === true) {
@@ -247,32 +240,32 @@ class Form
                     '%' . strtolower($this->filters->filter_str) . '%'
                 );
                 switch ($this->filters->field_filter) {
-                    case self::SKIFILTER_NAME:
+                    case self::FILTER_NAME:
                         $select->where(
-                            'o.parent_id LIKE ' . $token
+                            'o.parent_sname LIKE ' . $token
                         );
                         break;
-                    case self::SKIFILTER_BDATE:
+                    case self::FILTER_BDATE:
                             $select->where(
                                 'o.date_begin LIKE ' . $token
                             );
                         break;
-                    case self::SKIFILTER_FDATE:
+                    case self::FILTER_FDATE:
                             $select->where(
                                 'o.date_forecast LIKE ' . $token
                             );
                         break;
-                    case self::SKIFILTER_EDATE:
+                    case self::FILTER_EDATE:
                             $select->where(
                                 'o.date_end LIKE ' . $token
                             );
                         break;
-                    case self::SKIFILTER_STATUS:
+                    case self::FILTER_STATUS:
                         $select->where(
                             'LOWER(form_status) LIKE ' . $token
                         );
                         break;
-                    case self::SKIFILTER_ID:
+                    case self::FILTER_ID:
                         $select->where->equalTo('o.' . Form::PK, $this->filters->filter_str);
                         break;
                 }
@@ -297,8 +290,6 @@ class Form
      */
     private function buildOrderClause($fields = null)
     {
-/*$file = fopen("/home/daniel/fichier.txt", "a");*/
-/*fwrite($file, "\n 1---------------lib/Repository/Form.php buildOrderClause \n");*/
         $order = array();
         switch ($this->filters->orderby) {
             case self::ORDERBY_FORM:
@@ -307,8 +298,8 @@ class Form
                 }
                 break;
             case self::ORDERBY_NAME:
-                if ($this->canOrderBy('parent_id', $fields)) {
-                    $order[] = 'parent_id ' . $this->filters->getDirection();
+                if ($this->canOrderBy('parent_sname', $fields)) {
+                    $order[] = 'parent_sname ' . $this->filters->getDirection();
                 }
                 break;
             case self::ORDERBY_BDATE:
@@ -340,7 +331,7 @@ class Form
                 break;
 
             case self::ORDERBY_DURATION:
-                if ($this->canOrderBy('period', $fields)) {
+                if ($this->canOrderBy('duration', $fields)) {
                     $order[] = 'duration ' . $this->filters->getDirection();
                 }
                 break;
@@ -428,19 +419,6 @@ class Form
         }
     }
 
-    /*
-     *
-     *
-     *
-    * @return boolean True si OK, False si une erreur SQL est survenue
-    */
-    public function changeFormStatus($form_id, $form_status)
-    {
-      /*$file = fopen("/home/daniel/fichier.txt", "a");*/
-      /*fwrite($file, "\n 1---------------lib/Repository/Form.php changeFormStatus \n");*/
-
-      /*fwrite($file, "\n 2---------------lib/Repository/Form.php changeFormStatus \n");*/
-    }
 
     /*
     *
@@ -450,35 +428,29 @@ class Form
     public static function newForm($f)
     {
         $success = false;
-
         global $zdb;
-
         try {
-          /*$file = fopen("/home/daniel/fichier.txt", "a");*/
-          /*fwrite($file, "\n 1---------------lib/Repository/Form.php newForm \n");*/
-
-          /*fwrite($file, "\n 2---------------lib/Repository/Form.php newForm \n");*/
+            if (GALETTE_MODE == 'DEV') {
+                $file1="/home/galette/galette/data/logs/lib-repository-form-newForm.txt";
+                file_put_contents($file1, "\nf : ");
+                $output = print_r($f, true);
+            }
             $zdb->connection->beginTransaction();
 
-
             $values = array();
-
-
-
             $values['form_id']=$f->form_id;
             $values['date_begin']=$f->date_begin;
             $values['date_forecast']=$f->date_forecast;
             $values['comment']=$f->comment;
             $values['parent_id']=$f->parent_id;
-            $values['form_status']=$f->form_status;
-            $values['period']=$f->period;
+            $values['parent_sname']=$f->parent_sname;
             $values['duration']=$f->duration;
-
-
+            $values['period']=$f->period;
+            $values['form_status']=$f->form_status;
+            $output = print_r($values, true);
             unset($values[self::PK]);
             $insert = $zdb->insert(SKI_PREFIX . self::TABLE)
                         ->values($values);
-
             $result = $zdb->execute($insert);
 
             if ($result->count() > 0) {
@@ -490,8 +462,6 @@ class Form
                 throw new \Exception(_T("Form has not been added", "ski"));
             }
             $zdb->connection->commit();
-
-
             return true;
         } catch (\Exception $e) {
             $zdb->connection->rollBack();
@@ -502,33 +472,35 @@ class Form
             );
             return false;
         }
-        fclose($file);
     }
 
     public static function storeForm($f)
     {
         global $zdb;
+        if (GALETTE_MODE == 'DEV') {
+                $file1="/home/galette/galette/data/logs/lib-repository-form-storeForm.txt";
 
-        $file = fopen("/home/daniel/fichier.txt", "a");
-        fwrite($file, "\n 1---------------lib/Repository/Form.php storeForm \n");
-
-
+                file_put_contents($file1, "\nf : ");
+                $output = print_r($f, true);
+                file_put_contents($file1, $output . "\n===", FILE_APPEND);
+        }
         try {
             $zdb->connection->beginTransaction();
             $values = array();
-            fwrite($file, "\n 2---------------lib/Repository/Form.php storeForm \n");
             $values['form_status']=$f->form_status;
+            $values['parent_id']=$f->parent_id;
+            $values['period']=$f->period;
+            $values['duration']=$f->duration;
+            $values['date_begin']=$f->date_begin;
+            $values['date_forecast']=$f->date_forecast;
+            $values['parent_sname']=$f->parent_sname;
             unset($values[self::PK]);
-            fwrite($file, "\n 3-----$f->form_id-----$f->form_status-----lib/Repository/Form.php storeForm \n");
-
-
             $update = $zdb->update(SKI_PREFIX .self::TABLE);
             $update->set($values);
             $update->where(
                 self::PK . '=' . $f->form_id
             );
             $zdb->execute($update);
-            fwrite($file, "\n 4---------------lib/Repository/Form.php storeForm \n");
             $zdb->connection->commit();
             return true;
         } catch (\Exception $e) {

@@ -45,19 +45,25 @@ $this->register(
     'ski',                      //routing name and translation domain
     '2020-02-24',                       //Date
     [   //Permissions needed - not yet implemented
+      'ski_dashboard'     => 'staff',
       'ski_do_add_form'   => 'staff',
       'ski_do_add_object' => 'staff',
-      'ski_dashboard'     => 'staff',
-      'ski_form_list'     => 'staff',
-      'ski_preferences'   => 'staff',
-      'ski_filter_form'  => 'staff',
-      'ski_remove_form'   => 'staff',
-      'ski_form_printform' => 'staff',
+      'ski_do_edit_family' => 'staff',
       'ski_done_form' => 'staff',
-      'ski_members' => 'staff',
-      'ski_member' => 'staff',
       'ski_family' => 'staff',
-      'filter-ski_members' => 'staff',
-      'ski_form'          => 'staff'
+      'ski_filter_form'  => 'staff',
+      'ski_filter_members' => 'staff',
+      'ski_form_list'     => 'staff',
+      'ski_form_printform' => 'staff',
+      'ski_form'          => 'staff',
+      'ski_members' => 'staff',
+      'ski_remove_member' => 'staff',
+      'ski_print_member' => 'staff',
+      'ski_member' => 'staff',
+      'ski_member_duplicate' => 'staff',
+      'ski_preferences'   => 'staff',
+      'ski_remove_form'   => 'staff',
+      'ski_save_family' => 'staff',
+      'ski_store_family' => 'staff',
     ]
 );

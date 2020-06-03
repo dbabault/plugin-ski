@@ -1,8 +1,17 @@
-{if $GALETTE_MODE eq 'DEV'} {assign var="page_title" value="{$page_title} ({$GALETTE_MODE})"} {/if}
+{if $GALETTE_MODE eq 'DEV'}
+	{assign var="page_title" value="{$page_title} ({$GALETTE_MODE})"}
+	{$file1="/home/galette/galette/data/logs/template-AddForm.txt"}
+	{$output = print_r($form_status, true)}
+	{file_put_contents($file1, "\nform_status : ",FILE_APPEND)}
+	{file_put_contents($file1,  $output,FILE_APPEND)}
+{/if}
 {extends file="page.tpl"}
 {block name="content"}
-{if $GALETTE_MODE eq 'DEV'} {debug} {/if}
+{if $GALETTE_MODE eq 'DEV'} {*debug*} {/if}
 
+{if $form_status eq 'Done'}
+	{$form_status='Open'}
+{/if}
 {if $form_status eq 'Create'}
 	{$path="ski_do_add_form"}
 	{$id=Create}
@@ -10,8 +19,10 @@
 {elseif $form_status eq 'Open'}
 	{if (in_array("SkiAdmin",$group))}
 		{$path="ski_do_add_form"}
-		{$id=lock}
-		{$bt=Lock}
+		{$id=Open}
+		{$id1=lock}
+		{$bt=Done}
+		{$bt1=Lock}
 	{else}
 		{$path="ski_done_form"}
 		{$id=Open}
@@ -28,14 +39,14 @@
 	{/if}
 {/if}
 
-{*$file = fopen("/home/daniel/fichier.txt", "a")*}
-{*fwrite($file, "\n ---------------AddForm.tpl ")*}
-{*fwrite($file, "\n form_status: $form_status")*}
-{*fwrite($file, "\n 2---------------AddForm.tpl \n")*}
-
 <form action="{path_for name=$path }" method="post" id={$id} enctype="multipart/form-data">
 	<input type="hidden" name="form_id" value="{$form_id}">
-	<input type="hidden" name="test" value="test">
+							<input type="hidden" name="parent_id" value="{$parent_id}">
+							<input type="hidden" name="period" value="{$period}">
+							<input type="hidden" name="duration" value="{$duration}">
+							<input type="hidden" name="date_begin" value="{$date_begin}">
+							<input type="hidden" name="date_forecast" value="{$date_forecast}">
+							<input type="hidden" name="date_end" value="{$date_end}">
 	<div class="bigtable">
 		<fieldset class="galette_form" id="general">
 			<legend>{_T string="General informations" domain="ski"}</legend>
@@ -108,6 +119,7 @@
 					</tbody>
 				</table>
 				<br>
+
 				<table width=100%>
 					<thead>
 						<tr>
@@ -126,62 +138,90 @@
 		<fieldset class="galette_form" id="general">
 			<legend>{_T string="Member" domain="ski"}</legend>
 			{if $form_status eq 'Create'}
-			<div>
-				<select name="parent_id" id="parent_id">
-					<option value="null">{_T string="--- Select a Family ---" domain="ski"}</option>
-					{foreach from=$members item=mbr}
-					<option value="{$mbr['parent_id']}">{$mbr['sname']}</option>
-					{/foreach}
-				</select>
-			</div>
-			{*elseif $form_status eq 'Open'*}
+				<div>
+					<select name="parent_id" id="parent_id">
+						<option value="null">{_T string="--- Select a Family ---" domain="ski"}</option>
+						{foreach from=$members item=mbr}
+						<option value="{$mbr['parent_id']}" >{$mbr['sname']}</option>
+						{/foreach}
+					</select>
+				</div>
 			{else}
-			<table width=100%>
-				<thead>
-					<tr>
-						<th class="left"><a href="{path_for name="objectslend_objects"}"> {_T string="Name" domain="ski"}</a></th>
-						{foreach $categories as $cat}
-						<th class="center">{$cat->name}</th>
+				<table width=100%>
+					<thead>
+						<tr>
+							<th class="left"><a href="{path_for name="objectslend_objects"}"> {_T string="Name" domain="ski"}</a></th>
+							{foreach $categories as $cat}
+								<th class="center">{$cat->name}</th>
+								<th class="center">€</th>
+							{/foreach}
+						</tr>
+					</thead>
+					<tbody>
+						{* debut table saisie adherents *}
+						{foreach from=$members item=$mbr}
+							{if $mbr['parent_id'] == $parent_id}
+							{$id_adh=$mbr['id_adh']}
+							{$sname=$mbr['sname']}
+							<tr>
+									<td class="left"> 
+									<a href="{path_for name="ski_members" data=["option" => "edit", "value" => $parent_id] }"> 
+									{$sname}</a> </td>
+									{foreach $categories as $cat}
+									{$category_id=$cat->category_id}
+									{$rentobj=$objects[$form_rents[$form_id][$id_adh][$category_id]['object_id']]['name']}
+									{foreach from=$form_rents item=fr key=fid}
+										{$aid=$form_rents[$fid][$id_adh][$category_id]}
+											{foreach from=$aid item=b key=c}
+												{if $c == 'object_id'}
+												{$rentobj=$objects[$b]['name1']}
+												{$serial=$objects[$b]['serial_number']}
+												{/if}
+											{/foreach}
+										{if $fid == $form_id}{break}{/if}
+									{/foreach}
+									<td class="center">
+										<select name="object" id="object" style="width: 90% " class="center">
+											<option value="null">
+												{*if (isset($form_rents[$form_id][$id_adh][$category_id]['object_id'])) *}
+													{*$obj_id=$form_rents[$id_adh][$category_id]['object_id']*}
+													{if $serial != "000"}
+													{$rentobj}
+												{else}
+													--
+												{/if}
+											</option>
+											{foreach from=$objects item=obj}
+											{$object_category_id=$obj['category_id']} {$object_id=$obj['object_id']} {$object_name=$obj['name']}
+										
+												{if $category_id eq $object_category_id}
+													{assign var=mbr1 value="object="}
+													{assign var=mbr1 value=$mbr1|cat:"form_id="|cat:$form_id}
+													{assign var=mbr1 value=$mbr1|cat:":id_adh="|cat:$id_adh}
+													{assign var=mbr1 value=$mbr1|cat:":sname="|cat:$sname}
+													{assign var=mbr1 value=$mbr1|cat:":category_id="|cat:$category_id}
+													{assign var=mbr1 value=$mbr1|cat:":object_id="|cat:$object_id}
+													{assign var=mbr1 value=$mbr1|cat:":object_name="|cat:$obj['name1']}
+													{assign var=mbr1 value=$mbr1|cat:":date_begin="|cat:$date_begin}
+													{assign var=mbr1 value=$mbr1|cat:":date_forecast="|cat:$date_forecast}
+													{assign var=mbr1 value=$mbr1|cat:":date_end="|cat:$date_end}
+													{assign var=mbr1 value=$mbr1|cat:":period="|cat:$period}
+													{assign var=mbr1 value=$mbr1|cat:":duration="|cat:$duration}
+													<option value="{$mbr1}">
+														{$obj['name']}
+													</option>
+												{/if}
+											{/foreach}
+										</select>
+									</td>
+									<td></td>
+									{/foreach}
+							</tr>
+							{/if}
 						{/foreach}
-					</tr>
-				</thead>
-				<tbody>
-					{* debut table saisie adherents *}
-					{foreach from=$members item=$mbr}
-					{if $mbr['parent_id'] == $parent_id}
-					{$id_adh=$mbr['id_adh']}
-					{$sname=$mbr['sname']}
-					<tr>
-						<td class="left"> <a href="{path_for name="member" data=["id"=> $id_adh]}">{$sname}</a> </td>
-						{foreach $categories as $cat}
-						{$category_id=$cat->category_id}
-						<td class="center">
-							<select name="object" id="object" style="width: 90% " class="center">
-								<option value="null">
-									{if (isset($form_rents[$id_adh][$category_id]['object_id'])) }
-									{$obj_id=$form_rents[$id_adh][$category_id]['object_id']}{$objects[$obj_id]['name']}
-									{else}
-									--- Select an Object ---
-									{/if}
-								</option>
-								{foreach from=$objects item=obj}
-								{$object_category_id=$obj['category_id']} {$object_id=$obj['object_id']} {$object_name=$obj['name']}
-								{if $category_id eq $object_category_id}
-								<option value="object:{$form_id}:{$id_adh}:{$sname}:{$category_id}:{$object_id}:{$object_name}:{$date_begin}:{$date_forecast}:{$date_end}:{$period}:{$duration}">
-									{$obj['name']}
-								</option>
-								{/if}
-								{/foreach}
-							</select>
-						</td>
-						{/foreach}
-					</tr>
-					{/if}
-					{/foreach}
-					{* fin table saisie adherents *}
-				</tbody>
-			</table>
-
+						{* fin table saisie adherents *}
+					</tbody>
+				</table>
 			{/if}
 			<br>
 		</fieldset>
@@ -189,6 +229,10 @@
 	<div class="button-container" id="button_container">
 		<input type="submit" id="btnsave" name="form_status" value="{$bt}">
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		{if $bt1 == Lock}
+		<input type="submit" id="btnsave" name="form_status" value="{$bt1}">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		{/if}
 		<a href="{path_for name="ski_form"}" class="button" id="btncancel">{_T string="Cancel"}</a>
 	</div>
 </form>
@@ -237,43 +281,25 @@
 	});
 
 	$('select').on('change', function() {
-		//var msg=this.value;
-		var res = this.value.split(":");
-		if (res[0] === "object") {
-			//	<option value="object:{$form_id}:{$mbr['id_adh']}:{$mbr['sname']}:{$obj['category_id']}:{$obj['object_id']}:{$obj['name']} ">{$obj['name']}</option>
-			var _form_id = res[1];
-			var _id_adh = res[2];
-			var _sname = res[3];
-			var _category_id = res[4];
-			var _object_id = res[5];
-			var _name = res[6];
-			var _date_begin = res[7];
-			var _date_forecast = res[8];
-			var _date_end = res[9];
-			var _period = res[10];
-			var _duration = res[11];
-			var _form_status = res[12];
-			$.ajax({
-				url: '{path_for name="ski_do_add_object" domain="ski"}',
-				type: "post",
-				data: {
-					form_id: _form_id,
-					id_adh: _id_adh,
-					sname: _sname,
-					category_id: _category_id,
-					object_id: _object_id,
-					name: _name,
-					date_begin: _date_begin,
-					date_forecast: _date_forecast,
-					date_end: _date_end,
-					period: _period,
-					duration: _duration,
-					form_status: _form_status
-				},
-
+		var $obj = $('#object_name');
+		//var res = this.value.split(":");
+    var res1= this.value;
+    if (this.name === "object") {
+			window.confirm("{_T string="Do you want to lent "}" + $obj + "?" );
+      $.ajax({
+        url: '{path_for name="ski_do_add_object" domain="ski"}',
+        type: "post",
+        data: res1,
+				error: function() {
+          alert("{_T string="An error occurred storing "}" + $obj);
+          window.location.reload(true);
+        },
+        success: function() {
+          window.location.reload(true);
+        }
 			});
-			window.confirm(_sname);
-			window.location.reload(true);
+
+			//window.location.reload(true);
 		}
 	});
 </script>

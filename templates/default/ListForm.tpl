@@ -1,12 +1,13 @@
-{if $GALETTE_MODE eq 'DEV'} {assign var="page_title" value="{$page_title} ({$GALETTE_MODE})"} {/if}
+{if $GALETTE_MODE eq 'DEV'}
+	{assign var="page_title" value="{$page_title} ({$GALETTE_MODE})"}
+	{$file1="/home/galette/galette/data/logs/template-ListForm.txt"}
+	{$output = print_r($form_status, true)}
+	{file_put_contents($file1, "\nform_status : ")}
+	{file_put_contents($file1, $output,FILE_APPEND)}
+{/if}
 {extends file="page.tpl"}
 {block name="content"}
-{if $GALETTE_MODE eq 'DEV'} {debug} {/if}
-
-{*$file = fopen("/home/daniel/fichier.txt", "a")}
-{fwrite($file, "\n 1-------$pagination--------ListForm.tpl \n")}
-{fwrite($file, "\n 2---------------ListForm.tpl \n")*}
-
+{if $GALETTE_MODE eq 'DEV'} {*debug*} {/if}
 <div id="lend_content">
   <form id="filtre" method="POST" action='{path_for name="ski_filter_form" data=["type"=> "list"] }'  method="POST" id="filtre">
     <div id="listfilter">
@@ -43,7 +44,7 @@
         <tr>
           <th>
             <a href="{path_for name="ski_form_list" data=["option" => "order", "value" =>
-                                                                                      "GaletteSki\Repository\Form::ORDERBY_FORM"|constant]}">
+                                                "GaletteSki\Repository\Form::ORDERBY_FORM"|constant]}">
               {_T string="Id" domain="ski"}
               {if $filters->orderby eq constant('GaletteSki\Repository\Form::ORDERBY_FORM')}
               {if $filters->ordered eq constant('GaletteSki\Filters\FormFilter::ORDER_ASC')}
@@ -95,7 +96,19 @@
           </th>
           <th>
             <a href="{path_for name="ski_form_list" data=["option" => "order", "value" =>
-                                                                                      "GaletteSki\Repository\Form::ORDERBY_NAME"|constant]}">
+                                                                                      "GaletteSki\Repository\Form::ORDERBY_PERIOD"|constant]}">
+              {_T string="Period" domain="ski"}
+              {if $filters->orderby eq constant('GaletteSki\Repository\Form::ORDERBY_PERIOD')}
+              {if $filters->ordered eq constant('GaletteSki\Filters\FormFilter::ORDER_ASC')}
+              <img src="{base_url}/{$template_subdir}images/down.png" width="10" height="6"alt=""/>
+              {else}
+              <img src="{base_url}/{$template_subdir}images/up.png" width="10" height="6" alt=""/>
+              {/if}
+              {/if}
+            </a>
+          </th>
+          <th>
+            <a href="{path_for name="ski_form_list" data=["option" => "order", "value" =>"GaletteSki\Repository\Form::ORDERBY_NAME"|constant]}">
               {_T string="Parent_id" domain="ski"}
               {if $filters->orderby eq constant('GaletteSki\Repository\Form::ORDERBY_NAME')}
               {if $filters->ordered eq constant('GaletteSki\Filters\FormFilter::ORDER_ASC')}
@@ -107,8 +120,7 @@
             </a>
           </th>
           <th>
-            <a href="{path_for name="ski_form_list" data=["option" => "order", "value" =>
-                                                                                      "GaletteSki\Repository\Form::ORDERBY_STATUS"|constant]}">
+            <a href="{path_for name="ski_form_list" data=["option" => "order", "value" =>"GaletteSki\Repository\Form::ORDERBY_STATUS"|constant]}">
               {_T string="Status" domain="ski"}
               {if $filters->orderby eq constant('GaletteSki\Repository\Form::ORDERBY_STATUS')}
               {if $filters->ordered eq constant('GaletteSki\Filters\FormFilter::ORDER_ASC')}
@@ -129,6 +141,7 @@
         {foreach $lform  as $form}
         {$form_id=$form["form_id"]}
         {$form_status=$form["status"]}
+        {$parent_id=$form["parent_id"]}
         <tr class="{if $form@index is odd}even{else}odd{/if}">
           <td class="center">
 
@@ -159,21 +172,28 @@
             {/if}
           </td>
           <td class="left">
+            {if $form["period"]}
+            {$form["period"]}
+            {/if}
+          </td>
+          <td class="left">
             {foreach $members as $member}
             {if $member["id_adh"] == $form["parent_id"]}
-            {$member["sname"]} ({$form["parent_id"]})
+            <strong>
+              <a href="{path_for name="ski_members" data=["option" => "edit", "value" => $parent_id] }" >
+                {$form["parent_sname"]} ({$form["parent_id"]})
+              </a>
+              </strong>
             {/if}
             {/foreach}
+
           </td>
-          {if $form["form_status"] == "Open"}
-          <td class="center">
-            {$form["form_status"]}
-          </td>
-          {else}
-          <td class="right">
-            {$form["form_status"]}
-          </td>
+          {if $form["form_status"] == "Open"} <td class="left">
+          {elseif $form["form_status"] == "Done"} <td class="center">
+          {else} <td class="right">
           {/if}
+            {$form["form_status"]}
+          </td>
           <td>
             {$form["comment"]}
           </td>

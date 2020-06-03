@@ -34,9 +34,6 @@
  * @link      http://galette.tuxfamily.org
  * @since     Available since 0.9.3
  *
- *$file = fopen("/home/daniel/fichier.txt", "a");
- *fwrite($file,"\n filter_str2 :   " . $filters->filter_str );
- *fwrite($file, "\n---------------\n");
  *
  */
 
@@ -91,10 +88,14 @@ class FormRent
     const FILTER_SERIAL = 1;
     const FILTER_DIM = 2;
     const FILTER_ID = 3;
+    const FILTER_PERIOD=6;
+    const FILTER_DURATION=7;
 
     const ORDERBY_FORM = 0;
     const ORDERBY_BDATE = 1;
     const ORDERBY_FDATE = 2;
+    const ORDERBY_PERIOD=6;
+    const ORDERBY_DURATION=7;
 
 
     private $count = null;
@@ -111,11 +112,6 @@ class FormRent
     {
         $this->zdb = $zdb;
         $this->plugins = $plugins;
-
-/*$file = fopen("/home/daniel/fichier.txt", "a");*/
-/*fwrite($file, "\n 1---------------lib/Repository/FormRent.php\n");*/
-
-/*fwrite($file, "\n 2---------------lib/Repository/FormRent.php\n");*/
         if ($filters === null) {
             $this->filters = new FormFilter();
         } else {
@@ -140,26 +136,14 @@ class FormRent
         $count = true,
         $limit = false
     ) {
-/*$file = fopen("/home/daniel/fichier.txt", "a");*/
-/*/*fwrite($file, "\n 1---------------lib/Repository/FormRent.php getFormRentList \n");*/
-
         try {
-/*fwrite($file, "\n getFormRentList ==> 1");*/
             $select = $this->buildSelect($fields, $count);
-/*fwrite($file, "\n getFormRentList ==> 2");*/
             if ($limit === true) {
                 $this->filters->setLimit($select);
-/*fwrite($file, "\n getFormRentList ==> 21");*/
             }
-/*fwrite($file, "\n getFormRentList ==> 3");*/
             $rows = $this->zdb->execute($select);
-/*fwrite($file, "\n getFormRentList ==> 4");*/
             $FormRent = array();
-/*fwrite($file, "\n getFormRentList ==> 5");*/
             $FormRent = $rows;
-/*fwrite($file, "\n getFormRentList ==> 6");*/
-
-/*fwrite($file, "\n 2---------------lib/Repository/FormRent.php getFormRentList \n");*/
             return $FormRent;
         } catch (\Exception $e) {
             Analog::log(
@@ -182,29 +166,20 @@ class FormRent
     {
         global $zdb, $login;
         try {
-/*$file = fopen("/home/daniel/fichier.txt", "a");*/
-/*fwrite($file, "\n 1---------------lib/Repository/FormRent.php buildSelect \n");*/
             $select = $zdb->select(SKI_PREFIX . self::TABLE, 'o');
-/*fwrite($file, "\n buildSelect ==>2 \n");*/
             $fieldsList = ($fields != null)
                           ? ((!is_array($fields) || count($fields) < 1) ? (array)'*'
                           : $fields) : (array)'*';
-/*fwrite($file, "\n buildSelect ==>3 \n");*/
             $select->columns($fieldsList);
-/*fwrite($file, "\n buildSelect ==>4 \n");*/
 
             if ($this->filters !== false) {
-/*fwrite($file, "\n 41 \n");*/
                 $this->buildWhereClause($select);
             }
-/*fwrite($file, "\n buildSelect ==>5 \n");*/
             $this->buildOrderClause($fields);
             $select->order($this->buildOrderClause($fields));
-/*fwrite($file, "\n buildSelect ==>6 \n");*/
             if ($count) {
                 $this->proceedCount($select);
             }
-/*fwrite($file, "\n 2---------------lib/Repository/FormRent.php buildSelect \n");*/
             return $select;
         } catch (\Exception $e) {
             Analog::log(
@@ -226,8 +201,6 @@ class FormRent
         global $zdb;
 
         try {
-              /*$file = fopen("/home/daniel/fichier.txt", "a");*/
-      /*fwrite($file, "\n 1---------------lib/Repository/FormRent.php newFormrent \n");*/
               $zdb->connection->beginTransaction();
               $values = array();
               $values['form_id']=$f->form_id;
@@ -240,15 +213,12 @@ class FormRent
             if ($f->date_end == 'NULL') {
                 $values['date_end']='0000-00-00';
             }
-      /*fwrite($file, "\n newFormrent date_end :" . $values['date_end'] .":");*/
             unset($values[self::PK]);
             if ($f->form_rent_id > 0) {
-      /*fwrite($file, "\n newFormrent ==> update" );*/
                 $update = $zdb->update(SKI_PREFIX . self::TABLE);
                 $update->set($values)->where(self::PK . '=' . $f->form_rent_id);
                 $result = $zdb->execute($update);
             } else {
-/*fwrite($file, "\n newFormrent ==> insert" );*/
                 $insert = $zdb->insert(SKI_PREFIX . self::TABLE)->values($values);
                 $result = $zdb->execute($insert);
             }
@@ -290,44 +260,41 @@ class FormRent
         global $login;
 
         try {
-          /*$file = fopen("/home/daniel/fichier.txt", "a");*/
-    /*fwrite($file, "\n 1---------------lib/Repository/FormRent.php buildWhereClause \n");*/
             if ($this->filters->filter_str != '') {
                 $token = $this->zdb->platform->quoteValue(
                     '%' . strtolower($this->filters->filter_str) . '%'
                 );
                 switch ($this->filters->field_filter) {
-                    case self::SKIFILTER_NAME:
+                    case self::FILTER_NAME:
                         $select->where(
                             'o.parent_id LIKE ' . $token
                         );
                         break;
-                    case self::SKIFILTER_BDATE:
+                    case self::FILTER_BDATE:
                         $select->where(
                             'o.date_begin LIKE ' . $token
                         );
                         break;
-                    case self::SKIFILTER_FDATE:
+                    case self::FILTER_FDATE:
                         $select->where(
                             'o.date_forecast LIKE ' . $token
                         );
                         break;
-                    case self::SKIFILTER_EDATE:
+                    case self::FILTER_EDATE:
                         $select->where(
                             'o.date_end LIKE ' . $token
                         );
                         break;
-                    case self::SKIFILTER_STATUS:
+                    case self::FILTER_STATUS:
                         $select->where(
                             'LOWER(form_status) LIKE ' . $token
                         );
                         break;
-                    case self::SKIFILTER_ID:
+                    case self::FILTER_ID:
                         $select->where->equalTo('o.' . Form::PK, $this->filters->filter_str);
                         break;
                 }
             }
-    /*fwrite($file, "\n 2---------------lib/Repository/FormRent.php buildWhereClause \n");*/
         } catch (\Exception $e) {
             Analog::log(
                 __METHOD__ . ' | ' . $e->getMessage(),
@@ -348,8 +315,6 @@ class FormRent
  */
     private function buildOrderClause($fields = null)
     {
-    /*$file = fopen("/home/daniel/fichier.txt", "a");*/
-    /*fwrite($file, "\n 1---------------lib/Repository/FormRent.php buildOrderClause \n");*/
         $order = array();
         switch ($this->filters->orderby) {
             case self::ORDERBY_FORM:
@@ -384,7 +349,6 @@ class FormRent
                 }
                 break;
         }
-    /*fwrite($file, "\n 2---------------lib/Repository/FormRent.php buildOrderClause \n");*/
         return $order;
     }
 
@@ -399,8 +363,6 @@ class FormRent
     {
         global $zdb;
         try {
-    /*$file = fopen("/home/daniel/fichier.txt", "a");*/
-    /*fwrite($file, "\n 1---------------lib/Repository/FormRent.php proceedCount \n");*/
             $countSelect = clone $select;
             $countSelect->reset($countSelect::COLUMNS);
             $countSelect->reset($countSelect::ORDER);
@@ -455,8 +417,6 @@ class FormRent
  */
     private function canOrderBy($field_name, $fields)
     {
-    /*$file = fopen("/home/daniel/fichier.txt", "a");*/
-    /*fwrite($file, "\n 1---------------lib/Repository/FormRent.php canOrderBy \n");*/
         if (!is_array($fields)) {
             return true;
         } elseif (in_array($field_name, $fields)) {

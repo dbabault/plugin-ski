@@ -1,362 +1,208 @@
-{if $GALETTE_MODE eq 'DEV'} {assign var="page_title" value="{$page_title} ({$GALETTE_MODE})"} {/if}
+{if $GALETTE_MODE eq 'DEV'}
+	{assign var="page_title" value="{$page_title} ({$GALETTE_MODE})"}
+	{$file1="/home/galette/galette/data/logs/template-ski_family.txt"}
+	{$output = print_r($pid, true)}
+	{file_put_contents($file1, "\npid: ")}
+	{file_put_contents($file1, $output,FILE_APPEND)}
+{/if}
 {extends file="page.tpl"}
 {block name="content"}
-{if $GALETTE_MODE eq 'DEV'} {debug} {/if}
+{if $GALETTE_MODE eq 'DEV'} {*debug*} {/if}
+{*foreach from=$members item=member key=ordre*}
+  {*if $member['id_adh'] == $pid*}
+    {$parent_n=$members[$pid]['nom_adh']}
+    {$parent_s=$members[$pid]['prenom_adh']}
+    {$parent_id=$members[$pid]['id_adh']}
+    {$adresse_adh=$members[$pid]['adresse_adh']}
+    {$cp_adh=$members[$pid]['cp_adh']}
+    {$ville_adh=$members[$pid]['ville_adh']}
+    {$email_adh=$members[$pid]['email_adh']}
+    {$tel_adh=$members[$pid]['tel_adh']}
+    {$gsm_adh=$members[$pid]['gsm_adh']}
+    {$info_adh=$members[$pid]['info_adh']}
+  {*/if*}
+{*/foreach*}
 
-
-{foreach from=$members item=member key=ordre}
-  {if intval($member->id) == intval($member->parent)}
-    {$parent=$member->name}
-    {$parent_s=$member->surname}
-    {$parent_id=$member->parent}
-    {$address=$member->address}
-    {$zip=$member->zipcode}
-    {$city=$member->town}
-    {$email=$member->email}
-    {$phone=$member->phone}
-    {$gsm=$member->gsm}
-    {$job=$member->job}
-  {/if}
-{/foreach}
-
-<form action="{path_for name="ski_members" data=["option"=> "edit", "value" => $parent_id]}" method="post" id="filtre">
+{$id='store'}
+{$path="ski_store_family"}
   <div class="bigtable">
+<form action="{path_for name=$path }" method="post" id={$id} enctype="multipart/form-data">
+{*foreach from=$members item=member key=ordre}
+  {foreach from=$member item=value key=k}
+  	<input type="hidden" name="members[{$ordre}][{$k}]" value="{$value}">
+  {/foreach}
+{/foreach*}
+{foreach from=$members[$pid] item=value key=type}
+  	<input type="hidden" name="members[{$pid}][{$type}]" value="{$value}">
+{/foreach}
     <fieldset class="galette_form" id="general">
       <legend>{_T string="General informations" domain="ski"}</legend>
       <div>
-        <p><label for="Family">{_T string="Parent" domain="ski"}</label><b> {$parent} {$parent_s} ({$parent_id})</b></p>
-        <p><label for="Address">{_T string="Address" domain="ski"}</label><b>{$address}</b></p>
-        <p><label for="Zip">{_T string="Zip - Town" domain="ski"}</label><b>{$zip}</b></p>
-        <p><label for="City">{_T string="City" domain="ski"}</label><b>{$city}</b></p>
-        <p><label for="Email">{_T string="Email" domain="ski"}</label><b>{$email}</b></p>
-        <p><label for="Phone">{_T string="Phone" domain="ski"}</label><b>{$phone}</b></p>
-        <p><label for="date_begin">{_T string="GSM" domain="ski"}</label><b>{$gsm}</b></p>
-        <p>
+      {if $parent_n == '?' }
+        <p><label for="Name">{_T string="Name" domain="ski"}</label>
+        <input type="text" id="nom_adh" name="members[{$parent_id}][nom_adh]"  value="{$nom_adh}"  size="40"></p>
+        <p><label for="Surname">{_T string="First Name" domain="ski"}</label>
+        <input type="text" id="prenom_adh" name="members[{$parent_id}][prenom_adh]"  value="{$prenom_adh}"  size="40"></p>
+
+      {else}
+        <p><label for="Family">{_T string="Parent" domain="ski"}</label><b>{$parent_id} </b>({$parent_n} {$parent_s})</p>
+      {/if}
+        <p><label for="Address">{_T string="Address" domain="ski"}</label>
+        <input type="text" id="adresse_adh" name="members[{$parent_id}][adresse_adh]"  value="{$adresse_adh}"  size="40"></p>
+        
+        <p><label for="zip">{_T string="Zip - Town" domain="ski"}</label>
+        <input type="text" id="cp_adh" name="members[{$parent_id}][cp_adh]"  value="{$cp_adh}"  size="40"></p>
+        
+        <p><label for="city">{_T string="City" domain="ski"}</label>
+        <input type="text" id="ville_adh" name="members[{$parent_id}][ville_adh]"  value="{$ville_adh}"  size="40"></p>
+        
+        <p><label for="Email">{_T string="Email" domain="ski"}</label>
+        <input type="text" id="email_adh" name="members[{$parent_id}][email_adh]"  value="{$email_adh}"  size="40"></p>
+        
+        <p><label for="Phone">{_T string="Phone" domain="ski"}</label><b> {$phone} </b>
+        <input type="text" id="tel_adh" name="members[{$parent_id}][tel_adh]"  value="{$tel_adh}"  size="40"></p>
+        
+        <p><label for="GSM">{_T string="GSM" domain="ski"}</label>
+        <input type="text" id="gsm_adh" name="members[{$parent_id}][gsm_adh]" value="{$gsm_adh}"  size="40"></p>
+        
+        <p><label for="Comment">{_T string="Comment" domain="ski"}</label>
+        <input type="text" id="info_adh" name="members[{$parent_id}][info_adh]" value="{$info_adh}"  size="40"></p>
+        
       </div>
+  <div class="button-container" id="button_container">
+    <input type="submit" id="btnsave" name="save" value="Save">
+    </div>
+  <br>
     </fieldset>
+    </form>
+<br>
+    {if $parent_n != '?' }
     <fieldset class="galette_form" id="general">
       <legend>{_T string="Member" domain="ski"}</legend>
-      <table width=100% >
+<form action="{path_for name=$path }" method="post" id={$id} enctype="multipart/form-data">
+{foreach from=$members[$pid] item=value key=type}
+  	<input type="hidden" name="members[{$pid}][{$type}]" value="{$value}">
+{/foreach}
+  <div class="left" id="button_container">
+<br>
+    <input type="submit" id="btnsave" name="plus" value="Nouveau membre">
+<br>
+  </div>
+<br>
+</form>
+<form action="{path_for name=$path }" method="post" id={$id} enctype="multipart/form-data">
+{foreach from=$members item=member key=ordre}
+  {foreach from=$member item=value key=k}
+  	<input type="hidden" name="members[{$ordre}][{$k}]" value="{$value}">
+  {/foreach}
+{/foreach}
+      <table width=90%>
         <thead>
           <tr>
+            <th class="center">Id</th>
             <th class="center">{_T string="Name"}</th>
+            <th class="center">{_T string="First name"}</th>
+            <th class="center">{_T string="Gender:"}</th>
+        
             <th class="center">{_T string="Birth date" domain="ski"}</th>
-            <th class="center">{_T string="Card Nbr" domain="ski"}</th>
-            {foreach $dynval item=dyn key=id }
-              {$fname=$dyn['fname']}
-              <th class="center">{$fname}</th>
+            <th class="center">Age</th>
+            <th class="center">€</th>
+            {foreach $dynval item=dyn key=id_dyn }
+            <th class="center">{$dyn['fname']} ({$id_dyn})</th>
             {/foreach}
+        <th class="actions_row">{_T string="Actions"}</th>
           </tr>
         </thead>
+
         <tbody>
 
           {* debut table saisie adherents *}
-          {foreach from=$members item=member key=ordre}
-            {$mid=(int)$member->id}
-            <tr >
-              <td class="left">
-              <a href="{path_for name="member" data=["id" => $mid]}">{$member->surname} {$member->name}</a>
+        {foreach from=$members item=member key=id_member}
+          {$mid=(int)$member['id_adh']}
+          {$ddn_adh=$member['ddn_adh']}
+          {$prenom_adh=$member['prenom_adh']}
+          {$nom_adh=$member['nom_adh']}
+          {$sexe_adh=$member['sexe_adh']}
+          <tr>
+            <td class="left">
+              <a href="{path_for name="editmember" data=["action" => "edit", "id" => $mid]}" >
+              {$mid} </a>
             </td>
-              <td class="center">{$member->birthdate} {$member->getAge()}</td>
-              <td class="center"> - </td>
-              {foreach $dynval item=dyn key=id }
-                <td class="center">
-                  {$fname=$dyn['fname']}
-                  {$values=$dyn['values']}
-                  {$fval=$dynadh[$mid][$id]['fval']}
-                  {if $fval ==  ''}
-                    {$fval=0}
+            <td class="left">
+              <input type="text" id="nom_adh" name="members[{$mid}][nom_adh]" value="{$nom_adh}" size="10">
+            </td>
+            <td class="left">
+              <input type="text" id="prenom_adh" name="members[{$mid}][prenom_adh]" value="{$prenom_adh}" size="10">
+            </td>
+            <td class="left">
+              <select name="members[{$mid}][sexe_adh]" style="width: 90% " class="center">
+              <option value="null">
+              {if $sexe_adh eq 1}M{/if}
+              {if $sexe_adh eq 2}F{/if}
+              </option>
+              <option value="1">M</option>
+              <option value="2">F</option>
+              </select>
+            </td>
+            <td class="center">
+              <input type="text" id="ddn_adh" name="members[{$mid}][ddn_adh]"  value="{$ddn_adh}" size="10">
+            </td>
+            <td class="center">{$member['age']}</td>
+            <td class="center"></td>
+            {foreach $dynval item=dyn key=id_dyn }
+
+            {$fname=$dyn['fname']}
+            {$values=$dyn['values']}
+            {$fval=$dynadh[$mid][$id_dyn]['fval']}
+            {$ftext=$dynadh[$mid][$id_dyn]['ftext']}
+            {assign var=field value="info_field_"|cat:$id_dyn|cat:"_1"}
+            {if $ftext == ''}
+              {$ftext='?' }
+              {$fval='0' }
+              {/if}
+
+            <td class="center">
+              <select name="members[{$mid}][{$field}]" style="width: 90% " class="center">
+              <option value="null">
+                  {if $fval ne '' }
+                  {$ftext}
+                  {else}
+                  ?
                   {/if}
-                  <select name="{$fname}" id="{$id}">
-                    <option value="">?</option>
-                    {html_options options=$values selected=$fval}
-                  </select>
-                </td>
-              {/foreach}
-            </tr>
+                </option>
+                {foreach from=$values item=val key=id_val}
+                  <option value="{$id_val}">
+                    {$val}
+                  </option>
+                {/foreach}
+              </select>
+            </td>
+            {/foreach}
+        <td class="{$rclass} center nowrap actions_row">
+          <a href="{path_for name="editmember" data=["action" => "edit", "id" => $mid]}" class="tooltip action">
+            <i class="fas fa-user-edit fa-fw" aria-hidden="true"></i>
+            <span class="sr-only">{_T string="%membername: edit informations" pattern="/%membername/" replace=$prenom_adh}</span>
+          </a>
+
+<a href="{path_for name="removeMember" data=["id" => $mid]}" class="delete tooltip" >
+                            <i class="fas fa-user-times fa-fw" aria-hidden="true"></i>
+                            <span class="sr-only">{_T string="%membername: remove from database" pattern="/%membername/" replace=$prenom_adh}</span>
+                        </a>
+
+          </td>
+          </tr>
           {/foreach}
           {* fin table saisie adherents *}
         </tbody>
       </table>
       <br>
-    </fieldset>
-  </div>
   <div class="button-container" id="button_container">
-    <a href="{path_for name="ski_members"}" class="button" id="btnsave">{_T string="Save"}</a>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="{path_for name="ski_form"}" class="button" id="btncancel">{_T string="Cancel"}</a>
+    <input type="submit" id="btnsave" name="save" value="Save">
+  </div>
+  <br>
+    </fieldset>
+    {/if}
   </div>
 </form>
 {/block}
 
-{block name="javascripts"}
-<script type="text/javascript">
-  {
-    if $nb_members != 0
-  }
-  var _checkselection = function() {
-      var _checkeds = $('table.listing').find('input[type=checkbox]:checked').length;
-      if (_checkeds == 0) {
-        var _el = $('<div id="pleaseselect" title="{_T string="No member selected" escape="js"}">{_T string="Please make sure to select at least one member from the list to perform this action." escape="js"}</div>');
-        _el.appendTo('body').dialog({
-          modal: true,
-          buttons: {
-            Ok: function() {
-              $(this).dialog("close");
-            }
-          },
-          close: function(event, ui) {
-            _el.remove();
-          }
-        });
-        return false;
-      }
-      return true;
-    } {
-      /if} {
-        * Use of Javascript to draw specific elements that are not relevant is JS is inactive *
-      }
-      $(function() {
-
-            _initTooltips('#listform'); {
-              if $nb_members != 0
-            }
-            var _checklinks =
-              '<div class="checkboxes"><span class="fleft"><a href="#" class="checkall tooltip"><i class="fas fa-check-square"></i> {_T string="(Un)Check all"}</a> | <a href="#" class="checkinvert tooltip"><i class="fas fa-exchange-alt"></i> {_T string="Invert selection"}</a></span><a href="#" class="show_legend fright">{_T string="Show legend"}</a></div>';
-            $('.listing').before(_checklinks);
-            $('.listing').after(_checklinks);
-            _bind_check();
-            _bind_legend();
-            $('#nbshow').change(function() {
-              this.form.submit();
-            });
-            $('.selection_menu *[type="submit"], .selection_menu *[type="button"]').click(function() {
-              if (this.id == 'delete') {
-                //mass removal is handled from 2 steps removal
-                return;
-              }
-
-              if (!_checkselection()) {
-                return false;
-              } else {
-                {
-                  if $existing_mailing eq true
-                }
-                if (this.id == 'sendmail') {
-                  var _el = $('<div id="existing_mailing" title="{_T string="Existing mailing"}">{_T string="A mailing already exists. Do you want to create a new one or resume the existing?"}</div>');
-                  _el.appendTo('body').dialog({
-                    modal: true,
-                    hide: 'fold',
-                    width: '25em',
-                    height: 150,
-                    close: function(event, ui) {
-                      _el.remove();
-                    },
-                    buttons: {
-                      '{_T string="Resume"}': function() {
-                        $(this).dialog("close");
-                        location.href = '{path_for name="mailing"}';
-                      },
-                      '{_T string="New"}': function() {
-                        $(this).dialog("close");
-                        //add required controls to the form, change its action URI, and send it.
-                        var _form = $('#listform');
-                        _form.append($('<input type="hidden" name="mailing_new" value="true"/>'));
-                        _form.append($('<input type="hidden" name="mailing" value="true"/>'));
-                        _form.submit();
-                      }
-                    }
-                  });
-                  return false;
-                } {
-                  /if}
-                  if (this.id == 'attendance_sheet') {
-                    _attendance_sheet_details();
-                    return false;
-                  }
-                  return true;
-                }
-              }); {
-              /if}
-              if (_shq = $('#showhideqry')) {
-                _shq.click(function() {
-                  $('#sql_qry').toggleClass('hidden');
-                  return false;
-                });
-              }
-            });
-
-            var _bindmassres = function(res) {
-              res.find('#btncancel')
-                .button()
-                .on('click', function(e) {
-                  e.preventDefault();
-                  res.dialog('close');
-                });
-
-              res.find('input[type=submit]')
-                .button();
-            }
-
-            $('#masschange').off('click').on('click', function(event) {
-                  event.preventDefault();
-                  var _this = $(this);
-
-                  if (!_checkselection()) {
-                    return false;
-                  }
-                  $.ajax({
-                    url: '{path_for name="batch-memberslist"}',
-                    type: "POST",
-                    data: {
-                      ajax: true,
-                      masschange: true,
-                      member_sel: $('#listform input[type=\"checkbox\"]:checked').map(function() {
-                        return $(this).val();
-                      }).get()
-                    },
-                    datatype: 'json',
-                    {
-                      include file = "js_loader.tpl"
-                    },
-                    success: function(res) {
-                      var _res = $(res);
-                      _bindmassres(_res);
-
-                      _res.find('form').on('submit', function(e) {
-                            e.preventDefault();
-                            var _form = $(this);
-                            var _data = _form.serialize();
-                            $.ajax({
-                                url: _form.attr('action'),
-                                type: "POST",
-                                data: _data,
-                                datatype: 'json',
-                                {
-                                  include file = "js_loader.tpl"
-                                },
-                                success: function(html) {
-                                  var _html = $(html);
-                                  _bindmassres(_html);
-
-                                  $('#mass_change').remove();
-                                  $('body').append(_html);
-
-                                  _initTooltips('#mass_change');
-                                  //_massCheckboxes('#mass_change');
-
-                                  _html.dialog({
-                                    width: 'auto',
-                                    modal: true,
-                                    close: function(event, ui) {
-                                      $(this).dialog('destroy').remove()
-                                    }
-                                  });
-
-                                  _html.find('form').on('submit', function(e) {
-                                    e.preventDefault();
-                                    var _form = $(this);
-                                    var _data = _form.serialize();
-                                    $.ajax({
-                                      url: _form.attr('action'),
-                                      type: "POST",
-                                      data: _data,
-                                      datatype: 'json',
-                                      {
-                                        include file = "js_loader.tpl"
-                                      },
-                                      success: function(res) {
-                                        if (res.success) {
-                                          window.location.href = _form.find('input[name=redirect_uri]').val();
-                                        } else {
-                                          $.ajax({
-                                            url: '{path_for name="ajaxMessages"}',
-                                            method: "GET",
-                                            success: function(message) {
-                                              $('#asso_name').after(message);
-                                            }
-                                          });
-                                        }
-                                      }
-                                    });
-                                  });
-                                },
-                                error: function() {
-                                  alert("{_T string="
-                                    An error occurred: (" escape="
-                                      js "}");
-                                  }
-                                });
-                            });
-
-                          $('body').append(_res);
-
-                          _initTooltips('#mass_change'); _massCheckboxes('#mass_change');
-
-                          _res.dialog({
-                            width: 'auto',
-                            modal: true,
-                            close: function(event, ui) {
-                              $(this).dialog('destroy').remove()
-                            }
-                          });
-                        },
-                        error: function() {
-                          alert("{_T string="
-                            An error occurred: (" escape="
-                              js "}");
-                          }
-                        });
-                  });
-
-                  var _attendance_sheet_details = function() {
-                      var _selecteds = [];
-                      $('table.listing').find('input[type=checkbox]:checked').each(function() {
-                        _selecteds.push($(this).val());
-                      });
-                      $.ajax({
-                            url: '{path_for name="attendance_sheet_details"}',
-                            type: "POST",
-                            data: {
-                              ajax: true,
-                              selection: _selecteds
-                            },
-                            dataType: 'html',
-                            success: function(res) {
-                              var _el = $('<div id="attendance_sheet_details" title="{_T string="Attendance sheet details" escape="js"}"> </div>');
-                              _el.appendTo('body').dialog({
-                                modal: true,
-                                hide: 'fold',
-                                width: '60%',
-                                height: 400,
-                                close: function(event, ui) {
-                                  _el.remove();
-                                },
-                                buttons: {
-                                  Ok: function() {
-                                    $('#sheet_details_form').submit();
-                                    $(this).dialog("close");
-                                  },
-                                  Cancel: function() {
-                                    $(this).dialog("close");
-                                  }
-                                }
-                              }).append(res);
-                              $('#sheet_date').datepicker({
-                                changeMonth: true,
-                                changeYear: true,
-                                showOn: 'button',
-                                yearRange: 'c:c+5',
-                                buttonText: '<i class="far fa-calendar-alt"></i> <span class="sr-only">{_T string="Select a date" escape="js"}</span>'
-                              });
-                            },
-                            error: function() {
-                              alert("{_T string="
-                                An error occurred displaying attendance sheet details interface: (" escape="
-                                  js "}");
-                              }
-                            });
-                        } {
-                          /if}
-</script>
-{/block}

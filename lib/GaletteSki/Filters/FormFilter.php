@@ -34,9 +34,6 @@
  * @link      http://galette.tuxfamily.org
  * @since     Available since 0.9.3
  *
- *$file = fopen("/home/daniel/fichier.txt", "a");
- *fwrite($file,"\n filter_str2 :   " . $filters->filter_str );
- *fwrite($file, "\n---------------\n");
  *
  */
 
@@ -68,6 +65,9 @@ class FormFilter extends Pagination
     private $active_filter;
     private $field_filter;
     private $selected;
+//an empty contributions dynamic field criteria to begin
+    private $_contrib_dynamic = array();
+    private $_adh_dynamic = array();
 
     protected $query;
 
@@ -79,24 +79,18 @@ class FormFilter extends Pagination
         'selected',
         'query'
     );
-    const SKIFILTER_ID = 0;
-    const SKIFILTER_BDATE = 1;
-    const SKIFILTER_FDATE = 2;
-    const SKIFILTER_EDATE = 3;
-    const SKIFILTER_NAME = 4;
-    const SKIFILTER_STATUS = 5;
-    const SKIFILTER_PERIOD = 6;
-    const SKIFILTER_DURATION = 7;
+    const FILTER_ID = 0;
+    const FILTER_BDATE = 1;
+    const FILTER_FDATE = 2;
+    const FILTER_EDATE = 3;
+    const FILTER_NAME = 4;
+    const FILTER_STATUS = 5;
     /**
      * Default constructor
      */
     public function __construct()
     {
         $this->reinit();
-/*$file = fopen("/home/daniel/fichier.txt", "a");*/
-        /*fwrite($file, "\n 1---------------lib/Filters/FormFilter.php\n");*/
-
-        /*fwrite($file, "\n 2---------------lib/Filters/FormFilter.php\n");*/
     }
 
     /**
@@ -133,11 +127,6 @@ class FormFilter extends Pagination
      */
     public function __get($name)
     {
-        Analog::log(
-            '[FormFilter] Getting property `' . $name . '`',
-            Analog::DEBUG
-        );
-
         if (in_array($name, $this->pagination_fields)) {
             return parent::__get($name);
         } else {
@@ -273,17 +262,15 @@ class FormFilter extends Pagination
      */
     public function setViewCommonsFilters($prefs, \Smarty $view)
     {
-        $prefs = $prefs->getPreferences();
+        //$prefs = $prefs->getPreferences();
 
         $options = [
-            FormFilter::SKIFILTER_ID      => _T("Id", "ski"),
-            FormFilter::SKIFILTER_BDATE  => _T("Begin Date", "ski"),
-            FormFilter::SKIFILTER_FDATE  => _T("Forecast Date", "ski"),
-            FormFilter::SKIFILTER_EDATE  => _T("End  Date", "ski"),
-            FormFilter::SKIFILTER_NAME    => _T("Parent Id", "ski"),
-            FormFilter::SKIFILTER_STATUS    => _T("Status", "ski"),
-            FormFilter::SKIFILTER_PERIOD    => _T("Period", "ski"),
-            FormFilter::SKIFILTER_DURATION   => _T("Duration", "ski")
+            FormFilter::FILTER_NAME    => _T("Name", "ski"),
+            FormFilter::FILTER_STATUS    => _T("Status", "ski"),
+            FormFilter::FILTER_BDATE  => _T("Begin Date", "ski"),
+            FormFilter::FILTER_FDATE  => _T("Forecast Date", "ski"),
+            FormFilter::FILTER_EDATE  => _T("End  Date", "ski"),
+            FormFilter::FILTER_ID      => _T("Id", "ski"),
         ];
 
         $view->assign(

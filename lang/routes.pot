@@ -1,12 +1,12 @@
-#: ../_routes.php:574 ../_routes.php:602
+#: ../_routes.php:572 ../_routes.php:599
 msgid "page"
 msgstr ""
 
-#: ../_routes.php:606
+#: ../_routes.php:603
 msgid "order"
 msgstr ""
 
-#: ../_routes.php:698
+#: ../_routes.php:693
 msgid "/filter"
 msgstr ""
 

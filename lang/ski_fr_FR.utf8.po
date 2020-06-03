@@ -10,475 +10,99 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../templates/default/ski_preferences.tpl:89
-msgid "View price sum:"
-msgstr "Voir la somme des prix&nbsp;:"
-
-#: ../_routes.php:787
-msgid "Familymanagement"
-msgstr "Gestion des Familles"
-
-#: ../templates/default/ski_members.tpl:26 ../templates/default/ListForm.tpl:22
-msgid "Clear filter"
-msgstr "Effacer les filtres"
-
-#: ../lib/GaletteSki/Filters/FormFilter.php:286
-#: ../lib/GaletteSki/IO/PdfForm.php:190 ../lib/GaletteSki/IO/PdfForm.php:311
-#: ../templates/default/ski_family.tpl:46 ../templates/default/ListForm.tpl:111
-msgid "Status"
-msgstr "Statut"
-
-#: ../lib/GaletteSki/Filters/FormFilter.php:282
-#: ../templates/default/ListForm.tpl:59
-msgid "Begin Date"
-msgstr "Date de début"
-
-#: ../templates/default/ski_preferences.tpl:89
-#: ../templates/default/ski_preferences.tpl:90
-msgid "View the objects buy price sum on the list under the category"
-msgstr ""
-"Voir la somme des prix d'achat des objets sur la liste sous la catégorie"
-
-#: ../lib/GaletteSki/IO/PdfForm.php:184
-msgid "Description"
-msgstr "Voir la description"
-
-#: ../_routes.php:785
-msgid "Membersmanagement"
-msgstr "Gestion des Membres"
-
-#: ../templates/default/ListForm.tpl:85
-msgid "End Date"
-msgstr "Date de fin"
-
-#: ../templates/default/ListForm.tpl:121
-msgid "Comment"
-msgstr "Commentaire"
-
-#: ../lib/GaletteSki/IO/PdfForm.php:189
-msgid "Weight"
-msgstr ""
-
-#: ../templates/default/ski_preferences.tpl:64
-msgid "View category:"
-msgstr "Voir la catégorie:"
-
-#: ../templates/default/ski_preferences.tpl:79
-msgid "View dimensions:"
-msgstr "Voir les dimensions"
-
-#: ../lib/GaletteSki/Filters/FormFilter.php:284
-msgid "End  Date"
-msgstr "Date de fin"
-
-#: ../templates/default/ski_preferences.tpl:74
-msgid "View description"
-msgstr "Voir la description"
-
-#: ../templates/default/ski_preferences.tpl:95
-msgid "View buy price:"
-msgstr "Voir le prix d'achat&nbsp;:"
-
-#: ../templates/default/menu.tpl:7
-msgid "Ski dashboard"
-msgstr "Tableau de bord"
-
-#: ../templates/default/ski_preferences.tpl:33
-msgid ""
-"Comment text to add on generated contribution. Automatically replaced values "
-"(put into curly brackets): <br/>- NAME: Name<br/>- DESCRIPTION: "
-"Description<br/>- SERIAL_NUMBER: Serial number<br/>- PRICE: Price<br/>- "
-"RENT_PRICE: Borrow price<br/>- WEIGHT: Weight<br/>- DIMENSION: Dimensions"
-msgstr ""
-"Texte de commentaire à ajouter sur les contributions générées. Valeur "
-"remplacées automatiquement (mettre entre accolades)&nbsp;: <br/>- NAME : "
-"Nom<br/>- DESCRIPTION: Description<br/>- SERIAL_NUMBER : Numéro de série<br/"
-">- PRICE: Prix<br/>- RENT_PRICE : Prix d'emprunt<br/>- WEIGHT : Poids<br/>- "
-"DIMENSION : Dimensions"
-
-#: ../templates/default/ski_family.tpl:42
-msgid "Birth date"
-msgstr "Date de naissance"
-
-#: ../templates/default/Form.tpl:68 ../templates/default/Form.tpl:78
-msgid "Adherents"
-msgstr "iAdherents"
-
-#: ../lib/GaletteSki/IO/PdfForm.php:192 ../lib/GaletteSki/IO/PdfForm.php:313
-#: ../templates/default/AddForm.tpl:126 ../templates/default/ski_family.tpl:36
-msgid "Member"
-msgstr "Membres"
-
-#: ../templates/default/ListForm.tpl:123
-msgid "Actions"
-msgstr "Actions"
-
-#: ../lib/GaletteSki/IO/PdfForm.php:271
-msgid "Available"
-msgstr ""
-
-#: ../templates/default/Form.tpl:72
-msgid "--- Select a Member ---"
-msgstr "Choisir un membre"
-
-#: ../lib/GaletteSki/IO/PdfForm.php:183 ../templates/default/AddForm.tpl:141
-#: ../templates/default/Form.tpl:87
-msgid "Name"
-msgstr "Nom"
-
-#: ../templates/default/ski_family.tpl:44
-msgid "Licence"
-msgstr "Licence"
-
-#: ../_routes.php:134
-msgid "Lend Rental Form"
-msgstr "Fiche de location"
-
-#: ../lib/GaletteSki/Filters/FormFilter.php:283
-#: ../templates/default/ListForm.tpl:72
-msgid "Forecast Date"
-msgstr "Date de retour prévue"
-
-#: ../lib/GaletteSki/IO/PdfForm.php:137
-msgid "Printed on %date"
-msgstr ""
-
-#: ../lib/GaletteSki/IO/PdfForm.php:269
-msgid "Borrowed"
-msgstr ""
-
-#: ../templates/default/ski_preferences.tpl:84
-msgid "View borrow price:"
-msgstr "Voir le prix loc.&nbsp;:"
-
-#: ../templates/default/Form.tpl:14
-msgid "Form"
-msgstr "Ecran"
-
-#: ../templates/default/ski_preferences.tpl:41
-msgid "Max thumb height (in px)"
-msgstr "Taille maxi miniature (en px)"
-
-#: ../templates/default/ski_preferences.tpl:22
-msgid "Contribution type:"
-msgstr "Type de contribution&nbsp;:"
-
-#: ../templates/default/ski_family.tpl:25
-msgid "Parent"
-msgstr "Parent"
-
-#: ../templates/default/ski_family.tpl:29
-msgid "Email"
-msgstr "Email"
-
-#: ../templates/default/ski_preferences.tpl:39
-msgid "Images related"
-msgstr "Relatif aux images"
-
-#: ../templates/default/menu.tpl:23 ../templates/default/menu.tpl:24
-msgid "List Members"
-msgstr "Liste des membres"
-
-#: ../templates/default/menu.tpl:8
-msgid "Dashboard"
-msgstr "Tableau de bord"
-
-#: ../templates/default/ski_preferences.tpl:8
-msgid "Members can borrow:"
-msgstr ""
-
-#: ../templates/default/ListForm.tpl:227
-msgid "Pages:"
-msgstr ""
-
-#: ../templates/default/AddForm.tpl:49 ../templates/default/AddForm.tpl:89
-msgid "Status:"
-msgstr "Status:"
-
-#: ../lib/GaletteSki/Filters/FormFilter.php:281
-#: ../templates/default/AddForm.tpl:45 ../templates/default/AddForm.tpl:88
-#: ../templates/default/ListForm.tpl:46
-msgid "Id"
-msgstr "Id"
-
-#: ../lib/GaletteSki/IO/PdfForm.php:310
-msgid "End"
-msgstr ""
-
-#: ../lib/GaletteSki/IO/PdfForm.php:191
-msgid "Since"
-msgstr ""
-
-#: ../templates/default/ListForm.tpl:191 ../templates/default/ListForm.tpl:194
-msgid "form card in PDF"
-msgstr "Ecran location en PDF"
-
-#: ../templates/default/ski_members.tpl:25 ../templates/default/ListForm.tpl:21
-msgid "Filter"
-msgstr "Filtre"
-
-#: ../lib/GaletteSki/IO/PdfForm.php:312
-msgid "On site"
-msgstr ""
-
-#: ../templates/default/Form.tpl:56
-msgid "Expected return"
-msgstr "Retour attendu"
-
-#: ../templates/default/menu.tpl:13 ../templates/default/menu.tpl:14
-msgid "List Forms"
-msgstr "Liste des fiches de locations"
-
-#: ../templates/default/ListForm.tpl:33
-msgid "Change"
-msgstr "Changer"
-
-#: ../lib/GaletteSki/Filters/FormFilter.php:288
-#: ../templates/default/AddForm.tpl:62 ../templates/default/AddForm.tpl:91
-msgid "Duration"
-msgstr "Durée"
-
-#: ../templates/default/ListForm.tpl:26
+#: ../templates/default/ListForm.tpl:27
 msgid "Records per page:"
 msgstr "Nombre de lignes par page"
 
-#: ../templates/default/Form.tpl:196
-msgid "Cancel"
-msgstr ""
-
-#: ../templates/default/ski_preferences.tpl:105
-msgid "View weight"
-msgstr "Voir le poids ,,                        "
-
-#: ../templates/default/ski_preferences.tpl:24
-msgid "Choose a contribution type"
-msgstr "Choisir une contribution"
-
-#: ../lib/GaletteSki/IO/PdfForm.php:111 ../lib/GaletteSki/IO/PdfForm.php:113
-#: ../lib/GaletteSki/IO/PdfForm.php:128
-msgid "Form list"
-msgstr "Fiche de location"
-
-#: ../templates/default/ListForm.tpl:214
-msgid "No form has been found"
-msgstr "Aucun écran n'a été trouvé"
-
-#: ../templates/default/ski_preferences.tpl:45
-msgid "Max thumb width (in px)"
-msgstr "Taille max. minitaure (en px)"
-
-#: ../templates/default/ski_family.tpl:45
-msgid "Card Nbr"
-msgstr "N° carte"
-
-#: ../templates/default/Form.tpl:51
-msgid "Expected return:"
-msgstr "Retour attendu&nbsp;:"
-
-#: ../templates/default/ski_preferences.tpl:55
-msgid "Show fullsize image or just thumbs"
-msgstr "Afficher les images en pleine taille ou sous forme de miniatures"
-
-#: ../templates/default/ski_preferences.tpl:100
-msgid "View serial number:"
-msgstr "Voir n° série&nbsp;:"
-
-#: ../templates/default/ListForm.tpl:201 ../templates/default/ListForm.tpl:204
-msgid "Remove %form from database"
-msgstr "Supprimerde la base"
-
-#: ../lib/GaletteSki/Filters/FormFilter.php:287
-#: ../templates/default/AddForm.tpl:53 ../templates/default/AddForm.tpl:90
-msgid "Period"
-msgstr "Période"
-
-#: ../lib/GaletteSki/Repository/FormRent.php:263
+#: ../lib/GaletteSki/Repository/FormRent.php:262
 msgid "FormRent has not been added"
 msgstr ""
 
-#: ../templates/default/ski_preferences.tpl:6
-msgid "Plugin preferences"
-msgstr "Préférences du plugin"
+#: ../templates/default/ski_family.tpl:35
+msgid "Phone"
+msgstr "Tél."
 
-#: ../templates/default/ski_preferences.tpl:50
-msgid "Display images in objects and categories lists"
-msgstr "Afficher les images des objets et des catégories"
+#: ../_routes.php:781
+msgid "Familymanagement"
+msgstr "Gestion des Familles"
+
+#: ../templates/default/ski_members.tpl:27 ../templates/default/ListForm.tpl:23
+msgid "Clear filter"
+msgstr "Effacer les filtres"
+
+#: ../templates/default/AddForm.tpl:50 ../templates/default/AddForm.tpl:90
+msgid "Status:"
+msgstr "Status:"
 
 #: ../lib/GaletteSki/IO/PdfForm.php:219
 msgid "Category: %category"
 msgstr "Voir la catégorie:"
 
-#: ../templates/default/ski_family.tpl:30
-msgid "Phone"
-msgstr "Tél."
+#: ../lib/GaletteSki/Filters/FormFilter.php:284
+#: ../lib/GaletteSki/IO/PdfForm.php:190 ../lib/GaletteSki/IO/PdfForm.php:311
+#: ../templates/default/ListForm.tpl:112
+msgid "Status"
+msgstr "Statut"
 
-#: ../templates/default/ski_preferences.tpl:69
-msgid "View forecast return date:"
-msgstr "Voir la date de retour prévue"
+#: ../lib/GaletteSki/Filters/FormFilter.php:280
+#: ../templates/default/ListForm.tpl:60
+msgid "Begin Date"
+msgstr "Date de début"
 
-#: ../templates/default/ski_preferences.tpl:15
-#: ../templates/default/ski_preferences.tpl:16
-msgid ""
-"Automatically generate a contribution for the member of the amount of the "
-"rental price of the object"
-msgstr ""
-"Générer automatiquement une contribution pour l'adhérent du montant de la "
-"location de cet objet"
+#: ../lib/GaletteSki/Repository/Form.php:490
+msgid "Form has not been added"
+msgstr "Aucun écran n'a été trouvé"
+
+#: ../templates/default/ski_family.tpl:31
+msgid "Address"
+msgstr "Adresse"
+
+#: ../lib/GaletteSki/Filters/FormFilter.php:283
+msgid "Parent Id"
+msgstr "Parent"
+
+#: ../lib/GaletteSki/IO/PdfForm.php:184
+msgid "Description"
+msgstr "Voir la description"
+
+#: ../templates/default/AddForm.tpl:41 ../templates/default/ski_family.tpl:28
+msgid "General informations"
+msgstr "Informations générales"
+
+#: ../_routes.php:779
+msgid "Membersmanagement"
+msgstr "Gestion des Membres"
+
+#: ../lib/GaletteSki/Filters/FormFilter.php:279
+#: ../templates/default/AddForm.tpl:46 ../templates/default/AddForm.tpl:89
+#: ../templates/default/ListForm.tpl:47
+msgid "Id"
+msgstr "Id"
+
+#: ../templates/default/menu.tpl:8
+msgid "Dashboard"
+msgstr "Tableau de bord"
 
 #: ../lib/GaletteSki/IO/PdfForm.php:307
 msgid "History of Form loans"
 msgstr ""
 
-#: ../templates/default/Form.tpl:189
-msgid "I have read and I agree with terms and conditions"
-msgstr "J'ai lu et j'accepte les conditions générales"
-
-#: ../templates/default/ski_preferences.tpl:55
-msgid "Enable fullsize:"
-msgstr "Activer la pleine taille&nbsp;:"
-
-#: ../templates/default/Form.tpl:62
-msgid "Comments:"
-msgstr "Commentaires&nbsp;"
-
-#: ../templates/default/AddForm.tpl:130
-msgid "--- Select a Family ---"
-msgstr "--- Choisir une famille ---"
-
-#: ../templates/default/menu.tpl:2
-msgid "Ski"
-msgstr "Ski"
-
-#: ../templates/default/AddForm.tpl:75 ../templates/default/AddForm.tpl:94
-msgid "End date"
-msgstr "Date de retour"
-
-#: ../templates/default/AddForm.tpl:93
-msgid "Forecast date"
-msgstr "Date de retour prévue"
-
-#: ../templates/default/ski_family.tpl:28
-msgid "City"
-msgstr "Ville"
-
-#: ../templates/default/Form.tpl:28
-msgid "--- Select a Form ---"
-msgstr "--- Choisir une fiche ---"
-
-#: ../templates/default/ski_preferences.tpl:32
-msgid "Contribution text:"
-msgstr "Texte de la contribution&nbsp;:"
-
-#: ../templates/default/AddForm.tpl:64
-msgid "--- Select a duration ---"
-msgstr "--- Choisir une durée ---"
-
-#: ../templates/default/Form.tpl:195
-msgid "Take away"
-msgstr "Rendre"
-
-#: ../templates/default/AddForm.tpl:55
-msgid "--- Select a period ---"
-msgstr "--- Choisir une période ---"
-
-#: ../templates/default/Form.tpl:191
-msgid ""
-"The items offered for rent are in good condition and verification rental "
-"contradictory to their status is at the time of withdrawal. No claims will "
-"be accepted after the release of the object. Writing by the store a list of "
-"reservation does not exempt the customer checking his retrait. The payment "
-"of rent entitles the purchaser to make normal use of the loaned object. If "
-"the object is rendered in a degraded state, the seller reserves the right to "
-"collect all or part of the security deposit. In case of deterioration of the "
-"rented beyond the standard object, a financial contribution will be required "
-"for additional cleaning caused. In case of damage, loss or theft of the "
-"rented property, the deposit will not be refunded automatically to 'the "
-"company as damages pursuant to Article 1152 of the Civil Code and without "
-"that it need for any other judicial or extra-judicial formality. In some "
-"other cases not listed above and at the discretion of the seller, the "
-"deposit check may also be collected in whole or party."
-msgstr ""
-
-#: ../templates/default/Form.tpl:190
-msgid "Show terms and conditions"
-msgstr ""
-"Les objets proposés à la location sont en bon état de location et la "
-"vérification contradictoire de leur état se fait au moment du retrait. "
-"Aucune réclamation ne sera recevable après la sortie de l'objet. La "
-"rédaction par le magasin d'une liste de réservation n'exonère pas le client "
-"de la vérification de sa tenue au moment du retrait. Le paiement d'une "
-"location donne droit à l'acheteur de pouvoir faire un usage normal de "
-"l'objet prêté. Si l'objet est rendu dans un état dégradé, le vendeur se "
-"réserve le droit d'encaisser tout ou partie du chèque de caution. En cas de "
-"dégradation de l'objet loué au-delà des standards, une participation "
-"financière sera exigée pour le nettoyage supplémentaire occasionné. En cas "
-"de détérioration, de perte ou de vol de l'objet loué, le dépôt de garantie "
-"restera acquis de plein droit à la société, à titre de dommages et intérêts "
-"conformément aux dispositions de l'article 1152 du Code Civil et ce sans "
-"qu'il soit besoin d'aucune autre formalité judiciaire ou extra judiciaire. "
-"Dans certains autres cas, non énumérés ci-dessus et laissés à l'appréciation "
-"du vendeur, le chèque de caution peut également être encaissé en tout ou "
-"partie."
-
-#: ../templates/default/ListForm.tpl:98
-msgid "Parent_id"
-msgstr "Parent_id"
-
-#: ../templates/default/AddForm.tpl:71 ../templates/default/AddForm.tpl:92
-#: ../templates/default/Form.tpl:40 ../templates/default/Form.tpl:45
-msgid "Begin date"
-msgstr "Date de début"
-
-#: ../templates/default/ski_family.tpl:27
-msgid "Zip - Town"
-msgstr "Code postal"
-
-#: ../templates/default/ski_members.tpl:13 ../templates/default/ListForm.tpl:15
-msgid "Enter a value"
-msgstr "Entrez une valeur"
-
-#: ../templates/default/Form.tpl:17
-msgid "Form number:"
-msgstr "Numéro"
-
-#: ../lib/GaletteSki/IO/PdfForm.php:314 ../templates/default/AddForm.tpl:79
-#: ../templates/default/AddForm.tpl:113
+#: ../lib/GaletteSki/IO/PdfForm.php:314 ../templates/default/AddForm.tpl:80
+#: ../templates/default/AddForm.tpl:114
 msgid "Comments"
 msgstr "Commentaires"
 
-#: ../lib/GaletteSki/Repository/Form.php:491
-msgid "Form has not been added"
-msgstr "Aucun écran n'a été trouvé"
-
-#: ../templates/default/ski_family.tpl:26
-msgid "Address"
-msgstr "Adresse"
-
-#: ../lib/GaletteSki/Filters/FormFilter.php:285
-msgid "Parent Id"
-msgstr "Parent"
-
-#: ../templates/default/ski_preferences.tpl:62
-msgid "Display preferences"
-msgstr "Affichage des préférences"
-
-#: ../templates/default/AddForm.tpl:40 ../templates/default/ski_family.tpl:23
-msgid "General informations"
-msgstr "Informations générales"
-
-#: ../templates/default/ski_preferences.tpl:8
-#: ../templates/default/ski_preferences.tpl:9
-msgid ""
-"Allow a member (not staff neither admin) to borrow an object. If set to "
-"'No', only admin and staff members can access the 'Take object' page"
+#: ../lib/GaletteSki/IO/PdfForm.php:189
+msgid "Weight"
 msgstr ""
-"Autoriser les adhérents (qui ne sont pas membres du staff ni "
-"administrateurs) à emprunter un objet. Si à 'Non', seuls les administrateurs "
-"ou membres du staff pourront accéder à la page 'Emprunt d'objet'"
 
-#: ../lib/GaletteSki/Entity/SkiPreferences.php:291
-msgid "Unable to store preferences :("
+#: ../templates/default/ListForm.tpl:228
+msgid "Pages:"
 msgstr ""
+
+#: ../templates/default/menu.tpl:13 ../templates/default/menu.tpl:14
+msgid "List Forms"
+msgstr "Liste des fiches de locations"
 
 #: ../lib/GaletteSki/IO/PdfForm.php:262
 msgid "Sum:"
@@ -488,23 +112,97 @@ msgstr ""
 msgid "Borrow price"
 msgstr "Voir le prix loc.&nbsp;:"
 
-#: ../templates/default/ski_family.tpl:31
+#: ../templates/default/ListForm.tpl:86
+msgid "End Date"
+msgstr "Date de fin"
+
+#: ../templates/default/ski_family.tpl:36
 msgid "GSM"
 msgstr "GSM"
 
-#: ../templates/default/ski_preferences.tpl:49
-msgid "Images in lists:"
-msgstr "Voir les images dans les listes "
+#: ../templates/default/ski_family.tpl:37
+msgid "IP"
+msgstr ""
 
-#: ../templates/default/ski_members.tpl:14 ../templates/default/ListForm.tpl:16
+#: ../templates/default/ListForm.tpl:99
+msgid "Parent_id"
+msgstr "Parent_id"
+
+#: ../lib/GaletteSki/IO/PdfForm.php:310
+msgid "End"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:191
+msgid "Since"
+msgstr ""
+
+#: ../lib/GaletteSki/Filters/FormFilter.php:282
+msgid "End  Date"
+msgstr "Date de fin"
+
+#: ../templates/default/ListForm.tpl:192 ../templates/default/ListForm.tpl:195
+msgid "form card in PDF"
+msgstr "Ecran location en PDF"
+
+#: ../templates/default/menu.tpl:2
+msgid "Ski"
+msgstr "Ski"
+
+#: ../templates/default/AddForm.tpl:131
+msgid "--- Select a Family ---"
+msgstr "--- Choisir une famille ---"
+
+#: ../templates/default/ski_members.tpl:26 ../templates/default/ListForm.tpl:22
+msgid "Filter"
+msgstr "Filtre"
+
+#: ../lib/GaletteSki/IO/PdfForm.php:312
+msgid "On site"
+msgstr ""
+
+#: ../templates/default/ski_members.tpl:15 ../templates/default/ListForm.tpl:17
 msgid "in:"
 msgstr "Dans :"
+
+#: ../templates/default/AddForm.tpl:65
+msgid "--- Select a duration ---"
+msgstr "--- Choisir une durée ---"
+
+#: ../templates/default/ski_family.tpl:47
+msgid "Birth date"
+msgstr "Date de naissance"
+
+#: ../templates/default/AddForm.tpl:94
+msgid "Forecast date"
+msgstr "Date de retour prévue"
+
+#: ../templates/default/ski_family.tpl:33
+msgid "City"
+msgstr "Ville"
+
+#: ../lib/GaletteSki/IO/PdfForm.php:111 ../lib/GaletteSki/IO/PdfForm.php:113
+#: ../lib/GaletteSki/IO/PdfForm.php:128
+msgid "Form list"
+msgstr "Fiche de location"
+
+#: ../templates/default/ListForm.tpl:34
+msgid "Change"
+msgstr "Changer"
+
+#: ../lib/GaletteSki/IO/PdfForm.php:192 ../lib/GaletteSki/IO/PdfForm.php:313
+#: ../templates/default/AddForm.tpl:127 ../templates/default/ski_family.tpl:42
+msgid "Member"
+msgstr "Membres"
+
+#: ../templates/default/ListForm.tpl:202 ../templates/default/ListForm.tpl:205
+msgid "Remove %form from database"
+msgstr "Supprimerde la base"
 
 #: ../lib/GaletteSki/IO/PdfForm.php:309
 msgid "Begin"
 msgstr "Date de début"
 
-#: ../templates/default/ski_members.tpl:10 ../templates/default/ListForm.tpl:12
+#: ../templates/default/ski_members.tpl:11 ../templates/default/ListForm.tpl:13
 msgid "Search:"
 msgstr "Recherche :"
 
@@ -512,50 +210,282 @@ msgstr "Recherche :"
 msgid "Dimensions"
 msgstr "Voir les dimensions"
 
-#: ../templates/default/ski_preferences.tpl:15
-msgid "Generate contribution:"
-msgstr "Générer une contribution :"
+#: ../lib/GaletteSki/Filters/FormFilter.php:286
+#: ../templates/default/AddForm.tpl:63 ../templates/default/AddForm.tpl:92
+msgid "Duration"
+msgstr "Durée"
+
+#: ../templates/default/ListForm.tpl:215
+msgid "No form has been found"
+msgstr "Aucun écran n'a été trouvé"
+
+#: ../lib/GaletteSki/Filters/FormFilter.php:285
+#: ../templates/default/AddForm.tpl:54 ../templates/default/AddForm.tpl:91
+msgid "Period"
+msgstr "Période"
+
+#: ../templates/default/ListForm.tpl:124
+msgid "Actions"
+msgstr "Actions"
+
+#: ../templates/default/ListForm.tpl:187
+msgid "Edit the form"
+msgstr "Modifier la fiche de location"
+
+#: ../lib/GaletteSki/Filters/FormFilter.php:281
+#: ../templates/default/ListForm.tpl:73
+msgid "Forecast Date"
+msgstr "Date de retour prévue"
 
 #: ../templates/default/menu.tpl:18 ../templates/default/menu.tpl:19
 msgid "New Form"
 msgstr "Nouvelle fiche de location"
 
-#: ../templates/default/ListForm.tpl:186
-msgid "Edit the form"
-msgstr "Modifier la fiche de location"
+#: ../templates/default/AddForm.tpl:56
+msgid "--- Select a period ---"
+msgstr "--- Choisir une période ---"
 
 #: ../lib/GaletteSki/IO/PdfForm.php:185
 msgid "Serial"
 msgstr ""
 
-#: ../_routes.php:623
+#: ../lib/GaletteSki/IO/PdfForm.php:183 ../templates/default/AddForm.tpl:142
+msgid "Name"
+msgstr "Nom"
+
+#: ../_routes.php:138
+msgid "Lend Rental Form"
+msgstr "Fiche de location"
+
+#: ../_routes.php:620
 msgid "Ski Form List"
 msgstr "Fiche de location"
 
-#: ../templates/default/ski_preferences.tpl:32
-msgid "Comment text to add on generated contribution"
-msgstr "Texte de commentaire à ajouter aux contributions générées"
+#: ../lib/GaletteSki/IO/PdfForm.php:269
+msgid "Borrowed"
+msgstr ""
+
+#: ../lib/GaletteSki/IO/PdfForm.php:137
+msgid "Printed on %date"
+msgstr ""
+
+#: ../templates/default/ListForm.tpl:122
+msgid "Comment"
+msgstr "Commentaire"
+
+#: ../templates/default/ski_family.tpl:30
+msgid "Parent"
+msgstr "Parent"
+
+#: ../templates/default/AddForm.tpl:76 ../templates/default/AddForm.tpl:95
+msgid "End date"
+msgstr "Date de retour"
+
+#: ../lib/GaletteSki/IO/PdfForm.php:271
+msgid "Available"
+msgstr ""
 
 #: ../lib/GaletteSki/IO/PdfForm.php:186
 msgid "Price"
 msgstr ""
 
-#: ../templates/default/ski_preferences.tpl:56
-msgid ""
-"Will permit to see fullsize image clicking on thumbnails.<br/>If disabled, "
-"only thumbnails will be displayed, but full images are still kept."
-msgstr ""
-"Permet de voir l'image en pleine taille en cliquant sur la miniature.<br/>Si "
-"inactif, seules les miniatures seront affichées, mais les images d'origines "
-"sont conservées."
+#: ../templates/default/AddForm.tpl:72 ../templates/default/AddForm.tpl:93
+msgid "Begin date"
+msgstr "Date de début"
+
+#: ../templates/default/menu.tpl:7
+msgid "Ski dashboard"
+msgstr "Tableau de bord"
+
+#: ../templates/default/ski_family.tpl:34
+msgid "Email"
+msgstr "Email"
+
+#: ../templates/default/ski_family.tpl:32
+msgid "Zip - Town"
+msgstr "Code postal"
 
 #: ../lib/GaletteSki/IO/PdfForm.php:193
 msgid "Return"
 msgstr ""
 
-#: ../templates/default/ListForm.tpl:135 ../templates/default/ListForm.tpl:183
+#: ../templates/default/ski_members.tpl:14 ../templates/default/ListForm.tpl:16
+msgid "Enter a value"
+msgstr "Entrez une valeur"
+
+#: ../templates/default/ListForm.tpl:136 ../templates/default/ListForm.tpl:184
 msgid "Open the form"
 msgstr "Ouvre la fiche de location"
+
+#: ../templates/default/menu.tpl:23 ../templates/default/menu.tpl:24
+msgid "List Members"
+msgstr "Liste des membres"
+
+#~ msgid "View price sum:"
+#~ msgstr "Voir la somme des prix&nbsp;:"
+
+#~ msgid "View the objects buy price sum on the list under the category"
+#~ msgstr ""
+#~ "Voir la somme des prix d'achat des objets sur la liste sous la catégorie"
+
+#~ msgid "View category:"
+#~ msgstr "Voir la catégorie:"
+
+#~ msgid "View dimensions:"
+#~ msgstr "Voir les dimensions"
+
+#~ msgid "View description"
+#~ msgstr "Voir la description"
+
+#~ msgid "View buy price:"
+#~ msgstr "Voir le prix d'achat&nbsp;:"
+
+#~ msgid ""
+#~ "Comment text to add on generated contribution. Automatically replaced "
+#~ "values (put into curly brackets): <br/>- NAME: Name<br/>- DESCRIPTION: "
+#~ "Description<br/>- SERIAL_NUMBER: Serial number<br/>- PRICE: Price<br/>- "
+#~ "RENT_PRICE: Borrow price<br/>- WEIGHT: Weight<br/>- DIMENSION: Dimensions"
+#~ msgstr ""
+#~ "Texte de commentaire à ajouter sur les contributions générées. Valeur "
+#~ "remplacées automatiquement (mettre entre accolades)&nbsp;: <br/>- NAME : "
+#~ "Nom<br/>- DESCRIPTION: Description<br/>- SERIAL_NUMBER : Numéro de "
+#~ "série<br/>- PRICE: Prix<br/>- RENT_PRICE : Prix d'emprunt<br/>- WEIGHT : "
+#~ "Poids<br/>- DIMENSION : Dimensions"
+
+#~ msgid "Adherents"
+#~ msgstr "iAdherents"
+
+#~ msgid "--- Select a Member ---"
+#~ msgstr "Choisir un membre"
+
+#~ msgid "Licence"
+#~ msgstr "Licence"
+
+#~ msgid "View borrow price:"
+#~ msgstr "Voir le prix loc.&nbsp;:"
+
+#~ msgid "Form"
+#~ msgstr "Ecran"
+
+#~ msgid "Max thumb height (in px)"
+#~ msgstr "Taille maxi miniature (en px)"
+
+#~ msgid "Contribution type:"
+#~ msgstr "Type de contribution&nbsp;:"
+
+#~ msgid "Images related"
+#~ msgstr "Relatif aux images"
+
+#~ msgid "Expected return"
+#~ msgstr "Retour attendu"
+
+#~ msgid "View weight"
+#~ msgstr "Voir le poids ,,                        "
+
+#~ msgid "Choose a contribution type"
+#~ msgstr "Choisir une contribution"
+
+#~ msgid "Max thumb width (in px)"
+#~ msgstr "Taille max. minitaure (en px)"
+
+#~ msgid "Card Nbr"
+#~ msgstr "N° carte"
+
+#~ msgid "Expected return:"
+#~ msgstr "Retour attendu&nbsp;:"
+
+#~ msgid "Show fullsize image or just thumbs"
+#~ msgstr "Afficher les images en pleine taille ou sous forme de miniatures"
+
+#~ msgid "View serial number:"
+#~ msgstr "Voir n° série&nbsp;:"
+
+#~ msgid "Plugin preferences"
+#~ msgstr "Préférences du plugin"
+
+#~ msgid "Display images in objects and categories lists"
+#~ msgstr "Afficher les images des objets et des catégories"
+
+#~ msgid "View forecast return date:"
+#~ msgstr "Voir la date de retour prévue"
+
+#~ msgid ""
+#~ "Automatically generate a contribution for the member of the amount of the "
+#~ "rental price of the object"
+#~ msgstr ""
+#~ "Générer automatiquement une contribution pour l'adhérent du montant de la "
+#~ "location de cet objet"
+
+#~ msgid "I have read and I agree with terms and conditions"
+#~ msgstr "J'ai lu et j'accepte les conditions générales"
+
+#~ msgid "Enable fullsize:"
+#~ msgstr "Activer la pleine taille&nbsp;:"
+
+#~ msgid "Comments:"
+#~ msgstr "Commentaires&nbsp;"
+
+#~ msgid "--- Select a Form ---"
+#~ msgstr "--- Choisir une fiche ---"
+
+#~ msgid "Contribution text:"
+#~ msgstr "Texte de la contribution&nbsp;:"
+
+#~ msgid "Take away"
+#~ msgstr "Rendre"
+
+#~ msgid "Show terms and conditions"
+#~ msgstr ""
+#~ "Les objets proposés à la location sont en bon état de location et la "
+#~ "vérification contradictoire de leur état se fait au moment du retrait. "
+#~ "Aucune réclamation ne sera recevable après la sortie de l'objet. La "
+#~ "rédaction par le magasin d'une liste de réservation n'exonère pas le "
+#~ "client de la vérification de sa tenue au moment du retrait. Le paiement "
+#~ "d'une location donne droit à l'acheteur de pouvoir faire un usage normal "
+#~ "de l'objet prêté. Si l'objet est rendu dans un état dégradé, le vendeur "
+#~ "se réserve le droit d'encaisser tout ou partie du chèque de caution. En "
+#~ "cas de dégradation de l'objet loué au-delà des standards, une "
+#~ "participation financière sera exigée pour le nettoyage supplémentaire "
+#~ "occasionné. En cas de détérioration, de perte ou de vol de l'objet loué, "
+#~ "le dépôt de garantie restera acquis de plein droit à la société, à titre "
+#~ "de dommages et intérêts conformément aux dispositions de l'article 1152 "
+#~ "du Code Civil et ce sans qu'il soit besoin d'aucune autre formalité "
+#~ "judiciaire ou extra judiciaire. Dans certains autres cas, non énumérés ci-"
+#~ "dessus et laissés à l'appréciation du vendeur, le chèque de caution peut "
+#~ "également être encaissé en tout ou partie."
+
+#~ msgid "Form number:"
+#~ msgstr "Numéro"
+
+#~ msgid "Display preferences"
+#~ msgstr "Affichage des préférences"
+
+#~ msgid ""
+#~ "Allow a member (not staff neither admin) to borrow an object. If set to "
+#~ "'No', only admin and staff members can access the 'Take object' page"
+#~ msgstr ""
+#~ "Autoriser les adhérents (qui ne sont pas membres du staff ni "
+#~ "administrateurs) à emprunter un objet. Si à 'Non', seuls les "
+#~ "administrateurs ou membres du staff pourront accéder à la page 'Emprunt "
+#~ "d'objet'"
+
+#~ msgid "Images in lists:"
+#~ msgstr "Voir les images dans les listes "
+
+#~ msgid "Generate contribution:"
+#~ msgstr "Générer une contribution :"
+
+#~ msgid "Comment text to add on generated contribution"
+#~ msgstr "Texte de commentaire à ajouter aux contributions générées"
+
+#~ msgid ""
+#~ "Will permit to see fullsize image clicking on thumbnails.<br/>If "
+#~ "disabled, only thumbnails will be displayed, but full images are still "
+#~ "kept."
+#~ msgstr ""
+#~ "Permet de voir l'image en pleine taille en cliquant sur la miniature.<br/"
+#~ ">Si inactif, seules les miniatures seront affichées, mais les images "
+#~ "d'origines sont conservées."
 
 #~ msgid "Gender"
 #~ msgstr "Genre"
