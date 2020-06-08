@@ -393,26 +393,24 @@ $this->post(
                 $$k = "$val";
                 file_put_contents($file1, "\n" .$k ." " . $val, FILE_APPEND);
             }
-            $m1 = new Adherent($this->zdb, (int)$form->parent_id, $deps);
-            $form->parent_sname=$m1->parent->name . " " . $m1->parent->surname;
+            $m1 = new Adherent($this->zdb, (int)$form->parent_id);
+            $output = print_r($m1, true);
+            file_put_contents($file1, "\nm1 : ". $output,FILE_APPEND);
+            if (isset($m1->parent->sname)) {
+                $form->parent_sname=$m1->parent->name . " " . $m1->parent->surname;
+            }else{
+                $form->parent_sname=$m1->name . " " . $m1->surname;
+            }
+            $date_begin == date('Y-m-d', strtotime($date_begin));
+            $date_forecast == date('Y-m-d', strtotime($date_forecast)) ;
 
-            file_put_contents($file1, "\ndate_begin=" . $date_begin, FILE_APPEND);
-            //$dt = DateTime::createFromFormat('Y-m-d', $date_begin);
-             $date_begin == date('Y-m-d', strtotime($date_begin));
-             $date_forecast == date('Y-m-d', strtotime($date_forecast)) ;
-            //file_put_contents($file1, "\ndt=" . var_dump($dt),FILE_APPEND);
-            //if ($dt == 'true') {
-            //    $form->date_begin = $date_begin;
-            //    $form->date_forecast = $date_forecast;
-            //} else {
-            //    $form->date_begin = date_format(DateTime::createFromFormat('d/m/Y', $date_begin), 'Y-m-d');
-            //    $form->date_forecast = date_format(DateTime::createFromFormat('d/m/Y', $date_forecast), 'Y-m-d');
-           // }
-
+            $output = print_r($form, true);
+            
             if (in_array("SkiAdmin", $group)) {
                 if ($_POST['form_status'] == "Create") {
                     $form->form_status = 'Open';
                     $new = Form::newForm($form);
+            $output = print_r($new, true);
                 } else {
                     $new = Form::storeForm($form);
                 }
