@@ -432,15 +432,14 @@ class Form
         try {
             if (GALETTE_MODE == 'DEV') {
                 $file1="/home/galette/galette/data/logs/lib-repository-form-newForm.txt";
-                file_put_contents($file1, "\nf : ");
-                $output = print_r($f, true);
+                file_put_contents($file1, "\n" );
             }
             $zdb->connection->beginTransaction();
 
             $values = array();
             $values['form_id']=$f->form_id;
-            $values['date_begin']=$f->date_begin;
-            $values['date_forecast']=$f->date_forecast;
+            $values['date_begin']=date('Y-m-d', strtotime($f->date_begin));
+            $values['date_forecast']=date('Y-m-d', strtotime($f->date_forecast));
             $values['comment']=$f->comment;
             $values['parent_id']=$f->parent_id;
             $values['parent_sname']=$f->parent_sname;
@@ -448,17 +447,23 @@ class Form
             $values['period']=$f->period;
             $values['form_status']=$f->form_status;
             $output = print_r($values, true);
+            file_put_contents($file1, "\nvalues : " . $output,FILE_APPEND);
             unset($values[self::PK]);
             $insert = $zdb->insert(SKI_PREFIX . self::TABLE)
                         ->values($values);
+            $output = print_r($insert, true);
+                file_put_contents($file1, "\ninsert : ". $output,FILE_APPEND );
             $result = $zdb->execute($insert);
+                file_put_contents($file1, "\nresult : OK",FILE_APPEND );
 
             if ($result->count() > 0) {
+                file_put_contents($file1, "\nresult : OK",FILE_APPEND );
                 Analog::log(
                     'New Form #' . $f->form_id,
                     Analog::DEBUG
                 );
             } else {
+                file_put_contents($file1, "\nresult : NOK",FILE_APPEND );
                 throw new \Exception(_T("Form has not been added", "ski"));
             }
             $zdb->connection->commit();
