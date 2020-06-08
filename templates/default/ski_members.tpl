@@ -73,6 +73,9 @@
           </a>
         </th>
 
+        <th class="left">
+            {_T string="Family"}
+        </th>
         {foreach $dynval item=dyn key=id_dyn }
           <th class="center">
             {_T string=$dyn['fname']}
@@ -97,9 +100,6 @@
             {/if}
           </a>
         </th>
-        <th class="left">
-            {_T string="Family"}
-        </th>
         <th class="actions_row">{_T string="Actions"}</th>
       </tr>
     </thead>
@@ -108,8 +108,8 @@
 
       {foreach from=$list_members item=member key=ordre}
       {assign var=rclass value=$member->getRowClass()}
-      {$parent_id=$member->parent}
-      {$parent_name=$member->parent_name}
+      {$parent_id=$members[$member->id]['parent_id']}
+      {$parent_name=$members[$member->id]['parent_name']}
       <tr>
         {if $preferences->pref_show_id}
         <td class="{$rclass} right" data-scope="id">{$member->id}</td>
@@ -149,11 +149,20 @@
           <img src="{base_url}/{$template_subdir}images/icon-empty.png" alt="" width="16" height="16" />
           {/if}
           {assign var="mid" value=$member->id}
-          {if $parent_id == ''}{$pid=$member->id}{else}{$pid=$member->parent_id}{/if}
-          <a href="{path_for name="ski_members" data=["option" => "edit" , "value" => $pid] }" >
-          {$member->sname} ({$member->parent})
-          </a>
+          {if $parent_id == ''}
+            {$pid=$member->id}
+            <a href="{path_for name="ski_members" data=["option" => "edit" , "value" => $pid] }">{$member->sname}</a>
+          {else}
+            {$member->sname} 
+          {/if}
         </td>
+        <td class="{$rclass}" data-title="{_T string=" Family"}"><strong>
+          <a href="{path_for name="ski_members" data=["option" => "edit/" , "value" => $parent_id] }" >
+          {if $parent_id != ''}
+            {$parent_name} ({$parent_id})
+          {/if}
+          </a>
+        </strong></td>
         {foreach $dynval item=dyn key=id_dyn }
 
         {$fname=$dyn['fname']}
@@ -172,13 +181,6 @@
         <td class="{$rclass}" data-title="{_T string=" Phone"}">{$member->phone}</td>
         <td class="{$rclass}" data-title="{_T string=" GSM"}">{$member->gsm}</td>
         <td class="{$rclass}" data-title="{_T string=" Modified"}">{$member->modification_date}</td>
-        <td class="{$rclass}" data-title="{_T string=" Family"}"><strong>
-            
-          {*<a href="{path_for name="ski_members" data=["id"=> $parent_id]}">{$parent_name}]}</a>*}
-          <a href="{path_for name="ski_members" data=["option" => "edit/" , "value" => $parent_id] }" >
-            {$P[{$parent_id}]}
-          </a>
-        </strong></td>
         <td class="{$rclass} center nowrap actions_row">
           <a href="{path_for name="ski_members" data=["option" => "edit", "value" => $mid]}" class="tooltip action">
             <i class="fas fa-user-edit fa-fw" aria-hidden="true"></i>

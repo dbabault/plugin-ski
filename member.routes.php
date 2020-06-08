@@ -140,6 +140,19 @@ $this->get(
                     $filters->setViewCommonsFilters($this->preferences, $this->view->getSmarty());
                     $m = new Members($filters);
                     $list_members = $m->getMembersList(true, null, false, false, false, false, false);
+                    foreach ($list_members as $member) {
+                        $mid=$member->id;
+                        $c = new Adherent($this->zdb, $mid, $deps);
+                        $members[$mid]['id_adh'] = $mid;
+                        $has_parent=$c->hasParent();
+                        if ($has_parent) {
+                            $members[$mid]['parent_id'] = $c->parent->id;
+                            $members[$mid]['parent_name'] =  $c->parent->name . " ". $c->parent->surname;
+                        }else{
+                            $members[$mid]['parent_id'] = '';
+                            $members[$mid]['parent_name']='';
+                        }
+                    }
                     //$members=$list_members->toArray();
                     break;
                 case 'order':
@@ -149,6 +162,19 @@ $this->get(
                     $filters->setViewCommonsFilters($this->preferences, $this->view->getSmarty());
                     $m = new Members($filters);
                     $list_members = $m->getMembersList(true, null, false, false, false, false, false);
+                    foreach ($list_members as $member) {
+                        $mid=$member->id;
+                        $c = new Adherent($this->zdb, $mid, $deps);
+                        $members[$mid]['id_adh'] = $mid;
+                        $has_parent=$c->hasParent();
+                        if ($has_parent) {
+                            $members[$mid]['parent_id'] = $c->parent->id;
+                            $members[$mid]['parent_name'] =  $c->parent->name . " ". $c->parent->surname;
+                        }else{
+                            $members[$mid]['parent_id'] = '';
+                            $members[$mid]['parent_name']='';
+                        }
+                    }
                     //$members=$list_members->toArray();
                     break;
                 case 'edit':
@@ -212,6 +238,19 @@ $this->get(
                     $filters->setViewCommonsFilters($this->preferences, $this->view->getSmarty());
                     $m = new Members($filters);
                     $list_members = $m->getMembersList(true);
+                    foreach ($list_members as $member) {
+                        $mid=$member->id;
+                        $c = new Adherent($this->zdb, $mid, $deps);
+                        $members[$mid]['id_adh'] = $mid;
+                        $has_parent=$c->hasParent();
+                        if ($has_parent) {
+                            $members[$mid]['parent_id'] = $c->parent->id;
+                            $members[$mid]['parent_name'] =  $c->parent->name . " ". $c->parent->surname;
+                        }else{
+                            $members[$mid]['parent_id'] = '';
+                            $members[$mid]['parent_name']='';
+                        }
+                    }
                     break;
             }
         } else {
@@ -222,7 +261,16 @@ $this->get(
             $list_members = $m->getMembersList(true);
             foreach ($list_members as $member) {
                 $mid=$member->id;
+                $c = new Adherent($this->zdb, $mid, $deps);
                 $members[$mid]['id_adh'] = $mid;
+                $has_parent=$c->hasParent();
+                if ($has_parent) {
+                    $members[$mid]['parent_id'] = $c->parent->id;
+                    $members[$mid]['parent_name'] =  $c->parent->name . " ". $c->parent->surname;
+                }else{
+                    $members[$mid]['parent_id'] = '';
+                    $members[$mid]['parent_name']='';
+                }
             }
         }
             $output = print_r($members, true);
