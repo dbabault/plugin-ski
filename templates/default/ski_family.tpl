@@ -7,11 +7,13 @@
 {/if}
 {extends file="page.tpl"}
 {block name="content"}
-{if $GALETTE_MODE eq 'DEV'} {*debug*} {/if}
+{if $GALETTE_MODE eq 'DEV'} {debug} {/if}
 {*foreach from=$members item=member key=ordre*}
   {*if $member['id_adh'] == $pid*}
     {$parent_n=$members[$pid]['nom_adh']}
     {$parent_s=$members[$pid]['prenom_adh']}
+    {$nom_adh=$members[$pid]['nom_adh']}
+    {$prenom_adh=$members[$pid]['prenom_adh']}
     {$parent_id=$members[$pid]['id_adh']}
     {$adresse_adh=$members[$pid]['adresse_adh']}
     {$cp_adh=$members[$pid]['cp_adh']}
@@ -39,6 +41,7 @@
       <legend>{_T string="General informations" domain="ski"}</legend>
       <div>
       {if $parent_n == '?' }
+        {$email_adh='?'}
         <p><label for="Name">{_T string="Name" domain="ski"}</label>
         <input type="text" id="nom_adh" name="members[{$parent_id}][nom_adh]"  value="{$nom_adh}"  size="40"></p>
         <p><label for="Surname">{_T string="First Name" domain="ski"}</label>
@@ -157,11 +160,17 @@
             {$ftext=$dynadh[$mid][$id_dyn]['ftext']}
             {assign var=field value="info_field_"|cat:$id_dyn|cat:"_1"}
             {if $ftext == ''}
-              {$ftext='?' }
+              {$ftext='?'}
               {$fval='0' }
               {/if}
 
             <td class="center">
+
+            {if $ftext == 'O' || $ftext=='N'}
+            {if $ftext == 'O' }
+                  {'&#9989;'}
+            {/if}
+            {else}
               <select name="members[{$mid}][{$field}]" style="width: 90% " class="center">
               <option value="null">
                   {if $fval ne '' }
@@ -176,6 +185,7 @@
                   </option>
                 {/foreach}
               </select>
+              {/if}
             </td>
             {/foreach}
         <td class="{$rclass} center nowrap actions_row">

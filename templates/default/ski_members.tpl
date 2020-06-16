@@ -157,7 +157,7 @@
           {/if}
         </td>
         <td class="{$rclass}" data-title="{_T string=" Family"}"><strong>
-          <a href="{path_for name="ski_members" data=["option" => "edit/" , "value" => $parent_id] }" >
+          <a href="{path_for name="ski_members" data=["option" => "edit" , "value" => $parent_id] }" >
           {if $parent_id != ''}
             {$parent_name} ({$parent_id})
           {/if}

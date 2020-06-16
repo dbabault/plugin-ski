@@ -41,6 +41,7 @@ use GaletteObjectsLend\Filters\ObjectsList;
 use GaletteObjectsLend\Repository\Categories;
 use GaletteObjectsLend\Repository\Objects;
 use GaletteSki\Filters\FormFilter;
+use GaletteSki\Filters\FormRentFilter;
 use GaletteSki\Repository\Form;
 use GaletteSki\Repository\FormRent;
 use Galette\Entity\Adherent;
@@ -62,8 +63,8 @@ $this->get(
             $form_id = $args['form_id'];
         }
         if (GALETTE_MODE == 'DEV') {
-            $file1 = "/home/galette/galette/data/logs/route-ski_form.txt";
-            file_put_contents($file1, "\nski_form : " . $form_id);
+            //$file1 = "/home/galette/galette/data/logs/route-ski_form.txt";
+            //file_put_contents(//$file1, "\nski_form : " . $form_id);
         }
         $olendsprefs = new Preferences($this->zdb);
         $deps = array(
@@ -100,9 +101,9 @@ $this->get(
                 $fvalue = $field->getValues();
                 $$fname = $fvalue;
                 if (GALETTE_MODE == 'DEV') {
-                    file_put_contents($file1, "\n $fname :", FILE_APPEND);
+                    //file_put_contents(//$file1, "\n $fname :", FILE_APPEND);
                     $output = print_r($fvalue, true);
-                    file_put_contents($file1, $output, FILE_APPEND);
+                    //file_put_contents(//$file1, $output, FILE_APPEND);
                 }
             }
         }
@@ -198,17 +199,34 @@ $this->get(
             //
             // recuperer, et affecter les objets déja green par la Forme
             //
-            $formrent = new FormRent($this->zdb, $this->plugins, $olendsprefs);
+            $filters = new FormRentFilter();
+            $output=print_r($filters,true); 
+            //file_put_contents(//$file1, "\nform : " . $output,FILE_APPEND);
+            $filters->orderby = constant('GaletteSki\Repository\Formrent::ORDER_DESC');
+            $filters->field_filter = constant('GaletteSki\Repository\FormRent::FILTER_B_F_DATE');
+            $filters->begin = $date_begin;
+            $filters->filter_str = "BFdate";
+            $filters->forecast = $date_forecast;
+            $formrent = new FormRent($this->zdb, $this->plugins, $olendsprefs,$filters);
             $lists = $formrent->getFormRentList(true, null, false);
+            $output=count($lists); 
+            //file_put_contents(//$file1, "\ncount : " . $output);
+
             //
             // signaler les objets green avant,après, et pendant via une modification du nom de l'objet
             //
             $form_rents[] = "";
             foreach ($list_object as $object) {
-                $val1 = '';
                 $before=0;
                 $after=0;
-                $used='';
+                $during=0;
+                $used=0;
+                $before1="";
+                $after1="";
+                $during1="";
+                $used1="";
+                $val1 = '';
+                $val = '';
                 //
                 // https://www.w3schools.com/charsets/ref_emoji.asp
                 //
@@ -227,8 +245,9 @@ $this->get(
                     $form_rents[$rent->form_id][$rent->id_adh][$rent->category_id]['date_forecast'] = $rent->date_forecast;
                     $form_rents[$rent->form_id][$rent->id_adh][$rent->category_id]['date_end'] = $rent->date_end;
                     //}
-
+                    $id_adh="";
                     if ($rent->object_id == $object->object_id) {
+                        $obj=$object->object_id;
                         $rdb = $rent->date_begin;
                         $rdf = $rent->date_forecast;
                         $db = $date_begin;
@@ -241,27 +260,42 @@ $this->get(
                             $val = 'libre';
                         }
                         // début calcul val1
-                        if ($rdb == $db and $rdf == $df) {
+                        if ($db < $rdf and $df > $rdb) {
                             if ($rent->form_id != $form_id) {
                                 $val1 = 'during';
-                                $used=$rent->form_id;
+                                $during = $during + 1;
+                                if (strpos($during1, $rent->form_id) == FALSE) {
+                                    $during1=$during1 . " " . $rent->form_id ;
+                        $objects_list[$object->object_id][$rent->form_id] = $val1;
+                                }
                             } else {
                                 $val1 = 'used';
+                                $used = $used + 1;
                             }
-                        } elseif ($rdb < $df and $rdf > $db) {
-                            $val1 = 'before';
-                            $used=$rent->form_id;
-                        } elseif ($rdb < $db and $rdf == $db) {
-                            $val1 = 'before';
-                            $used=$rent->form_id;
-                        } elseif ($rdb == $df and $rdf > $df) {
+                        } elseif ($df == $rdb ) {
                             $val1 = 'after';
-                            $used=$rent->form_id;
+                            $after=$after+1;
+                            if (strpos($after1, $rent->form_id) == FALSE) {
+                                $after1=$after1 . " " . $rent->form_id;
+                        $objects_list[$object->object_id][$rent->form_id] = $val1;
+                            }
+                        } elseif ($db == $rdf) {
+                            $val1 = 'before';
+                            $before=$before + 1;
+                            if (strpos($before1, $rent->form_id) == false) {
+                                $before1=$before1 . " " . $rent->form_id;
+                        $objects_list[$object->object_id][$rent->form_id] = $val1;
+                            }
                         } else {
                             $val1 = 'libre';
                         } // fin calcul val1
+                        if ($val != 'libre') {
+                            //file_put_contents(//$file1, "\n" .$this->login->name . " " . $val1 . " form_rent_id:" . $rent->form_rent_id . " form_id:" . $rent->form_id ." object_id:". $obj . " rdb:" .$rdb ." rdf:".  $rdf ." db:".  $db ." df:".  $df, FILE_APPEND);
+                        }
                         // calcul new val
                         if ($val == 'libre') {
+                            $val = $val1;
+                        } else if ($val == 'used' ) {
                             $val = $val1;
                         } elseif ($val == 'before' and $val1 == 'after') {
                             $val = 'before-after';
@@ -278,38 +312,44 @@ $this->get(
                 $val = $objects_list[$object->object_id]['state'];
 
                 if ($val == 'libre') {
-                    $a = $space . $green;
-                    $b = $green . $space;
+                    $b = $green . '&emsp;';
+                    $a = '&emsp;' . $green;
                 } elseif ($val == 'before') {
-                    $a = $space . $green;
-                    $b = $yellow . $space;
+                    $b = $yellow . '['. $before1 . ']&emsp;';
+                    $a = '&emsp;' . $green;
                 } elseif ($val == 'after') {
-                    $a = $space . $yellow;
-                    $b = $green . $space;
+                    $b = $green . '&emsp;';
+                    $a = $space . '&emsp;['. $after1 .']'. $yellow;
                 } elseif ($val == 'before-after') {
-                    $a = $space . $yellow;
-                    $b = $yellow . $space;
+                    $b = $yellow . '['. $before1 . ']&emsp;';
+                    $a = $space . '&emsp;['. $after1 .']'. $yellow;
                 } elseif ($val == 'used') {
-                    $a = $space . $gray;
-                    $b = $gray . $space;
+                    $a = '&emsp;' . $gray;
+                    $b = $gray . '&emsp;';
                 } elseif ($val == 'during') {
-                    $a = $space . $red;
-                    $b = $red . $space;
+                    $b = $red . '&ensp;' ;
+                    $a = '&ensp;' . $red  . '&emsp;[fiche '. $during1 . ']';
                 }
 
+                if (GALETTE_MODE == 'DEV') {
+                    $D=' {' . $object->object_id . '}';
+                }else{
+                    $D="";
+                }
                 //$objects_list[$object->object_id]['name']= $b . $object->name . " (" . $object->dimension . ")" . $a ;
                 if ($object->name == "casque") {
-                    $objects_list[$object->object_id]['name'] = $b . $object->serial_number . " (" . $object->dimension . ")" . $a;
+                    $objects_list[$object->object_id]['name'] = $b . $object->serial_number . " (" . $object->dimension . ")" . $D . $a;
+                    $objects_list[$object->object_id]['name1'] = $object->serial_number . " (" . $object->dimension . ")" . $D  ;
                 } else {
-                    $objects_list[$object->object_id]['name'] = $b . $object->dimension . $a;
+                    $objects_list[$object->object_id]['name'] = $b . $object->dimension . $D  . $a;
+                    $objects_list[$object->object_id]['name1'] = $object->dimension . $D;
                 }
 
-                $objects_list[$object->object_id]['used'] = $used;
+
 
                 $objects_list[$object->object_id]['object_id'] = $object->object_id;
                 $objects_list[$object->object_id]['serial_number'] = $object->serial_number;
                 $objects_list[$object->object_id]['category_id'] = $object->category_id;
-                $objects_list[$object->object_id]['name1'] = $object->serial_number . " (" . $object->dimension . ")";
                 if ($object->serial_number == "000") {
                     $objects_list[$object->object_id]['name'] = "";
                     $objects_list[$object->object_id]['name1'] = "";
@@ -338,7 +378,7 @@ $this->get(
             'group' => $group,
             'adhs' => $adhs,
             'comment' => $comment,
-            'count' => count($list_forms),
+            'count' => count($form_rent),
             'next_form_id' => $next_form_id,
             'members' => $members,
             'categories' => $categories_list,
@@ -362,10 +402,10 @@ $this->post(
     __('/do_add_form', "ski"),
     function ($request, $response, $args) use ($module, $module_id) {
         if (GALETTE_MODE == 'DEV') {
-            $file1="/home/galette/galette/data/logs/route-do_add_form.txt";
+            //$file1="/home/galette/galette/data/logs/route-do_add_form.txt";
             $output = print_r($_POST, true);
-            file_put_contents($file1, "\n_POST : ");
-            file_put_contents($file1, $output, FILE_APPEND);
+            //file_put_contents(//$file1, "\n_POST : ");
+            //file_put_contents(//$file1, $output, FILE_APPEND);
         }
         $olendsprefs = new Preferences($this->zdb);
         $form = new Form($this->zdb, $this->plugins, $olendsprefs);
@@ -391,11 +431,11 @@ $this->post(
             foreach ($_POST as $k => $val) {
                 $form->$k = "$val";
                 $$k = "$val";
-                file_put_contents($file1, "\n" .$k ." " . $val, FILE_APPEND);
+                //file_put_contents(//$file1, "\n" .$k ." " . $val, FILE_APPEND);
             }
             $m1 = new Adherent($this->zdb, (int)$form->parent_id);
             $output = print_r($m1, true);
-            file_put_contents($file1, "\nm1 : ". $output,FILE_APPEND);
+            //file_put_contents(//$file1, "\nm1 : ". $output,FILE_APPEND);
             if (isset($m1->parent->sname)) {
                 $form->parent_sname=$m1->parent->name . " " . $m1->parent->surname;
             }else{
@@ -460,16 +500,16 @@ $this->post(
         $olendsprefs = new Preferences($this->zdb);
         $formrent = new FormRent($this->zdb, $this->plugins, $olendsprefs);
         if (GALETTE_MODE == 'DEV') {
-            $file1="/home/galette/galette/data/logs/route-do-add-object.txt";
-            $output = print_r($_POST . $output);
-                file_put_contents($file1, "\nargs : " . $output);
+            //$file1="/home/galette/galette/data/logs/route-do-add-object.txt";
+            $output = print_r($_POST ,true);
+                //file_put_contents(//$file1, "\nargs : " . $output);
         }
 
         foreach ($pst as $val) {
             $a = explode("=", $val)[0];
             $b = explode("=", $val)[1];
             if (GALETTE_MODE == 'DEV') {
-                file_put_contents($file1, "\npst1 : " . $a . "=" . $b);
+                //file_put_contents(//$file1, "\npst1 : " . $a . "=" . $b);
             }
             $formrent->$a = "$b";
             $$a = "$b";
@@ -515,6 +555,11 @@ $this->get(
     __('/ski_form_list', "ski") . '[/{option:' . __('page', 'routes') . '|' .
     __('order') . '|' . __('category') . '}/{value:\d+}]',
     function ($request, $response, $args) use ($module, $module_id) {
+        if (GALETTE_MODE == 'DEV') {
+            //$file1="/home/galette/galette/data/logs/route-ski_form_list.txt";
+            $output = print_r($_POST ,true);
+                //file_put_contents(//$file1, "\nargs : " . $output);
+        }
         // Init values
         $option = null;
         $value = null;
@@ -617,9 +662,9 @@ $this->post(
     function ($request, $response) {
         $post = $request->getParsedBody();
         if (GALETTE_MODE == 'DEV') {
-            $file1="/home/galette/galette/data/logs/route-form-filter.txt";
+            //$file1="/home/galette/galette/data/logs/route-form-filter.txt";
             $output = print_r($post, true);
-            file_put_contents($file1, "\npost : " . $output);
+            //file_put_contents(//$file1, "\npost : " . $output);
         }
         $m = new Members();
         $required_fields = array(

@@ -7,7 +7,7 @@
 {/if}
 {extends file="page.tpl"}
 {block name="content"}
-{if $GALETTE_MODE eq 'DEV'} {*debug*} {/if}
+{if $GALETTE_MODE eq 'DEV'} {debug} {/if}
 <div id="lend_content">
   <form id="filtre" method="POST" action='{path_for name="ski_filter_form" data=["type"=> "list"] }'  method="POST" id="filtre">
     <div id="listfilter">
@@ -44,10 +44,10 @@
         <tr>
           <th>
             <a href="{path_for name="ski_form_list" data=["option" => "order", "value" =>
-                                                "GaletteSki\Repository\Form::ORDERBY_FORM"|constant]}">
+              "GaletteSki\Repository\Form::ORDERBY_FORM"|constant]}">
               {_T string="Id" domain="ski"}
               {if $filters->orderby eq constant('GaletteSki\Repository\Form::ORDERBY_FORM')}
-              {if $filters->ordered eq constant('GaletteSki\Filters\FormFilter::ORDER_ASC')}
+              {if $filters->ordered eq constant('GaletteSki\Filters\FormFilter::ORDER_DESC')}
               <img src="{base_url}/{$template_subdir}images/down.png" width="10" height="6"alt=""/>
               {else}
               <img src="{base_url}/{$template_subdir}images/up.png" width="10" height="6" alt=""/>
@@ -57,7 +57,7 @@
           </th>
           <th>
             <a href="{path_for name="ski_form_list" data=["option" => "order", "value" =>
-                                                                                      "GaletteSki\Repository\Form::ORDERBY_BDATE"|constant]}">
+             "GaletteSki\Repository\Form::ORDERBY_BDATE"|constant]}">
               {_T string="Begin Date" domain="ski"}
               {if $filters->orderby eq constant('GaletteSki\Repository\Form::ORDERBY_BDATE')}
               {if $filters->ordered eq constant('GaletteSki\Filters\FormFilter::ORDER_ASC')}
@@ -108,7 +108,7 @@
             </a>
           </th>
           <th>
-            <a href="{path_for name="ski_form_list" data=["option" => "order", "value" =>"GaletteSki\Repository\Form::ORDERBY_NAME"|constant]}">
+            <a href="{path_for name="ski_form_list" data=["option" => "order", "value" =>"GaletteSki\Repository\Form::ORDERBY_FORM"|constant]}">
               {_T string="Parent_id" domain="ski"}
               {if $filters->orderby eq constant('GaletteSki\Repository\Form::ORDERBY_NAME')}
               {if $filters->ordered eq constant('GaletteSki\Filters\FormFilter::ORDER_ASC')}
@@ -144,43 +144,39 @@
         {$parent_id=$form["parent_id"]}
         <tr class="{if $form@index is odd}even{else}odd{/if}">
           <td class="center">
-
-            <a href="{path_for name="ski_form"}/{$form_id}"
-               title="{_T string="Open the form" domain="ski"}">{$form_id}
-            </a>
-
+            <a href="{path_for name="ski_form"}/{$form_id}" title="{_T string="Open the form" domain="ski"}">{$form_id} </a>
           </td>
           <td class="center nowrap">
             {if $form["date_begin"]}
-            {$form["date_begin"]|date_format:_T("Y-m-d")}
+              {$form["date_begin"]|date_format:_T("Y-m-d")}
             {else}
             -
             {/if}
           </td>
           <td class="center nowrap">
             {if $form["date_forecast"]}
-            {$form["date_forecast"]|date_format:_T("Y-m-d")}
+              {$form["date_forecast"]|date_format:_T("Y-m-d")}
             {else}
             -
             {/if}
           </td>
           <td class="center nowrap">
             {if $form["date_end"]}
-            {$form["date_end"]|date_format:_T("Y-m-d")}
+              {$form["date_end"]|date_format:_T("Y-m-d")}
             {else}
             -
             {/if}
           </td>
           <td class="left">
             {if $form["period"]}
-            {$form["period"]}
+              {$form["period"]}
             {/if}
           </td>
           <td class="left">
             {foreach $members as $member}
             {if $member["id_adh"] == $form["parent_id"]}
             <strong>
-              <a href="{path_for name="ski_members" data=["option" => "edit", "value" => $parent_id] }" >
+            <a href="{path_for name="ski_form"}/{$form_id}" title="{_T string="Open the form" domain="ski"}"> 
                 {$form["parent_sname"]} ({$form["parent_id"]})
               </a>
               </strong>
