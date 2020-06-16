@@ -48,7 +48,7 @@
  use Galette\Entity\Adherent;
  use Galette\Repository\Repository;
 
- use GaletteSki\Filters\FormFilter;
+ use GaletteSki\Filters\FormRentFilter;
  use GaletteObjectsLend\Entity\Preferences;
 
 /**
@@ -84,19 +84,23 @@ class FormRent
     const ACTIVE_FORM = 1;
     const INACTIVE_FORM = 2;
 
-    const FILTER_NAME = 0;
-    const FILTER_SERIAL = 1;
-    const FILTER_DIM = 2;
-    const FILTER_ID = 3;
-    const FILTER_PERIOD=6;
-    const FILTER_DURATION=7;
+ const FILTER_FORM_ID = 0;
+    const FILTER_ID_ADH = 1;
+    const FILTER_CATEGORY_ID = 2;
+    const FILTER_OBJECT_ID=3;
+    const FILTER_BDATE=4;
+    const FILTER_FDATE=5;
+    const FILTER_EDATE = 6;
+    const FILTER_B_F_DATE = 7;
 
-    const ORDERBY_FORM = 0;
+
+    const ORDERBY_FORM_ID = 0;
     const ORDERBY_BDATE = 1;
     const ORDERBY_FDATE = 2;
-    const ORDERBY_PERIOD=6;
-    const ORDERBY_DURATION=7;
-
+    const ORDERBY_OBJECT_ID=3;
+    const ORDERBY_EDATE=4;
+const ORDER_DESC = 'DESC';
+    const ORDER_ASC = 'ASC';
 
     private $count = null;
     private $errors = array();
@@ -108,15 +112,20 @@ class FormRent
      * @param Db          $zdb     Database instance
      * @param Plugins     $plugins Plugins instance
      */
-    public function __construct(Db $zdb, Plugins $plugins, Preferences $lprefs, FormFilter $filters = null)
+    public function __construct(Db $zdb, Plugins $plugins, Preferences $lprefs, FormRentFilter $filters = null)
     {
         $this->zdb = $zdb;
         $this->plugins = $plugins;
+        //$file1="/home/galette/galette/data/logs/lib-getFormRentList.txt";
         if ($filters === null) {
-            $this->filters = new FormFilter();
+            $this->filters = new FormRentFilter();
+	//file_put_contents(//$file1,"\nnew",FILE_APPEND);
         } else {
+	//file_put_contents(//$file1,"\nnot new",FILE_APPEND);
             $this->filters = $filters;
         }
+        $output=print_r($filters,true);
+	//file_put_contents(//$file1,"\nfilters0".$output,FILE_APPEND);
     }
 
     /**
@@ -128,6 +137,9 @@ class FormRent
      *                            an array. If null, all fields will be
      *                            returned
      * @param boolean $count      true if we want to count members
+     * @param boolean $limit      
+     * @param boolean $start_after exclude form which start's after date      
+     * @param boolean $end_before  exclude form which end's before date    
      *
      * @return Form[]|ResultSet
      */
@@ -137,10 +149,11 @@ class FormRent
         $limit = false
     ) {
         try {
-            $select = $this->buildSelect($fields, $count);
+        //$file1="/home/galette/galette/data/logs/lib-getFormRentList.txt";
             if ($limit === true) {
                 $this->filters->setLimit($select);
             }
+            $select = $this->buildSelect($fields, $count);
             $rows = $this->zdb->execute($select);
             $FormRent = array();
             $FormRent = $rows;
@@ -171,12 +184,12 @@ class FormRent
                           ? ((!is_array($fields) || count($fields) < 1) ? (array)'*'
                           : $fields) : (array)'*';
             $select->columns($fieldsList);
-
+  
             if ($this->filters !== false) {
                 $this->buildWhereClause($select);
             }
-            $this->buildOrderClause($fields);
-            $select->order($this->buildOrderClause($fields));
+            //$this->buildOrderClause($fields);
+            //$select->order($this->buildOrderClause($fields));
             if ($count) {
                 $this->proceedCount($select);
             }
@@ -260,38 +273,40 @@ class FormRent
         global $login;
 
         try {
+        //$file1="/home/galette/galette/data/logs/lib-getFormRentList.txt";
+	//file_put_contents(//$file1,"\nfield_filter = ".$this->filters->field_filter,FILE_APPEND);
+
             if ($this->filters->filter_str != '') {
                 $token = $this->zdb->platform->quoteValue(
                     '%' . strtolower($this->filters->filter_str) . '%'
                 );
+                $begin = $this->zdb->platform->quoteValue($this->filters->begin);
+                $forecast = $this->zdb->platform->quoteValue($this->filters->forecast);
                 switch ($this->filters->field_filter) {
-                    case self::FILTER_NAME:
-                        $select->where(
-                            'o.parent_id LIKE ' . $token
-                        );
+                    case self::FILTER_FORM_ID:
+	//file_put_contents(//$file1,"\nbuildWhereClause1",FILE_APPEND);
+                        $select->where( 'o.form_id LIKE ' . $token);
+                        break;
+                    case self::FILTER_ID_ADH:
+	//file_put_contents(//$file1,"\nbuildWhereClause2",FILE_APPEND);
+                        $select->where( 'o.id_adh LIKE ' . $token);
                         break;
                     case self::FILTER_BDATE:
-                        $select->where(
-                            'o.date_begin LIKE ' . $token
-                        );
+	//file_put_contents(//$file1,"\nbuildWhereClause3",FILE_APPEND);
+                        $select->where( 'o.date_begin LIKE ' . $token);
                         break;
                     case self::FILTER_FDATE:
-                        $select->where(
-                            'o.date_forecast LIKE ' . $token
-                        );
+	//file_put_contents(//$file1,"\nbuildWhereClause4",FILE_APPEND);
+                        $select->where( 'o.date_forecast LIKE ' . $token);
                         break;
                     case self::FILTER_EDATE:
-                        $select->where(
-                            'o.date_end LIKE ' . $token
-                        );
+	//file_put_contents(//$file1,"\nbuildWhereClause5",FILE_APPEND);
+                        $select->where( 'o.date_end LIKE ' . $token);
                         break;
-                    case self::FILTER_STATUS:
-                        $select->where(
-                            'LOWER(form_status) LIKE ' . $token
-                        );
-                        break;
-                    case self::FILTER_ID:
-                        $select->where->equalTo('o.' . Form::PK, $this->filters->filter_str);
+                    case self::FILTER_B_F_DATE:
+	//file_put_contents(//$file1,"\nbuildWhereClause6",FILE_APPEND);
+	//file_put_contents(//$file1,"\n " .  $forecast . '  '  . $begin ,FILE_APPEND);
+                        $select->where( 'o.date_begin <= ' . $forecast . ' AND o.date_forecast >= ' . $begin);
                         break;
                 }
             }
@@ -313,18 +328,20 @@ class FormRent
  *
  * @return string SQL ORDER clause
  */
+
+
     private function buildOrderClause($fields = null)
     {
         $order = array();
         switch ($this->filters->orderby) {
-            case self::ORDERBY_FORM:
+            case self::ORDERBY_FORM_ID:
                 if ($this->canOrderBy('form_id', $fields)) {
                     $order[] = 'form_id ' . $this->filters->getDirection();
                 }
                 break;
-            case self::ORDERBY_NAME:
-                if ($this->canOrderBy('parent_id', $fields)) {
-                    $order[] = 'parent_id ' . $this->filters->getDirection();
+            case self::ORDERBY_OBJECT_ID:
+                if ($this->canOrderBy('object_id', $fields)) {
+                    $order[] = 'object_id ' . $this->filters->getDirection();
                 }
                 break;
             case self::ORDERBY_BDATE:
@@ -340,12 +357,6 @@ class FormRent
             case self::ORDERBY_EDATE:
                 if ($this->canOrderBy('date_end', $fields)) {
                     $order[] = 'date_end ' . $this->filters->getDirection();
-                }
-                break;
-
-            case self::ORDERBY_STATUS:
-                if ($this->canOrderBy('form_status', $fields)) {
-                    $order[] = 'form_status ' . $this->filters->getDirection();
                 }
                 break;
         }
