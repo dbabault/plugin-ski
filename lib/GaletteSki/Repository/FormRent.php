@@ -40,14 +40,12 @@
  namespace GaletteSki\Repository;
 
  use Galette\Entity\DynamicFields;
-
  use Analog\Analog;
  use Galette\Core\Db;
  use Laminas\Db\Sql\Expression;
  use Galette\Core\Plugins;
  use Galette\Entity\Adherent;
  use Galette\Repository\Repository;
-
  use GaletteSki\Filters\FormRentFilter;
  use GaletteObjectsLend\Entity\Preferences;
 
@@ -66,8 +64,8 @@
 
 class FormRent
 {
-    const TABLE = 'form_rent';
-    const PK = 'form_rent_id';
+    private const TABLE = 'form_rent';
+    private const PK = 'form_rent_id';
 
     private $fields = array(
         'form_rent_id' => 'integer',
@@ -80,27 +78,27 @@ class FormRent
     );
 
 
-    const ALL_FORM = 0;
-    const ACTIVE_FORM = 1;
-    const INACTIVE_FORM = 2;
+    private const ALL_FORM = 0;
+    private const ACTIVE_FORM = 1;
+    private const INACTIVE_FORM = 2;
 
- const FILTER_FORM_ID = 0;
-    const FILTER_ID_ADH = 1;
-    const FILTER_CATEGORY_ID = 2;
-    const FILTER_OBJECT_ID=3;
-    const FILTER_BDATE=4;
-    const FILTER_FDATE=5;
-    const FILTER_EDATE = 6;
-    const FILTER_B_F_DATE = 7;
+    private const FILTER_FORM_ID = 0;
+    private const FILTER_ID_ADH = 1;
+    private const FILTER_CATEGORY_ID = 2;
+    private const FILTER_OBJECT_ID = 3;
+    private const FILTER_BDATE = 4;
+    private const FILTER_FDATE = 5;
+    private const FILTER_EDATE = 6;
+    private const FILTER_B_F_DATE = 7;
 
 
-    const ORDERBY_FORM_ID = 0;
-    const ORDERBY_BDATE = 1;
-    const ORDERBY_FDATE = 2;
-    const ORDERBY_OBJECT_ID=3;
-    const ORDERBY_EDATE=4;
-const ORDER_DESC = 'DESC';
-    const ORDER_ASC = 'ASC';
+    private const ORDERBY_FORM_ID = 0;
+    private const ORDERBY_BDATE = 1;
+    private const ORDERBY_FDATE = 2;
+    private const ORDERBY_OBJECT_ID = 3;
+    private const ORDERBY_EDATE = 4;
+    private const ORDER_DESC = 'DESC';
+    private const ORDER_ASC = 'ASC';
 
     private $count = null;
     private $errors = array();
@@ -116,16 +114,11 @@ const ORDER_DESC = 'DESC';
     {
         $this->zdb = $zdb;
         $this->plugins = $plugins;
-        //$file1="/home/galette/galette/data/logs/lib-getFormRentList.txt";
         if ($filters === null) {
             $this->filters = new FormRentFilter();
-	//file_put_contents(//$file1,"\nnew",FILE_APPEND);
         } else {
-	//file_put_contents(//$file1,"\nnot new",FILE_APPEND);
             $this->filters = $filters;
         }
-        $output=print_r($filters,true);
-	//file_put_contents(//$file1,"\nfilters0".$output,FILE_APPEND);
     }
 
     /**
@@ -137,9 +130,9 @@ const ORDER_DESC = 'DESC';
      *                            an array. If null, all fields will be
      *                            returned
      * @param boolean $count      true if we want to count members
-     * @param boolean $limit      
-     * @param boolean $start_after exclude form which start's after date      
-     * @param boolean $end_before  exclude form which end's before date    
+     * @param boolean $limit
+     * @param boolean $start_after exclude form which start's after date
+     * @param boolean $end_before  exclude form which end's before date
      *
      * @return Form[]|ResultSet
      */
@@ -149,7 +142,6 @@ const ORDER_DESC = 'DESC';
         $limit = false
     ) {
         try {
-        //$file1="/home/galette/galette/data/logs/lib-getFormRentList.txt";
             if ($limit === true) {
                 $this->filters->setLimit($select);
             }
@@ -216,15 +208,15 @@ const ORDER_DESC = 'DESC';
         try {
               $zdb->connection->beginTransaction();
               $values = array();
-              $values['form_id']=$f->form_id;
-              $values['id_adh']=$f->id_adh;
-              $values['category_id']=$f->category_id;
-              $values['object_id']=$f->object_id;
-              $values['date_begin']=$f->date_begin;
-              $values['date_forecast']=$f->date_forecast;
-              $values['date_end']=$f->date_end;
+              $values['form_id'] = $f->form_id;
+              $values['id_adh'] = $f->id_adh;
+              $values['category_id'] = $f->category_id;
+              $values['object_id'] = $f->object_id;
+              $values['date_begin'] = $f->date_begin;
+              $values['date_forecast'] = $f->date_forecast;
+              $values['date_end'] = $f->date_end;
             if ($f->date_end == 'NULL') {
-                $values['date_end']='0000-00-00';
+                $values['date_end'] = '0000-00-00';
             }
             unset($values[self::PK]);
             if ($f->form_rent_id > 0) {
@@ -273,9 +265,6 @@ const ORDER_DESC = 'DESC';
         global $login;
 
         try {
-        //$file1="/home/galette/galette/data/logs/lib-getFormRentList.txt";
-	//file_put_contents(//$file1,"\nfield_filter = ".$this->filters->field_filter,FILE_APPEND);
-
             if ($this->filters->filter_str != '') {
                 $token = $this->zdb->platform->quoteValue(
                     '%' . strtolower($this->filters->filter_str) . '%'
@@ -284,29 +273,22 @@ const ORDER_DESC = 'DESC';
                 $forecast = $this->zdb->platform->quoteValue($this->filters->forecast);
                 switch ($this->filters->field_filter) {
                     case self::FILTER_FORM_ID:
-	//file_put_contents(//$file1,"\nbuildWhereClause1",FILE_APPEND);
-                        $select->where( 'o.form_id LIKE ' . $token);
+                        $select->where('o.form_id LIKE ' . $token);
                         break;
                     case self::FILTER_ID_ADH:
-	//file_put_contents(//$file1,"\nbuildWhereClause2",FILE_APPEND);
-                        $select->where( 'o.id_adh LIKE ' . $token);
+                        $select->where('o.id_adh LIKE ' . $token);
                         break;
                     case self::FILTER_BDATE:
-	//file_put_contents(//$file1,"\nbuildWhereClause3",FILE_APPEND);
-                        $select->where( 'o.date_begin LIKE ' . $token);
+                        $select->where('o.date_begin LIKE ' . $token);
                         break;
                     case self::FILTER_FDATE:
-	//file_put_contents(//$file1,"\nbuildWhereClause4",FILE_APPEND);
-                        $select->where( 'o.date_forecast LIKE ' . $token);
+                        $select->where('o.date_forecast LIKE ' . $token);
                         break;
                     case self::FILTER_EDATE:
-	//file_put_contents(//$file1,"\nbuildWhereClause5",FILE_APPEND);
-                        $select->where( 'o.date_end LIKE ' . $token);
+                        $select->where('o.date_end LIKE ' . $token);
                         break;
                     case self::FILTER_B_F_DATE:
-	//file_put_contents(//$file1,"\nbuildWhereClause6",FILE_APPEND);
-	//file_put_contents(//$file1,"\n " .  $forecast . '  '  . $begin ,FILE_APPEND);
-                        $select->where( 'o.date_begin <= ' . $forecast . ' AND o.date_forecast >= ' . $begin);
+                        $select->where('o.date_begin <= ' . $forecast . ' AND o.date_forecast >= ' . $begin);
                         break;
                 }
             }

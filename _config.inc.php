@@ -35,4 +35,5 @@
  * @link      http://galette.tuxfamily.org
  * @since     Available since 0.9.3
  */
+
 define('SKI_PREFIX', 'ski_');

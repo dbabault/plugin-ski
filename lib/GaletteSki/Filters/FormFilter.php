@@ -65,9 +65,6 @@ class FormFilter extends Pagination
     private $active_filter;
     private $field_filter;
     private $selected;
-//an empty contributions dynamic field criteria to begin
-    private $_contrib_dynamic = array();
-    private $_adh_dynamic = array();
 
     protected $query;
 
@@ -79,12 +76,12 @@ class FormFilter extends Pagination
         'selected',
         'query'
     );
-    const FILTER_ID = 0;
-    const FILTER_BDATE = 1;
-    const FILTER_FDATE = 2;
-    const FILTER_EDATE = 3;
-    const FILTER_NAME = 4;
-    const FILTER_STATUS = 5;
+    private const FILTER_ID = 0;
+    private const FILTER_BDATE = 1;
+    private const FILTER_FDATE = 2;
+    private const FILTER_EDATE = 3;
+    private const FILTER_NAME = 4;
+    private const FILTER_STATUS = 5;
     /**
      * Default constructor
      */
@@ -134,7 +131,7 @@ class FormFilter extends Pagination
                 return $this->$name;
             } else {
                 Analog::log(
-                    '[FormFilter] Unable to get proprety `' .$name . '`',
+                    '[FormFilter] Unable to get proprety `' . $name . '`',
                     Analog::WARNING
                 );
             }

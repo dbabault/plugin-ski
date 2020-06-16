@@ -59,15 +59,15 @@ use GaletteObjectsLend\Entity\Preferences;
 class SkiMembersList extends Pagination
 {
     //filters
-    private $_filter_str;
-    private $_field_filter;
-    private $_membership_filter;
-    private $_filter_account;
-    private $_email_filter;
-    private $_group_filter;
+    private $filter_str;
+    private $field_filter;
+    private $membership_filter;
+    private $filter_account;
+    private $email_filter;
+    private $group_filter;
 
-    private $_selected;
-    private $_unreachable;
+    private $selected;
+    private $unreachable;
 
     protected $query;
 
@@ -147,7 +147,7 @@ class SkiMembersList extends Pagination
                 }
             } else {
                 Analog::log(
-                    '[SkiMembersList] Unable to get proprety `' .$name . '`',
+                    '[SkiMembersList] Unable to get proprety `' . $name . '`',
                     Analog::WARNING
                 );
             }
@@ -238,7 +238,7 @@ class SkiMembersList extends Pagination
                     } elseif ($value !== null && $value !== '0') {
                         Analog::log(
                             '[SkiMembersList] Value for group filter should be an '
-                            .'integer (' . gettype($value) . ' given)',
+                            . 'integer (' . gettype($value) . ' given)',
                             Analog::WARNING
                         );
                     }

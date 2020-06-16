@@ -65,7 +65,7 @@ use GaletteObjectsLend\Entity\Preferences;
  */
 class PdfForm extends Pdf
 {
-    const LIST_FONT = self::FONT_SIZE-2;
+    private const LIST_FONT = self::FONT_SIZE - 2;
 
     private $zdb;
     private $lendsprefs;
@@ -232,14 +232,14 @@ class PdfForm extends Pdf
                 $this->SetFillColor(255, 214, 135);
             }
 
-            $fill=!$object->is_home_location;
+            $fill = !$object->is_home_location;
 
             $this->Cell($w_checkbox, 0, '□', 'B', 0, 'L', $fill);
             $this->Cell($w_name, 0, $this->cut($object->name, $w_name), 'B', 0, 'L', $fill);
             $this->Cell($w_description, 0, $this->cut($object->description, $w_description), 'B', 0, 'L', $fill);
             $this->Cell($w_serial, 0, $this->cut($object->serial_number, $w_serial), 'B', 0, 'L', $fill);
             $this->Cell($w_price, 0, $this->cut($object->price, $w_price), 'B', 0, 'R', $fill);
-            $this->Cell($w_price, 0, $this->cut($object->rent_price, $w_price).$object->currency, 'B', 0, 'R', $fill);
+            $this->Cell($w_price, 0, $this->cut($object->rent_price, $w_price) . $object->currency, 'B', 0, 'R', $fill);
             $this->Cell($w_dimension, 0, $this->cut($object->dimension, $w_dimension), 'B', 0, 'L', $fill);
             $this->Cell($w_weight, 0, $this->cut($object->weight, $w_weight), 'B', 0, 'R', $fill);
             $this->Cell($w_status, 0, $this->cut($object->status_text, $w_status), 'B', 0, 'L', $fill);
@@ -360,7 +360,7 @@ class PdfForm extends Pdf
      */
     protected function cut($str, $length)
     {
-        $length = $length -2; //keep a margin
+        $length = $length - 2; //keep a margin
         if ($this->GetStringWidth($str) > $length) {
             while ($this->GetStringWidth($str . '...') > $length) {
                 $str = mb_substr($str, 0, -1, 'UTF-8');

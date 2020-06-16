@@ -1,9 +1,5 @@
 {if $GALETTE_MODE eq 'DEV'}
 	{assign var="page_title" value="{$page_title} ({$GALETTE_MODE})"}
-	{$file1="/home/galette/galette/data/logs/template-ski_family.txt"}
-	{$output = print_r($pid, true)}
-	{file_put_contents($file1, "\npid: ")}
-	{file_put_contents($file1, $output,FILE_APPEND)}
 {/if}
 {extends file="page.tpl"}
 {block name="content"}

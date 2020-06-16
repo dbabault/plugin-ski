@@ -39,7 +39,6 @@ namespace GaletteSki\Repository;
 
 use Galette\DynamicFields\DynamicField;
 use Galette\Entity\DynamicFieldsHandle;
-
 use Analog\Analog;
 use Laminas\Db\Sql\Expression;
 use Laminas\Db\Sql\Predicate\PredicateSet;
@@ -70,53 +69,53 @@ use Galette\Core\Db;
  */
 class SkiMembers
 {
-    const TABLE = Adherent::TABLE;
-    const PK = Adherent::PK;
+    private const TABLE = Adherent::TABLE;
+    private const PK = Adherent::PK;
 
-    const ALL_ACCOUNTS = 0;
-    const ACTIVE_ACCOUNT = 1;
-    const INACTIVE_ACCOUNT = 2;
+    private const ALL_ACCOUNTS = 0;
+    private const ACTIVE_ACCOUNT = 1;
+    private const INACTIVE_ACCOUNT = 2;
 
-    const SHOW_LIST = 0;
-    const SHOW_PUBLIC_LIST = 1;
-    const SHOW_ARRAY_LIST = 2;
-    const SHOW_STAFF = 3;
-    const SHOW_MANAGED = 4;
-    const SHOW_EXPORT = 5;
+    private const SHOW_LIST = 0;
+    private const SHOW_PUBLIC_LIST = 1;
+    private const SHOW_ARRAY_LIST = 2;
+    private const SHOW_STAFF = 3;
+    private const SHOW_MANAGED = 4;
+    private const SHOW_EXPORT = 5;
 
-    const FILTER_NAME = 0;
-    const FILTER_ADDRESS = 1;
-    const FILTER_MAIL = 2;
-    const FILTER_JOB = 3;
-    const FILTER_INFOS = 4;
-    const FILTER_DC_EMAIL = 5;
-    const FILTER_W_EMAIL = 6;
-    const FILTER_WO_EMAIL = 7;
-    const FILTER_COMPANY_NAME = 8;
-    const FILTER_DC_PUBINFOS = 9;
-    const FILTER_W_PUBINFOS = 10;
-    const FILTER_WO_PUBINFOS = 11;
-    const FILTER_NUMBER = 12;
-    const FILTER_PARENT = 13;
+    private const FILTER_NAME = 0;
+    private const FILTER_ADDRESS = 1;
+    private const FILTER_MAIL = 2;
+    private const FILTER_JOB = 3;
+    private const FILTER_INFOS = 4;
+    private const FILTER_DC_EMAIL = 5;
+    private const FILTER_W_EMAIL = 6;
+    private const FILTER_WO_EMAIL = 7;
+    private const FILTER_COMPANY_NAME = 8;
+    private const FILTER_DC_PUBINFOS = 9;
+    private const FILTER_W_PUBINFOS = 10;
+    private const FILTER_WO_PUBINFOS = 11;
+    private const FILTER_NUMBER = 12;
+    private const FILTER_PARENT = 13;
 
-    const MEMBERSHIP_ALL = 0;
-    const MEMBERSHIP_UP2DATE = 3;
-    const MEMBERSHIP_NEARLY = 1;
-    const MEMBERSHIP_LATE = 2;
-    const MEMBERSHIP_NEVER = 4;
-    const MEMBERSHIP_STAFF = 5;
-    const MEMBERSHIP_ADMIN = 6;
-    const MEMBERSHIP_NONE = 7;
+    private const MEMBERSHIP_ALL = 0;
+    private const MEMBERSHIP_UP2DATE = 3;
+    private const MEMBERSHIP_NEARLY = 1;
+    private const MEMBERSHIP_LATE = 2;
+    private const MEMBERSHIP_NEVER = 4;
+    private const MEMBERSHIP_STAFF = 5;
+    private const MEMBERSHIP_ADMIN = 6;
+    private const MEMBERSHIP_NONE = 7;
 
-    const ORDERBY_NAME = 0;
-    const ORDERBY_NICKNAME = 1;
-    const ORDERBY_STATUS = 2;
-    const ORDERBY_FEE_STATUS = 3;
-    const ORDERBY_MODIFDATE = 4;
-    const ORDERBY_ID = 5;
-    const ORDERBY_PARENT = 6;
+    private const ORDERBY_NAME = 0;
+    private const ORDERBY_NICKNAME = 1;
+    private const ORDERBY_STATUS = 2;
+    private const ORDERBY_FEE_STATUS = 3;
+    private const ORDERBY_MODIFDATE = 4;
+    private const ORDERBY_ID = 5;
+    private const ORDERBY_PARENT = 6;
 
-    const NON_STAFF_MEMBERS = 30;
+    private const NON_STAFF_MEMBERS = 30;
 
     private $filters = false;
     private $count = null;
@@ -412,7 +411,8 @@ class SkiMembers
                 return true;
             } catch (\Exception $e) {
                 $zdb->connection->rollBack();
-                if ($e instanceof \Zend_Db_Statement_Exception
+                if (
+                    $e instanceof \Zend_Db_Statement_Exception
                     && $e->getCode() == 23000
                 ) {
                     Analog::log(
@@ -664,7 +664,8 @@ class SkiMembers
             }
 
             //check for contributions filtering
-            if ($this->filters instanceof AdvancedMembersList
+            if (
+                $this->filters instanceof AdvancedMembersList
                 && $this->filters->withinContributions()
             ) {
                 $select->join(
@@ -679,7 +680,8 @@ class SkiMembers
             $hasDf = false;
             $dfs = array();
 
-            if ($this->filters instanceof AdvancedMembersList
+            if (
+                $this->filters instanceof AdvancedMembersList
                 && $this->filters->free_search
                 && count($this->filters->free_search) > 0
                 && !isset($this->filters->free_search['empty'])
@@ -699,10 +701,12 @@ class SkiMembers
             $hasCdfc = false;
             $cdfcs = array();
 
-            if ($this->filters instanceof AdvancedMembersList
+            if (
+                $this->filters instanceof AdvancedMembersList
                 && $this->filters->withinContributions()
             ) {
-                if ($this->filters->contrib_dynamic
+                if (
+                    $this->filters->contrib_dynamic
                     && count($this->filters->contrib_dynamic) > 0
                     && !isset($this->filters->contrib_dynamic['empty'])
                 ) {
@@ -992,7 +996,7 @@ class SkiMembers
                         } else {
                             $sep = ', " ", ';
                             $pre = 'CONCAT(';
-                            $post=')';
+                            $post = ')';
                         }
                         //$sep = ( TYPE_DB === 'pgsql' ) ? " || ' ' || " : ', " ", ';
                         $select->where(
@@ -1145,7 +1149,8 @@ class SkiMembers
             }
 
             if ($this->filters instanceof AdvancedMembersList) {
-                if ($this->filters->rbirth_date_begin
+                if (
+                    $this->filters->rbirth_date_begin
                     || $this->filters->rbirth_date_end
                 ) {
                     if ($this->filters->rbirth_date_begin) {
@@ -1164,7 +1169,8 @@ class SkiMembers
                     }
                 }
 
-                if ($this->filters->rcreation_date_begin
+                if (
+                    $this->filters->rcreation_date_begin
                     || $this->filters->rcreation_date_end
                 ) {
                     if ($this->filters->rcreation_date_begin) {
@@ -1183,7 +1189,8 @@ class SkiMembers
                     }
                 }
 
-                if ($this->filters->rmodif_date_begin
+                if (
+                    $this->filters->rmodif_date_begin
                     || $this->filters->rmodif_date_end
                 ) {
                     if ($this->filters->rmodif_date_begin) {
@@ -1202,7 +1209,8 @@ class SkiMembers
                     }
                 }
 
-                if ($this->filters->rdue_date_begin
+                if (
+                    $this->filters->rdue_date_begin
                     || $this->filters->rdue_date_end
                 ) {
                     if ($this->filters->rdue_date_begin) {
@@ -1242,7 +1250,8 @@ class SkiMembers
                     );
                 }
 
-                if ($this->filters->rcontrib_creation_date_begin
+                if (
+                    $this->filters->rcontrib_creation_date_begin
                     || $this->filters->rcontrib_creation_date_end
                 ) {
                     if ($this->filters->rcontrib_creation_date_begin) {
@@ -1265,7 +1274,8 @@ class SkiMembers
                     }
                 }
 
-                if ($this->filters->rcontrib_begin_date_begin
+                if (
+                    $this->filters->rcontrib_begin_date_begin
                     || $this->filters->rcontrib_begin_date_end
                 ) {
                     if ($this->filters->rcontrib_begin_date_begin) {
@@ -1288,7 +1298,8 @@ class SkiMembers
                     }
                 }
 
-                if ($this->filters->rcontrib_end_date_begin
+                if (
+                    $this->filters->rcontrib_end_date_begin
                     || $this->filters->rcontrib_end_date_end
                 ) {
                     if ($this->filters->rcontrib_end_date_begin) {
@@ -1311,7 +1322,8 @@ class SkiMembers
                     }
                 }
 
-                if ($this->filters->contrib_min_amount
+                if (
+                    $this->filters->contrib_min_amount
                     || $this->filters->contrib_max_amount
                 ) {
                     if ($this->filters->contrib_min_amount) {
@@ -1342,7 +1354,8 @@ class SkiMembers
                     );
                 }
 
-                if (count($this->filters->contrib_dynamic) > 0
+                if (
+                    count($this->filters->contrib_dynamic) > 0
                     && !isset($this->filters->contrib_dynamic['empty'])
                 ) {
                     foreach ($this->filters->contrib_dynamic as $k => $cd) {
@@ -1366,12 +1379,13 @@ class SkiMembers
                             $field = 'field_val';
                             $qry .= 'LOWER(' . $prefix . $field . ') ' .
                                 $qop  . ' ' ;
-                            $select->where($qry . $zdb->platform->quoteValue('%' .strtolower($cd) . '%'));
+                            $select->where($qry . $zdb->platform->quoteValue('%' . strtolower($cd) . '%'));
                         }
                     }
                 }
 
-                if (count($this->filters->free_search) > 0
+                if (
+                    count($this->filters->free_search) > 0
                     && !isset($this->filters->free_search['empty'])
                 ) {
                     foreach ($this->filters->free_search as $fs) {
@@ -1437,7 +1451,8 @@ class SkiMembers
                         } elseif (!strncmp($fs['field'], 'bool_', strlen('bool_'))) {
                             $qry .= $prefix . $fs['field'] . $qop  . ' ' .
                                 $fs['search'] ;
-                        } elseif ($fs['qry_op'] === AdvancedMembersList::OP_BEFORE
+                        } elseif (
+                            $fs['qry_op'] === AdvancedMembersList::OP_BEFORE
                             || $fs['qry_op'] === AdvancedMembersList::OP_AFTER
                         ) {
                             if ($prefix === 'a.') {
@@ -1542,7 +1557,8 @@ class SkiMembers
 
                 foreach ($results as $m) {
                     $dirty = false;
-                    if ($m->login_adh == ''
+                    if (
+                        $m->login_adh == ''
                         || !isset($m->login_adh)
                         || $m->login_adh == 'NULL'
                     ) {
@@ -1550,7 +1566,8 @@ class SkiMembers
                         $dirty = true;
                     }
 
-                    if ($m->mdp_adh == ''
+                    if (
+                        $m->mdp_adh == ''
                         || !isset($m->mdp_adh)
                         || $m->mdp_adh == 'NULL'
                     ) {

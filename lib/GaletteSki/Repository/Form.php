@@ -34,65 +34,59 @@
  * @link      http://galette.tuxfamily.org
  * @since     Available since 0.9.3
  *
- *$file1="/home/daniel/fichier1-do_add_form.txt";
- *file_put_contents($file1, "\n 1 Form.php newForm",FILE_APPEND);
- *$output = print_r($f, true);
- *file_put_contents($file1, "\n 3 Form.php newForm",FILE_APPEND);
  *
  */
 
 namespace GaletteSki\Repository;
 
 use Galette\Entity\DynamicFields;
-
 use Analog\Analog;
 use Galette\Core\Db;
 use Zend\Db\Sql\Expression;
 use Galette\Core\Plugins;
 use Galette\Entity\Adherent;
 use Galette\Repository\Repository;
-
 use GaletteSki\Filters\FormFilter;
 use GaletteObjectsLend\Entity\Preferences;
 
 /**
- * Form list
+ * form list
  *
- * @name Form
- * @category  Repository
- * @package   GaletteSki
+ * @name form
+ * @category  repository
+ * @package   galetteski
  *
- * @author    Johan Cwiklinski <johan@x-tnd.be>
- * @copyright 2017-2018 The Galette Team
- * @license   http://www.gnu.org/licenses/gpl-3.0.html GPL License 3.0 or (at your option) any later version
+ * @author    johan cwiklinski <johan@x-tnd.be>
+ * @copyright 2017-2018 the galette team
+ * @license   http://www.gnu.org/licenses/gpl-3.0.html gpl license 3.0 or (at your option) any later version
  * @link      http://galette.tuxfamily.org
  */
 class Form
 {
-    const TABLE = "form";
-    const PK = "form_id";
+    private const TABLE = "form";
+    private const PK = "form_id";
 
-    const FILTER_ID = 0;
-    const FILTER_BDATE = 1;
-    const FILTER_FDATE = 2;
-    const FILTER_EDATE = 3;
-    const FILTER_NAME = 4;
-    const FILTER_STATUS = 5;
-    const FILTER_PERIOD= 6;
-    const FILTER_DURATION = 6;
+    private const FILTER_ID = 0;
+    private const FILTER_BDATE = 1;
+    private const FILTER_FDATE = 2;
+    private const FILTER_EDATE = 3;
+    private const FILTER_NAME = 4;
+    private const FILTER_STATUS = 5;
+    private const FILTER_PERIOD = 6;
+    private const FILTER_DURATION = 6;
 
-    const ALL_FORM = 0;
-    const ACTIVE_FORM = 1;
-    const INACTIVE_FORM = 2;
+    private const ALL_FORM = 0;
+    private const ACTIVE_FORM = 1;
+    private const INACTIVE_FORM = 2;
 
-    const ORDERBY_FORM = 0;
-    const ORDERBY_BDATE = 1;
-    const ORDERBY_FDATE = 2;
-    const ORDERBY_EDATE = 3;
-    const ORDERBY_NAME= 4;
-    const ORDERBY_STATUS=5;
-    const ORDERBY_PERIOD=6;
-    const ORDERBY_DURATION=7;
+    private const ORDERBY_FORM = 0;
+    private const ORDERBY_BDATE = 1;
+    private const ORDERBY_FDATE = 2;
+    private const ORDERBY_EDATE = 3;
+    private const ORDERBY_NAME = 4;
+    private const ORDERBY_STATUS = 5;
+    private const ORDERBY_PERIOD = 6;
+    private const ORDERBY_DURATION = 7;
 
 
 
@@ -430,40 +424,28 @@ class Form
         $success = false;
         global $zdb;
         try {
-            if (GALETTE_MODE == 'DEV') {
-                $file1="/home/galette/galette/data/logs/lib-repository-form-newForm.txt";
-                file_put_contents($file1, "\n" );
-            }
             $zdb->connection->beginTransaction();
-
             $values = array();
-            $values['form_id']=$f->form_id;
-            $values['date_begin']=date('Y-m-d', strtotime($f->date_begin));
-            $values['date_forecast']=date('Y-m-d', strtotime($f->date_forecast));
-            $values['comment']=$f->comment;
-            $values['parent_id']=$f->parent_id;
-            $values['parent_sname']=$f->parent_sname;
-            $values['duration']=$f->duration;
-            $values['period']=$f->period;
-            $values['form_status']=$f->form_status;
-            $output = print_r($values, true);
-            file_put_contents($file1, "\nvalues : " . $output,FILE_APPEND);
+            $values['form_id'] = $f->form_id;
+            $values['date_begin'] = date('Y-m-d', strtotime($f->date_begin));
+            $values['date_forecast'] = date('Y-m-d', strtotime($f->date_forecast));
+            $values['comment'] = $f->comment;
+            $values['parent_id'] = $f->parent_id;
+            $values['parent_sname'] = $f->parent_sname;
+            $values['duration'] = $f->duration;
+            $values['period'] = $f->period;
+            $values['form_status'] = $f->form_status;
             unset($values[self::PK]);
             $insert = $zdb->insert(SKI_PREFIX . self::TABLE)
                         ->values($values);
-            $output = print_r($insert, true);
-                file_put_contents($file1, "\ninsert : ". $output,FILE_APPEND );
             $result = $zdb->execute($insert);
-                file_put_contents($file1, "\nresult : OK",FILE_APPEND );
 
             if ($result->count() > 0) {
-                file_put_contents($file1, "\nresult : OK",FILE_APPEND );
                 Analog::log(
                     'New Form #' . $f->form_id,
                     Analog::DEBUG
                 );
             } else {
-                file_put_contents($file1, "\nresult : NOK",FILE_APPEND );
                 throw new \Exception(_T("Form has not been added", "ski"));
             }
             $zdb->connection->commit();
@@ -482,25 +464,18 @@ class Form
     public static function storeForm($f)
     {
         global $zdb;
-        if (GALETTE_MODE == 'DEV') {
-                $file1="/home/galette/galette/data/logs/lib-repository-form-storeForm.txt";
-
-                file_put_contents($file1, "\nf : ");
-                $output = print_r($f, true);
-                file_put_contents($file1, $output . "\n===", FILE_APPEND);
-        }
         try {
             $zdb->connection->beginTransaction();
             $values = array();
-            $values['form_status']=$f->form_status;
-            $values['parent_id']=$f->parent_id;
-            $values['period']=$f->period;
-            $values['duration']=$f->duration;
-            $values['date_begin']=$f->date_begin;
-            $values['date_forecast']=$f->date_forecast;
-            $values['parent_sname']=$f->parent_sname;
+            $values['form_status'] = $f->form_status;
+            $values['parent_id'] = $f->parent_id;
+            $values['period'] = $f->period;
+            $values['duration'] = $f->duration;
+            $values['date_begin'] = $f->date_begin;
+            $values['date_forecast'] = $f->date_forecast;
+            $values['parent_sname'] = $f->parent_sname;
             unset($values[self::PK]);
-            $update = $zdb->update(SKI_PREFIX .self::TABLE);
+            $update = $zdb->update(SKI_PREFIX . self::TABLE);
             $update->set($values);
             $update->where(
                 self::PK . '=' . $f->form_id

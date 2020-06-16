@@ -125,17 +125,14 @@ class FormRentFilter extends Pagination
      */
     public function __get($name)
     {
-        //$file1="/home/galette/galette/data/logs/lib-getFormRentList.txt";
-	//file_put_contents(//$file1,"\n\n get name: ".$name,FILE_APPEND);
         if (in_array($name, $this->pagination_fields)) {
             return parent::__get($name);
         } else {
-            
             if (in_array($name, $this->formlist_fields)) {
                 return $this->$name;
             } else {
                 analog::log(
-                    '[formfilter] unable to get proprety `' .$name . '`',
+                    '[formfilter] unable to get proprety `' . $name . '`',
                     analog::WARNING
                 );
             }
@@ -152,8 +149,6 @@ class FormRentFilter extends Pagination
      */
     public function __set($name, $value)
     {
-        //$file1="/home/galette/galette/data/logs/lib-getFormRentList.txt";
-	//file_put_contents(//$file1,"\n\nset name: ".$name." " .$value,FILE_APPEND);
         if (in_array($name, $this->form_list_fields)) {
             parent::__set($name, $value);
         } else {

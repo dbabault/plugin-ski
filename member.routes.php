@@ -34,6 +34,7 @@
  * @link      http://galette.tuxfamily.org
  * @since     Available since 0.9.3
  */
+
 use Analog\Analog;
 use GaletteObjectsLend\Entity\Preferences;
 use GaletteObjectsLend\Filters\CategoriesList;
@@ -58,13 +59,7 @@ require_once $module['root'] . '/_config.inc.php';
 $this->get(
     '/ski_members[/{option:page|order|edit}/{value:\d+}]',
     function ($request, $response, $args = []) {
-        $post=$_POST;
-        if (GALETTE_MODE == 'DEV') {
-            $file1="/home/galette/galette/data/logs/route-ski_members.txt";
-            $output = print_r($post, true);
-            file_put_contents($file1, "\n\n\n============");
-            file_put_contents($file1, "\npost : " . $output, FILE_APPEND);
-        }
+        $post = $_POST;
         $parent_id = '';
         $option = '';
         $groups = [];
@@ -97,15 +92,11 @@ $this->get(
         if ($option == 'edit') {
             $id = (int)$value;
             $a = new Adherent($this->zdb, $id, $deps);
-            $output = print_r($a, true);
-            file_put_contents($file1, "\na : " . $output, FILE_APPEND);
             if ($a->id != '') {
-                $exist=true;
-                file_put_contents($file1, "\nexist", FILE_APPEND);
+                $exist = true;
             } else {
-                $exist=false;
-                file_put_contents($file1, "\nnot exist", FILE_APPEND);
-                $option='';
+                $exist = false;
+                $option = '';
             }
         }
 
@@ -141,16 +132,16 @@ $this->get(
                     $m = new Members($filters);
                     $list_members = $m->getMembersList(true, null, false, false, false, false, false);
                     foreach ($list_members as $member) {
-                        $mid=$member->id;
+                        $mid = $member->id;
                         $c = new Adherent($this->zdb, $mid, $deps);
                         $members[$mid]['id_adh'] = $mid;
-                        $has_parent=$c->hasParent();
+                        $has_parent = $c->hasParent();
                         if ($has_parent) {
                             $members[$mid]['parent_id'] = $c->parent->id;
-                            $members[$mid]['parent_name'] =  $c->parent->name . " ". $c->parent->surname;
-                        }else{
+                            $members[$mid]['parent_name'] =  $c->parent->name . " " . $c->parent->surname;
+                        } else {
                             $members[$mid]['parent_id'] = '';
-                            $members[$mid]['parent_name']='';
+                            $members[$mid]['parent_name'] = '';
                         }
                     }
                     //$members=$list_members->toArray();
@@ -163,16 +154,16 @@ $this->get(
                     $m = new Members($filters);
                     $list_members = $m->getMembersList(true, null, false, false, false, false, false);
                     foreach ($list_members as $member) {
-                        $mid=$member->id;
+                        $mid = $member->id;
                         $c = new Adherent($this->zdb, $mid, $deps);
                         $members[$mid]['id_adh'] = $mid;
-                        $has_parent=$c->hasParent();
+                        $has_parent = $c->hasParent();
                         if ($has_parent) {
                             $members[$mid]['parent_id'] = $c->parent->id;
-                            $members[$mid]['parent_name'] =  $c->parent->name . " ". $c->parent->surname;
-                        }else{
+                            $members[$mid]['parent_name'] =  $c->parent->name . " " . $c->parent->surname;
+                        } else {
                             $members[$mid]['parent_id'] = '';
-                            $members[$mid]['parent_name']='';
+                            $members[$mid]['parent_name'] = '';
                         }
                     }
                     //$members=$list_members->toArray();
@@ -183,28 +174,24 @@ $this->get(
                     $id = (int)$value;
                     $page_title = $page_title1;
                     $a = new Adherent($this->zdb, $id, $deps);
-                    $has_children=$a->hasChildren();
-                    $has_parent=$a->hasParent();
-                    $parent_id=$id;
-                    file_put_contents($file1, "\nhas parent : " . $has_parent . "\nhas children : " . $has_children, FILE_APPEND);
+                    $has_children = $a->hasChildren();
+                    $has_parent = $a->hasParent();
+                    $parent_id = $id;
                     if ($has_parent) {
                         // je suis chez l'enfant
-                        file_put_contents($file1, "\nchildren " . $id . " ==> parent_id : " . $parent_id, FILE_APPEND);
-                        $parent_id=$a->parent->id;
+                        $parent_id = $a->parent->id;
                     }
                     $a = new Adherent($this->zdb, $parent_id, $deps);
-                    $MID[]=$parent_id;
-                    $parent_name=$a->name;
+                    $MID[] = $parent_id;
+                    $parent_name = $a->name;
                     if ($has_children) {
                         foreach ($a->children as $children) {
                             // je recupere les id de la fanille
-                            $cid=$children->id;
-                            file_put_contents($file1, "\nparent " . $id . "==> children : " . $cid, FILE_APPEND);
-                            $MID[]=$cid;
+                            $cid = $children->id;
+                            $MID[] = $cid;
                         }
                     }
                     foreach ($MID as $cid) {
-                        file_put_contents($file1, "\ncid : " . $cid, FILE_APPEND);
                         $b = new Adherent($this->zdb, $cid, $deps);
                         $members[$cid]['id_adh'] = $cid;
                         $members[$cid]['parent_id'] = $parent_id;
@@ -228,8 +215,6 @@ $this->get(
                             _T(' (%age years old)')
                         );
                     }
-                    $output = print_r($MID, true);
-                    file_put_contents($file1, "\nMID : " . $output . " ==>  " . $parent_id, FILE_APPEND);
                     break;
                 default:
                     $filters->current_page = (int) $value;
@@ -239,16 +224,16 @@ $this->get(
                     $m = new Members($filters);
                     $list_members = $m->getMembersList(true);
                     foreach ($list_members as $member) {
-                        $mid=$member->id;
+                        $mid = $member->id;
                         $c = new Adherent($this->zdb, $mid, $deps);
                         $members[$mid]['id_adh'] = $mid;
-                        $has_parent=$c->hasParent();
+                        $has_parent = $c->hasParent();
                         if ($has_parent) {
                             $members[$mid]['parent_id'] = $c->parent->id;
-                            $members[$mid]['parent_name'] =  $c->parent->name . " ". $c->parent->surname;
-                        }else{
+                            $members[$mid]['parent_name'] =  $c->parent->name . " " . $c->parent->surname;
+                        } else {
                             $members[$mid]['parent_id'] = '';
-                            $members[$mid]['parent_name']='';
+                            $members[$mid]['parent_name'] = '';
                         }
                     }
                     break;
@@ -260,25 +245,23 @@ $this->get(
             $m = new Members($filters);
             $list_members = $m->getMembersList(true);
             foreach ($list_members as $member) {
-                $mid=$member->id;
+                $mid = $member->id;
                 $c = new Adherent($this->zdb, $mid, $deps);
                 $members[$mid]['id_adh'] = $mid;
-                $has_parent=$c->hasParent();
+                $has_parent = $c->hasParent();
                 if ($has_parent) {
                     $members[$mid]['parent_id'] = $c->parent->id;
-                    $members[$mid]['parent_name'] =  $c->parent->name . " ". $c->parent->surname;
-                }else{
+                    $members[$mid]['parent_name'] =  $c->parent->name . " " . $c->parent->surname;
+                } else {
                     $members[$mid]['parent_id'] = '';
-                    $members[$mid]['parent_name']='';
+                    $members[$mid]['parent_name'] = '';
                 }
             }
         }
-            $output = print_r($members, true);
-            //file_put_contents($file1, "\n\n\n============\nmembers : " . $output, FILE_APPEND);
         $this->session->filter_members  = $filters;
         if (is_array($members)) {
             foreach ($members as $member) {
-                $mid=$member['id_adh'];
+                $mid = $member['id_adh'];
                 // chargement des tarifs, licences et années d'adhésion de l'adhérent (champs dynamiques adherent)
                 $a = new Adherent($this->zdb, $mid, $deps);
                 foreach ($fields as $field) {
@@ -286,14 +269,14 @@ $this->get(
                     $ffield = $a->getDynamicFields()->getValues($fid);
                     if (is_array($ffield)) {
                         foreach ($ffield as $k => $field_data) {
-                            $f1=intval($field->getId());
-                            $f2='info_field_' . $f1 . '_1';
-                            $fv=$field_data['field_val'];
-                            $tv=$field_data['text_val'];
+                            $f1 = intval($field->getId());
+                            $f2 = 'info_field_' . $f1 . '_1';
+                            $fv = $field_data['field_val'];
+                            $tv = $field_data['text_val'];
                             $dynadh[$mid][intval($field->getId())]['fname'] = $field->getName();
                             $dynadh[$mid][intval($field->getId())]['fval'] = $fv;
                             $dynadh[$mid][intval($field->getId())]['ftext'] = $tv;
-                            $members[$mid][$f2]=$fv;
+                            $members[$mid][$f2] = $fv;
                         }
                     }
                 }
@@ -339,11 +322,6 @@ $this->post(
     '/ski_members/filter',
     function ($request, $response) {
         $post = $request->getParsedBody();
-        if (GALETTE_MODE == 'DEV') {
-            $file1="/home/galette/galette/data/logs/route-members-filter.txt";
-            $output = print_r($post, true);
-            file_put_contents($file1, "\npost : " . $output);
-        }
         //reintialize filters
         if (isset($this->session->filter_members)) {
             $filters = $this->session->filter_members;
@@ -402,16 +380,10 @@ $this->post(
 $this->post(
     __('/family/store', "ski"),
     function ($request, $response, $args) {
-        if (GALETTE_MODE == 'DEV') {
-            $file1="/home/galette/galette/data/logs/route-familystore.txt";
-            $output = print_r($_POST, true);
-            file_put_contents($file1, "\npost : " . $output);
-        }
-        $parent_id='';
+        $parent_id = '';
         if ((isset($_POST['save'])) || (isset($_POST['plus']))) {
             foreach ($_POST['members'] as $k => $m) {
                 if (isset($_POST['plus'])) {
-                    file_put_contents($file1, "\nplus", FILE_APPEND);
                     if ($m['id_adh'] == $m['parent_id']) {
                         foreach ($m as $kv => $val) {
                             if ($val != 'null') {
@@ -422,7 +394,6 @@ $this->post(
                         $posts[$k]['parent_id'] = $m->id_adh;
                     }
                 } else {
-                    file_put_contents($file1, "\nnot plus", FILE_APPEND);
                     foreach ($m as $kv => $val) {
                         if ($val != 'null') {
                             $$kv = $val;
@@ -431,14 +402,13 @@ $this->post(
                     }
                     // un parent n'est pas son propre parent ...
                     if ($m['id_adh'] == $m['parent_id']) {
-                        file_put_contents($file1, "\nclear parent", FILE_APPEND);
-                        $posts[$k]['parent_id']=null;
+                        $posts[$k]['parent_id'] = null;
                     }
                 }
                 if ($posts[$k]['titre_adh'] == '') {
-                    $posts[$k]['titre_adh']=1;
+                    $posts[$k]['titre_adh'] = 1;
                 }
-                $posts[$k]['titre_adh']=$posts[$k]['sexe_adh'];
+                $posts[$k]['titre_adh'] = $posts[$k]['sexe_adh'];
             }
             $deps = array(
                 'picture' => true,
@@ -462,8 +432,10 @@ $this->post(
                 // flagging required fields
                 $fc = $this->fields_config;
                 $fc->setNotRequired('mdp_adh');
-                if ($member->hasParent() && !isset($post['detach_parent'])
-                    || isset($post['parent_id']) && !empty($post['parent_id'])) {
+                if (
+                    $member->hasParent() && !isset($post['detach_parent'])
+                    || isset($post['parent_id']) && !empty($post['parent_id'])
+                ) {
                     $parent_fields = $member->getParentFields();
                     foreach ($parent_fields as $field) {
                         if ($fc->isRequired($field)) {
@@ -505,26 +477,22 @@ $this->post(
                 }
                 if (isset($_POST['plus'])) {
                     $new = true;
-                    $post['id_adh']= '';
-                    $post['prenom_adh']='?';
-                    $post['ddn_adh']='01/01/2000';
-                    $post['date_crea_adh']=date("Y-m-d");
-                    $post['email_adh']='';
+                    $post['id_adh'] = '';
+                    $post['prenom_adh'] = '?';
+                    $post['ddn_adh'] = '01/01/2000';
+                    $post['date_crea_adh'] = date("Y-m-d");
+                    $post['email_adh'] = '';
                 } else {
                     $new = false;
                 }
                 $real_requireds = array_diff(array_keys($required), array_keys($disabled));
-                $output = print_r($post, true);
-                file_put_contents($file1, "\npost : " . $output, FILE_APPEND);
                 $valid = $member->check($post, $required, $disabled);
-                $member->addesse_adh=$post['adresse_adh'];
+                $member->addesse_adh = $post['adresse_adh'];
                 if ($valid !== true) {
                     $error_detected = array_merge($error_detected, $valid);
                 }
                 if (count($error_detected) == 0) {
                     //all goes well, we can proceed
-                    $output = print_r($member, true);
-                    //file_put_contents($file1, "\nmember : " . $output,FILE_APPEND);
                     $store = $member->store();
                     if ($store === true) {
                         //member has been stored :)
@@ -605,12 +573,6 @@ $this->post(
 $this->get(
     __('/ski_family', "ski"),
     function ($request, $response, $args) use ($module, $module_id) {
-        if (GALETTE_MODE == 'DEV') {
-            $file1="/home/galette/galette/data/logs/route-ski_family.txt";
-            $output = print_r($_POST, true);
-            file_put_contents($file1, "\npost : " . $output);
-        }
-
                     $post['id_adh'] = '';
                     $post['parent_id'] = '';
                     $post['nom_adh'] = '?';
@@ -621,10 +583,10 @@ $this->get(
                     $post['sexe_adh'] = '1';
                     $post['ville_adh'] = '?';
                     $post['email_adh'] = '';
-                    $post['tel_adh'] ='?';
+                    $post['tel_adh'] = '?';
                     $post['gsm_adh'] = '';
                     $post['ddn_adh'] = '01/01/2000';
-                    $post['date_crea_adh']=date("Y-m-d");
+                    $post['date_crea_adh'] = date("Y-m-d");
 
             $deps = array(
                 'picture' => true,
@@ -681,7 +643,7 @@ $this->get(
         if ($valid == true) {
             //all goes well, we can proceed
             $store = $member->store();
-            $id=0;
+            $id = 0;
             if ($store === true) {
                 //member has been stored :)
                     $success = _T("New member has been successfully added.");

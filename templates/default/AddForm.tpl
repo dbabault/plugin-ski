@@ -1,9 +1,5 @@
 {if $GALETTE_MODE eq 'DEV'}
     {assign var="page_title" value="{$page_title} ({$GALETTE_MODE})"}
-    {$file1="/home/galette/galette/data/logs/template-AddForm.txt"}
-    {*$output = print_r($form_status, true)}
-    {file_put_contents($file1, "\nform_status : ")}
-    {file_put_contents($file1, $output,FILE_APPEND)*}
 {/if}
 {extends file="page.tpl"}
 {block name="content"}

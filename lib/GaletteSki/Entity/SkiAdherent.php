@@ -64,73 +64,73 @@ class Adherent
 {
     use DynamicsTrait;
 
-    const TABLE = 'adherents';
-    const PK = 'id_adh';
+    private const TABLE = 'adherents';
+    private const PK = 'id_adh';
 
-    const NC = 0;
-    const MAN = 1;
-    const WOMAN = 2;
+    private const NC = 0;
+    private const MAN = 1;
+    private const WOMAN = 2;
 
-    const AFTER_ADD_DEFAULT = 0;
-    const AFTER_ADD_TRANS = 1;
-    const AFTER_ADD_NEW = 2;
-    const AFTER_ADD_SHOW = 3;
-    const AFTER_ADD_LIST = 4;
-    const AFTER_ADD_HOME = 5;
+    private const AFTER_ADD_DEFAULT = 0;
+    private const AFTER_ADD_TRANS = 1;
+    private const AFTER_ADD_NEW = 2;
+    private const AFTER_ADD_SHOW = 3;
+    private const AFTER_ADD_LIST = 4;
+    private const AFTER_ADD_HOME = 5;
 
-    private $_id;
+    private $id;
     //Identity
-    private $_title;
-    private $_company_name;
-    private $_name;
-    private $_surname;
-    private $_nickname;
-    private $_birthdate;
-    private $_birth_place;
-    private $_gender;
-    private $_job;
-    private $_language;
-    private $_active;
-    private $_status;
+    private $title;
+    private $company_name;
+    private $name;
+    private $surname;
+    private $nickname;
+    private $birthdate;
+    private $birth_place;
+    private $gender;
+    private $job;
+    private $language;
+    private $active;
+    private $status;
     //Contact information
-    private $_address;
-    private $_address_continuation; /** TODO: remove */
-    private $_zipcode;
-    private $_town;
-    private $_country;
-    private $_phone;
-    private $_gsm;
-    private $_email;
-    private $_website;
-    private $_msn; /** TODO: remove */
-    private $_icq; /** TODO: remove */
-    private $_jabber; /** TODO: remove */
-    private $_gnupgid; /** TODO: remove */
-    private $_fingerprint; /** TODO: remove */
+    private $address;
+    private $address_continuation; /** TODO: remove */
+    private $zipcode;
+    private $town;
+    private $country;
+    private $phone;
+    private $gsm;
+    private $email;
+    private $website;
+    private $msn; /** TODO: remove */
+    private $icq; /** TODO: remove */
+    private $jabber; /** TODO: remove */
+    private $gnupgid; /** TODO: remove */
+    private $fingerprint; /** TODO: remove */
     //Galette relative information
-    private $_appears_in_list;
-    private $_admin;
-    private $_staff;
-    private $_due_free;
-    private $_login;
-    private $_password;
-    private $_creation_date;
-    private $_modification_date;
-    private $_due_date;
-    private $_others_infos;
-    private $_others_infos_admin;
-    private $_picture;
-    private $_oldness;
-    private $_days_remaining;
-    private $_groups;
-    private $_managed_groups;
-    private $_parent;
-    private $_children;
+    private $appears_in_list;
+    private $admin;
+    private $staff;
+    private $due_free;
+    private $login;
+    private $password;
+    private $creation_date;
+    private $modification_date;
+    private $due_date;
+    private $others_infos;
+    private $others_infos_admin;
+    private $picture;
+    private $oldness;
+    private $days_remaining;
+    private $groups;
+    private $managed_groups;
+    private $parent;
+    private $children;
     //
-    private $_row_classes;
+    private $row_classes;
     //fields list and their translation
-    private $_self_adh = false;
-    private $_deps = array(
+    private $self_adh = false;
+    private $deps = array(
         'picture'   => true,
         'groups'    => true,
         'dues'      => true,
@@ -161,7 +161,7 @@ class Adherent
      * @param mixed   $args Either a ResultSet row, its id or its
      *                      login or its email for to load s specific
      *                      member, or null to just instanciate object
-     * @param boolean $deps Dependencies configuration, see Adherent::$_deps
+     * @param boolean $deps Dependencies configuration, see Adherent::$deps
      */
     public function __construct(Db $zdb, $args = null, $deps = null)
     {
@@ -340,7 +340,8 @@ class Adherent
         //Galette relative information
         $this->_appears_in_list = ($r->bool_display_info == 1) ? true : false;
         $this->_admin = ($r->bool_admin_adh == 1) ? true : false;
-        if (isset($r->priorite_statut)
+        if (
+            isset($r->priorite_statut)
             && $r->priorite_statut < Members::NON_STAFF_MEMBERS
         ) {
             $this->_staff = true;
@@ -724,7 +725,7 @@ class Adherent
             $patterns = array('/%days/', '/%date/');
             $ddate = new \DateTime($this->_due_date);
             $replace = array(
-                $this->_days_remaining *-1,
+                $this->_days_remaining * -1,
                 $ddate->format(__("Y-m-d"))
             );
             if ($this->_active) {
@@ -954,7 +955,7 @@ class Adherent
     /**
      * Check posted values validity
      *
-     * @param array $values   All values to check, basically the $_POST array
+     * @param array $values   All values to check, basically the $POST array
      *                        after sending the form
      * @param array $required Array of required fields
      * @param array $disabled Array of disabled fields
@@ -974,7 +975,8 @@ class Adherent
         }
 
         //no parent if checkbox was unchecked
-        if (!isset($values['attach'])
+        if (
+            !isset($values['attach'])
             && empty($this->_id)
             && isset($values['parent_id'])
         ) {
@@ -1034,7 +1036,8 @@ class Adherent
                 // now, check validity
                 if ($value !== null && $value != '') {
                     $this->validate($key, $value, $values);
-                } elseif (($key == 'login_adh' && !isset($required['login_adh']))
+                } elseif (
+                    ($key == 'login_adh' && !isset($required['login_adh']))
                     || ($key == 'mdp_adh' && !isset($required['mdp_adh']))
                     && !isset($this->_id)
                 ) {
@@ -1059,7 +1062,7 @@ class Adherent
                 if ($mandatory_missing === true) {
                     $this->errors[] = str_replace(
                         '%field',
-                        '<a href="#' . $key . '">' . $this->getFieldLabel($key) .'</a>',
+                        '<a href="#' . $key . '">' . $this->getFieldLabel($key) . '</a>',
                         _T("- Mandatory field %field empty.")
                     );
                 }
@@ -1135,12 +1138,12 @@ class Adherent
                         $d->setTime(0, 0, 0);
 
                         $diff = $now->diff($d);
-                        $days = (integer)$diff->format('%R%a');
+                        $days = (int)$diff->format('%R%a');
                         if ($days >= 0) {
-                            $this->errors[] =_T('- Birthdate must be set in the past!');
+                            $this->errors[] = _T('- Birthdate must be set in the past!');
                         }
 
-                        $years = (integer)$diff->format('%R%Y');
+                        $years = (int)$diff->format('%R%Y');
                         if ($years <= -200) {
                             $this->errors[] = str_replace(
                                 '%years',
@@ -1245,7 +1248,8 @@ class Adherent
                             }
 
                             $results = $this->zdb->execute($select);
-                            if ($results->count() !==  0
+                            if (
+                                $results->count() !==  0
                                 || $value == $preferences->pref_admin_login
                             ) {
                                 $this->errors[] = _T("- This username is already in use, please choose another one!");
@@ -1261,13 +1265,15 @@ class Adherent
                 }
                 break;
             case 'mdp_adh':
-                if ($this->_self_adh !== true
+                if (
+                    $this->_self_adh !== true
                     && (!isset($values['mdp_adh2'])
                     || $values['mdp_adh2'] != $value)
                 ) {
                     $this->errors[] = _T("- The passwords don't match!");
-                } elseif ($this->_self_adh === true
-                    && !crypt($value, $values['mdp_crypt'])==$values['mdp_crypt']
+                } elseif (
+                    $this->_self_adh === true
+                    && !crypt($value, $values['mdp_crypt']) == $values['mdp_crypt']
                 ) {
                     $this->errors[] = _T("Password misrepeated: ");
                 } else {
@@ -1337,29 +1343,23 @@ class Adherent
         try {
             $values = array();
             $fields = self::getDbFields($this->zdb);
-            $file1="/home/galette/galette/data/logs/lib-galette-store.txt";
-                    $output = print_r($this->fields, true);
-                    //file_put_contents($file1, "\nfields : " . $output);
-
             foreach ($fields as $field) {
-//                  file_put_contents($file1, "\nfield : " . $field,FILE_APPEND);
-                if ($field !== 'date_modif_adh'
+                if (
+                    $field !== 'date_modif_adh'
                     || !isset($this->_id)
                     || $this->_id == ''
                 ) {
                     $prop = '_' . $this->fields[$field]['propname'];
-                    //file_put_contents($file1, "\nprop : " . $prop,FILE_APPEND);
-                    if (($field === 'bool_admin_adh'
+                    if (
+                        ($field === 'bool_admin_adh'
                         || $field === 'bool_exempt_adh'
                         || $field === 'bool_display_info'
                         || $field === 'activite_adh')
                         && $this->$prop === false
                     ) {
-                    //file_put_contents($file1, "\n1 " ,FILE_APPEND);
                         //Handle booleans for postgres ; bugs #18899 and #19354
                         $values[$field] = $this->zdb->isPostgres() ? 'false' : 0;
                     } elseif ($field === 'parent_id') {
-                    //file_put_contents($file1, "\n2 " ,FILE_APPEND);
                         //handle parents
                         if ($this->_parent === null) {
                             $values['parent_id'] = new Expression('NULL');
@@ -1370,8 +1370,7 @@ class Adherent
                         }
                     } else {
                         $values[$field] = $this->$prop;
-                        $output = print_r($this->$prop, true);
-                    //file_put_contents($file1, "\n3 : " . $output,FILE_APPEND);
+                       //$output =print_r($this->$prop, true);
                     }
                 }
             }
@@ -1409,11 +1408,8 @@ class Adherent
                 }
             }
 
-            $output = print_r($values, true);
-            file_put_contents($file1, "\nvalues : " . $output);
             $success = false;
             if (!isset($this->_id) || $this->_id == '') {
-                file_put_contents($file1, "\nNew member : ", FILE_APPEND);
                 //we're inserting a new member
                 unset($values[self::PK]);
                 //set modification date
@@ -1455,7 +1451,6 @@ class Adherent
                     );
                 }
             } else {
-                file_put_contents($file1, "\nExisting member : ", FILE_APPEND);
                 //we're editing an existing member
                 if (!$this->isDueFree()) {
                     // deadline
@@ -1480,7 +1475,6 @@ class Adherent
                 //edit == 0 does not mean there were an error, but that there
                 //were nothing to change
                 if ($edit->count() > 0) {
-                    file_put_contents($file1, "\nModif : ", FILE_APPEND);
                     $this->updateModificationDate();
                     $hist->add(
                         _T("Member card updated"),
@@ -1494,7 +1488,6 @@ class Adherent
 
             //dynamic fields
             if ($success) {
-                file_put_contents($file1, "\nStore Dynamic : ", FILE_APPEND);
                 $success = $this->dynamicsStore();
             }
 
@@ -1831,7 +1824,7 @@ class Adherent
         // picture upload
         if (isset($files['photo'])) {
             if ($files['photo']['error'] === UPLOAD_ERR_OK) {
-                if ($files['photo']['tmp_name'] !='') {
+                if ($files['photo']['tmp_name'] != '') {
                     if (is_uploaded_file($files['photo']['tmp_name'])) {
                         $res = $this->picture->store($files['photo']);
                         if ($res < 0) {
@@ -1850,7 +1843,7 @@ class Adherent
                 );
             }
         }
-        $this->dynamicsFiles($_FILES);
+        $this->dynamicsFiles($FILES);
 
         if (count($this->errors) > 0) {
             Analog::log(
