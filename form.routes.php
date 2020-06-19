@@ -192,7 +192,7 @@ $this->get(
             // recuperer, et affecter les objets déja green par la Forme
             //
             $filters = new FormRentFilter();
-            $filters->orderby = constant('GaletteSki\Repository\Formrent::ORDER_DESC');
+            $filters->orderby = constant('GaletteSki\Repository\FormRent::ORDER_DESC');
             $filters->field_filter = constant('GaletteSki\Repository\FormRent::FILTER_B_F_DATE');
             $filters->begin = $date_begin;
             $filters->filter_str = "BFdate";
@@ -364,7 +364,6 @@ $this->get(
             'group' => $group,
             'adhs' => $adhs,
             'comment' => $comment,
-            'count' => count($form_rent),
             'next_form_id' => $next_form_id,
             'members' => $members,
             'categories' => $categories_list,
@@ -478,10 +477,13 @@ $this->post(
         $formrent = new FormRent($this->zdb, $this->plugins, $olendsprefs);
 
         foreach ($pst as $val) {
-            $a = explode("=", $val)[0];
-            $b = explode("=", $val)[1];
-            $formrent->$a = "$b";
-            $$a = "$b";
+            $v = explode("=", $val);
+            if (array_key_exists(1, $v)) {
+                $a = $v[0];
+                $b = $v[1];
+                $formrent->$a = "$b";
+                $$a = "$b";
+            }
         }
         if (isset($form_id)) {
             $lists = $formrent->getFormRentList(true, null, false);
@@ -509,13 +511,13 @@ $this->post(
                 $success_detected = "Object has been rent";
                 $this->flash->addMessage('success_detected', $success_detected);
             }
-        }
-        return $response
+            return $response
             ->withStatus(301)
             ->withHeader(
                 'Location',
                 $this->router->pathFor('ski_form') . "/" . $form_id
             );
+        }
     }
 )->setName('ski_do_add_object')->add($authenticate);
 //fin AddObject

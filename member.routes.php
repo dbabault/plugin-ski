@@ -207,6 +207,7 @@ $this->get(
                         $members[$cid]['info_public_adh'] = $b->others_infos;
                         $members[$cid]['info_adh'] = $b->others_infos_admin;
                         $members[$cid]['sexe_adh'] = $b->gender;
+                        $members[$cid]['titre_adh'] = $b->titre_adh;
                         $members[$cid]['ddn_adh'] = $b->birthdate;
                         $d = DateTime::createFromFormat('d/m/Y', $b->birthdate);
                         $members[$cid]['age'] = str_replace(
@@ -271,8 +272,16 @@ $this->get(
                         foreach ($ffield as $k => $field_data) {
                             $f1 = intval($field->getId());
                             $f2 = 'info_field_' . $f1 . '_1';
-                            $fv = $field_data['field_val'];
-                            $tv = $field_data['text_val'];
+                            if (array_key_exists('field_val', $field_data)) {
+                                $fv = $field_data['field_val'];
+                            } else {
+                                $fv = '';
+                            }
+                            if (array_key_exists('text_val', $field_data)) {
+                                $tv = $field_data['text_val'];
+                            } else {
+                                $tv = '';
+                            }
                             $dynadh[$mid][intval($field->getId())]['fname'] = $field->getName();
                             $dynadh[$mid][intval($field->getId())]['fval'] = $fv;
                             $dynadh[$mid][intval($field->getId())]['ftext'] = $tv;
@@ -405,10 +414,6 @@ $this->post(
                         $posts[$k]['parent_id'] = null;
                     }
                 }
-                if ($posts[$k]['titre_adh'] == '') {
-                    $posts[$k]['titre_adh'] = 1;
-                }
-                $posts[$k]['titre_adh'] = $posts[$k]['sexe_adh'];
             }
             $deps = array(
                 'picture' => true,

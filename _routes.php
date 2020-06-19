@@ -56,7 +56,6 @@ require_once $module['root'] . '/_config.inc.php';
 include 'form.routes.php';
 include 'member.routes.php';
 
-
 //galette's dashboard
 $this->get(
     __('/dashboard', "ski"),

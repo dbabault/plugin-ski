@@ -78,27 +78,27 @@ class FormRent
     );
 
 
-    private const ALL_FORM = 0;
-    private const ACTIVE_FORM = 1;
-    private const INACTIVE_FORM = 2;
+    public const ALL_FORM = 0;
+    public const ACTIVE_FORM = 1;
+    public const INACTIVE_FORM = 2;
 
-    private const FILTER_FORM_ID = 0;
-    private const FILTER_ID_ADH = 1;
-    private const FILTER_CATEGORY_ID = 2;
-    private const FILTER_OBJECT_ID = 3;
-    private const FILTER_BDATE = 4;
-    private const FILTER_FDATE = 5;
-    private const FILTER_EDATE = 6;
-    private const FILTER_B_F_DATE = 7;
+    public const FILTER_FORM_ID = 0;
+    public const FILTER_ID_ADH = 1;
+    public const FILTER_CATEGORY_ID = 2;
+    public const FILTER_OBJECT_ID = 3;
+    public const FILTER_BDATE = 4;
+    public const FILTER_FDATE = 5;
+    public const FILTER_EDATE = 6;
+    public const FILTER_B_F_DATE = 7;
 
 
-    private const ORDERBY_FORM_ID = 0;
-    private const ORDERBY_BDATE = 1;
-    private const ORDERBY_FDATE = 2;
-    private const ORDERBY_OBJECT_ID = 3;
-    private const ORDERBY_EDATE = 4;
-    private const ORDER_DESC = 'DESC';
-    private const ORDER_ASC = 'ASC';
+    public const ORDERBY_FORM_ID = 0;
+    public const ORDERBY_BDATE = 1;
+    public const ORDERBY_FDATE = 2;
+    public const ORDERBY_OBJECT_ID = 3;
+    public const ORDERBY_EDATE = 4;
+    public const ORDER_DESC = 'DESC';
+    public const ORDER_ASC = 'ASC';
 
     private $count = null;
     private $errors = array();

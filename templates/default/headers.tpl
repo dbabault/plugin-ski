@@ -1,1 +1,1 @@
-<link rel="stylesheet" type="text/css" href="{path_for name="plugin_res" data=["plugin" => $module_id, "path" => "galette_ski.css"]}" media="screen"/>
+//<link rel="stylesheet" type="text/css" href="{path_for name='plugin_res' data=['plugin'=>$module_id,'path'=>'galette_ski.css']}" media="screen"/>

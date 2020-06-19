@@ -66,27 +66,27 @@ class Form
     private const TABLE = "form";
     private const PK = "form_id";
 
-    private const FILTER_ID = 0;
-    private const FILTER_BDATE = 1;
-    private const FILTER_FDATE = 2;
-    private const FILTER_EDATE = 3;
-    private const FILTER_NAME = 4;
-    private const FILTER_STATUS = 5;
-    private const FILTER_PERIOD = 6;
-    private const FILTER_DURATION = 6;
+    public const FILTER_ID = 0;
+    public const FILTER_BDATE = 1;
+    public const FILTER_FDATE = 2;
+    public const FILTER_EDATE = 3;
+    public const FILTER_NAME = 4;
+    public const FILTER_STATUS = 5;
+    public const FILTER_PERIOD = 6;
+    public const FILTER_DURATION = 6;
 
-    private const ALL_FORM = 0;
-    private const ACTIVE_FORM = 1;
-    private const INACTIVE_FORM = 2;
+    public const ALL_FORM = 0;
+    public const ACTIVE_FORM = 1;
+    public const INACTIVE_FORM = 2;
 
-    private const ORDERBY_FORM = 0;
-    private const ORDERBY_BDATE = 1;
-    private const ORDERBY_FDATE = 2;
-    private const ORDERBY_EDATE = 3;
-    private const ORDERBY_NAME = 4;
-    private const ORDERBY_STATUS = 5;
-    private const ORDERBY_PERIOD = 6;
-    private const ORDERBY_DURATION = 7;
+    public const ORDERBY_FORM = 0;
+    public const ORDERBY_BDATE = 1;
+    public const ORDERBY_FDATE = 2;
+    public const ORDERBY_EDATE = 3;
+    public const ORDERBY_NAME = 4;
+    public const ORDERBY_STATUS = 5;
+    public const ORDERBY_PERIOD = 6;
+    public const ORDERBY_DURATION = 7;
 
 
 

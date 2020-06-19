@@ -149,7 +149,7 @@ class FormRentFilter extends Pagination
      */
     public function __set($name, $value)
     {
-        if (in_array($name, $this->form_list_fields)) {
+        if (in_array($name, $this->formlist_fields)) {
             parent::__set($name, $value);
         } else {
             analog::log(
